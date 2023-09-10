@@ -1,0 +1,13 @@
+:root {
+    --color-background: #E5E5E5;
+    --color-primary-lighter: #F1AC81;
+    --color-primary-darker: #F59E0B;
+    --color-secondary: #FFFFF0;
+    --color-font-black: #000000;
+    --color-font-blue: #0E1735;
+}
+
+body,
+html {
+  font-family: Roboto;
+}
