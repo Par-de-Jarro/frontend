@@ -1,8 +1,5 @@
-// src/App.js
-
 import Posts from "./components/Posts";
-import "./App.css";
-
+import './assets/styles/global.css';
 
 function App() {
   return (
