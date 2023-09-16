@@ -15,7 +15,7 @@
 		"@types/react-dom": "^18.2.7",
 		"axios": "^1.4.0",
 		"react": "^18.1.0",
-    	"react-dom": "^18.1.0",
+		"react-dom": "^18.1.0",
 		"react-is": "^16.13.1",
 		"react-router-dom": "^6.15.0",
 		"react-scripts": "5.0.1",
@@ -46,5 +46,8 @@
 			"last 1 firefox version",
 			"last 1 safari version"
 		]
+	},
+	"devDependencies": {
+		"@types/styled-components": "^5.1.27"
 	}
 }
