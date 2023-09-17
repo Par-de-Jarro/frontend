@@ -13,6 +13,16 @@ import {
 
 
 export default function UserRegister() {
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [gender, setGender] = useState('');
+    const [birthDate, setBirthDate] = useState('');
+    const [password, setPassword] = useState('');
+    const [cpf, setCpf] = useState('');
+    const [college, setCollege] = useState('');
+    const [course, setCourse] = useState('');
+    const [cellphone, setCellphone] = useState('');
+
     const [passwordVisible, setPasswordVisible] = useState(false);
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
@@ -27,10 +37,34 @@ export default function UserRegister() {
                 <Form>
                     <FormDiv>
                         <FieldSet>
-                            <Input name="name" label="Nome" type="text"></Input>
-                            <Input name="email" label="Email" type="text"></Input>
-                            <Input name="gender" label="Gênero" type="text"></Input>
-                            <Input name="password" label="Senha" type={passwordVisible ? 'text' : 'password'} ></Input>
+                            <Input 
+                                name="name" 
+                                label="Nome" 
+                                type="text" 
+                                value={name} 
+                                onChange={(e) => { setName(e.target.value)}}>    
+                            </Input>
+                            <Input 
+                                name="email" 
+                                label="Email" 
+                                type="text" 
+                                value={email} 
+                                onChange={(e) => { setEmail(e.target.value)}}>
+                            </Input>
+                            <Input 
+                                name="gender" 
+                                label="Gênero" 
+                                type="text" 
+                                value={gender} 
+                                onChange={(e) => { setGender(e.target.value)}}>
+                            </Input>
+                            <Input 
+                                name="password" 
+                                label="Senha" 
+                                type={passwordVisible ? 'text' : 'password'} 
+                                value={password} 
+                                onChange={(e) => { setPassword(e.target.value)}}>
+                            </Input>
                             <div>
                                 <label>Mostrar senha</label>
                                 <CheckboxInput 
@@ -42,11 +76,41 @@ export default function UserRegister() {
                             </div>
                         </FieldSet>
                         <FieldSet>
-                            <Input name="cpf" label="CPF" type="text"></Input>
-                            <Input name="birthDate" label="Data de Nascimento" type="date"></Input>
-                            <Input name="college" label="Universidade" type="text"></Input>
-                            <Input name="course" label="Curso" type="text"></Input>
-                            <Input name="cellphone" label="Telefone Celular" type="text"></Input>
+                            <Input 
+                                name="cpf" 
+                                label="CPF" 
+                                type="text"
+                                value={cpf} 
+                                onChange={(e) => { setCpf(e.target.value)}}>
+                            </Input>
+                            <Input 
+                                name="birthDate" 
+                                label="Data de Nascimento" 
+                                type="date"
+                                value={birthDate} 
+                                onChange={(e) => { setBirthDate(e.target.value)}}>
+                            </Input>
+                            <Input 
+                                name="college" 
+                                label="Universidade" 
+                                type="text"
+                                value={college} 
+                                onChange={(e) => { setCollege(e.target.value)}}>
+                            </Input>
+                            <Input 
+                                name="course" 
+                                label="Curso" 
+                                type="text"
+                                value={course} 
+                                onChange={(e) => { setCourse(e.target.value)}}>
+                            </Input>
+                            <Input 
+                                name="cellphone" 
+                                label="Telefone Celular" 
+                                type="text"
+                                value={cellphone} 
+                                onChange={(e) => { setCellphone(e.target.value)}}>
+                            </Input>
                         </FieldSet>
                     </FormDiv>
                 </Form>
