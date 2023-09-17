@@ -38,12 +38,13 @@ export const CentralDiv = styled.div`
 
 export const Form = styled.form`
     width: 100%; 
-    hight: 100%;
+    height: 100%;
     margin-top: 40px;
 `
 
-export const FormDiv = styled.form`
+export const FormDiv = styled.div`
     width: 100%; 
+    height: 80%;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -51,5 +52,15 @@ export const FormDiv = styled.form`
 
 export const FieldSet = styled.div`
     width: 100%; 
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+` 
+
+export const CheckboxInput = styled.input`
+    margin-left: 10px;
+    width: 18px; 
+    height: 18px;
 ` 
   
