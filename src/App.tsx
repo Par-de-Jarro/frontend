@@ -1,9 +1,9 @@
 import './assets/styles/global.css';
-import UserRegister from '../src/pages/user/register';
+import AppRoutes from './routes';
 
 function App() {
   return (
-   <UserRegister></UserRegister>
+    <AppRoutes/>
   );
 }
 
