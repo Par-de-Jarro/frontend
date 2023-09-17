@@ -4,7 +4,7 @@ import Logo from "../components/logo";
 function Home() {
     return <>
         <Logo/>
-        <Button/>
+        <Button text="Buscar"/>
     </>;
 }
 
