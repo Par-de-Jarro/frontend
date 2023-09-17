@@ -6,7 +6,7 @@ import {
 export default function UserRegister() {
     return (
         <Container>
-            <p>Text</p>
+            
         </Container>
     )
 }
