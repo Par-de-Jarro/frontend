@@ -1,14 +1,24 @@
 import React from 'react';
 import { Button as ChakraButton } from '@chakra-ui/react';
 import { ChevronRightIcon } from '@chakra-ui/icons';
+
+import '../../assets/styles/global.css';
+
 interface ButtonProps {
-    text: string
+    text: string,
+    borderRadius?: number,
+    onClick: React.MouseEventHandler<HTMLButtonElement>
 }
-const ButtonArrow : React.FC<ButtonProps> = ({ text }) => {
+const ButtonArrow: React.FC<ButtonProps> = ({ text, borderRadius, onClick }) => {
     return (
-        <ChakraButton bgColor={'#F1AC81'} color='white'> 
-        {text}
-        <ChevronRightIcon pt={1} h={6} w={6} color='white' />
+        <ChakraButton
+            minW={24}
+            borderRadius={borderRadius ?? 0}
+            bgColor={'var(--color-primary-lighter)'}
+            color='white'
+            onClick={onClick}
+        >
+            {text}<ChevronRightIcon h={7} w={6} color='white' />
         </ChakraButton>
     )
 }
