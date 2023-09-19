@@ -23,7 +23,7 @@ export const Header = styled.div`
 `
 
 export const CentralDiv = styled.div`
-    width: 75%; 
+    width: 35%; 
     height: 80%;
     margin: 0 auto; 
     background-color: var(--color-primary-lighter);

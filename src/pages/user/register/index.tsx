@@ -33,10 +33,10 @@ export default function UserRegister() {
                             <Input name="password" label="Senha" type={passwordVisible ? 'text' : 'password'} ></Input>
                             <div>
                                 <label>Mostrar senha</label>
-                                <CheckboxInput 
-                                    name="showPassword" 
+                                <CheckboxInput
+                                    name="showPassword"
                                     type="checkbox"
-                                    onChange={togglePasswordVisibility} 
+                                    onChange={togglePasswordVisibility}
                                     checked={passwordVisible}>
                                 </CheckboxInput>
                             </div>
