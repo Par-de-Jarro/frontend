@@ -7,6 +7,8 @@ const Card = styled.div`
 	margin: 10px;
 	align-items: center;
 	flex: 1;
+	background-color: var(--color-primary-lighter);
+	color: var(--color-secondary);
 	min-height: 40px;
 	padding: 5px 10px;
 	border: 1px solid ${({ theme }) => theme.purple};
