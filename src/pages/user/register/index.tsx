@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useState, FormEvent } from 'react';
 import Logo from '../../../components/logo';
 import Input from '../../../components/input';
+import api from '../../../services/api';
+
 import {
     Container,
     Header,
@@ -27,6 +29,28 @@ export default function UserRegister() {
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
     };
+
+    const handleSubmit = (e: FormEvent) => {
+        e.preventDefault();
+
+        api.post('/', {
+            name, 
+            email, 
+            gender, 
+            birthdate: birthDate, 
+            password, 
+            document_id: cpf,
+            cellphone, 
+            bio: '',
+            course,
+            id_university: 0
+        }).then(() => {
+            alert('Cadastro realizado com sucesso')
+        }).catch(() => {
+            alert('erro no cadastro')
+        })
+        
+    }
     return (
         <Container>
             <Header>
@@ -34,7 +58,7 @@ export default function UserRegister() {
             </Header>
             <CentralDiv>
                 <h1>Cadastro</h1>
-                <Form>
+                <Form onSubmit={handleSubmit}>
                     <FormDiv>
                         <FieldSet>
                             <Input 
@@ -113,6 +137,7 @@ export default function UserRegister() {
                             </Input>
                         </FieldSet>
                     </FormDiv>
+                    <button type="submit">Cadastrar</button>
                 </Form>
             </CentralDiv>
         </Container>
