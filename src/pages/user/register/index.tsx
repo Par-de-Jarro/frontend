@@ -132,13 +132,17 @@ export default function UserRegister() {
                                 value={birthDate} 
                                 onChange={(e) => { setBirthDate(e.target.value)}}>
                             </Input>
-                            <Input 
+                            <Select 
+                                value={college}
+                                onChange={(e) => {setCollege(e.target.value)}}
                                 name="college" 
-                                label="Universidade" 
-                                type="text"
-                                value={college} 
-                                onChange={(e) => { setCollege(e.target.value)}}>
-                            </Input>
+                                label="Universidade"
+                                options= {[
+                                    {value: 'FEMININE', label: 'Feminino'},
+                                    {value: 'MASCULINE', label: 'Masculino'},
+                                    {value: 'UNINFORMED', label: 'Não informado'}
+                                ]}
+                            />
                             <Input 
                                 name="course" 
                                 label="Curso" 
