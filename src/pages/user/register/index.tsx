@@ -2,6 +2,7 @@ import { useState, FormEvent } from 'react';
 import Logo from '../../../components/logo';
 import Input from '../../../components/input';
 import api from '../../../services/api';
+import Select from '../../../components/select';
 
 import {
     Container,
@@ -11,6 +12,7 @@ import {
     FormDiv,
     FieldSet,
     CheckboxInput,
+    Title
 } from "./styles"
 
 
@@ -69,7 +71,7 @@ export default function UserRegister() {
                 <Logo></Logo>
             </Header>
             <CentralDiv>
-                <h1>Cadastro</h1>
+                <Title>Cadastro</Title>
                 <Form onSubmit={handleSubmit}>
                     <FormDiv>
                         <FieldSet>
@@ -87,13 +89,17 @@ export default function UserRegister() {
                                 value={email} 
                                 onChange={(e) => { setEmail(e.target.value)}}>
                             </Input>
-                            <Input 
+                            <Select 
+                                value={gender}
+                                onChange={(e) => {setGender(e.target.value)}}
                                 name="gender" 
-                                label="Gênero" 
-                                type="text" 
-                                value={gender} 
-                                onChange={(e) => { setGender(e.target.value)}}>
-                            </Input>
+                                label="Gênero"
+                                options= {[
+                                    {value: 'FEMININE', label: 'Feminino'},
+                                    {value: 'MASCULINE', label: 'Masculino'},
+                                    {value: 'UNINFORMED', label: 'Não informado'}
+                                ]}
+                            />
                             <Input 
                                 name="password" 
                                 label="Senha" 

@@ -1,6 +1,11 @@
 import styled from "styled-components";
 import cityBackground from '../../../assets/images/CityBackground.png';
 
+export const Title = styled.h1`
+    font-size: 37px;
+    font-weight: bold;
+`
+
 export const Container = styled.div`
     width: 100%;
     height: 100%;
@@ -40,6 +45,8 @@ export const Form = styled.form`
     width: 100%; 
     height: 100%;
     margin-top: 40px;
+    display: flex;
+    flex-direction: column;
 `
 
 export const FormDiv = styled.div`
@@ -48,6 +55,7 @@ export const FormDiv = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
+    margin-bottom: 30px;
 `
 
 export const FieldSet = styled.div`
