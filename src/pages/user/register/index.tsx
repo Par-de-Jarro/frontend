@@ -30,10 +30,22 @@ export default function UserRegister() {
         setPasswordVisible(!passwordVisible);
     };
 
+    const getColleges = () => {
+        const apiKey = "qwertyuiopasdfghjklzxcvbnm123456";
+        const config = {
+            headers:{
+                'Api-Key': apiKey
+            }
+        };
+        
+        const response = api.get('university', config);
+        
+    }
+
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
 
-        api.post('/', {
+        api.post('user', {
             name, 
             email, 
             gender, 
