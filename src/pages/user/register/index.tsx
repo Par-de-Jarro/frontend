@@ -41,8 +41,10 @@ export default function UserRegister() {
         };
         
         const response = api.get('university', config);
+        console.log(response)
         
     }
+    getColleges();
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
