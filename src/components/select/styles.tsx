@@ -4,6 +4,7 @@ export const SelectDiv = styled.div`
     display: flex;
     flex-direction: column;
     width: 90%;
+    font-weight: bold;
 `
 
 export const SelectBox = styled.select`

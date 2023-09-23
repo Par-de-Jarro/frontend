@@ -1,4 +1,4 @@
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, useEffect } from 'react';
 import Logo from '../../../components/logo';
 import Input from '../../../components/input';
 import api from '../../../services/api';
@@ -12,9 +12,17 @@ import {
     FormDiv,
     FieldSet,
     CheckboxInput,
-    Title
+    Title,
+    Button
 } from "./styles"
 
+export interface University {
+    id_university: string,
+    lat: number,
+    long: number,
+    name: string,
+    slug: string
+}
 
 export default function UserRegister() {
     const [name, setName] = useState('');
@@ -26,47 +34,57 @@ export default function UserRegister() {
     const [college, setCollege] = useState('');
     const [course, setCourse] = useState('');
     const [cellphone, setCellphone] = useState('');
+    const [colleges, setColleges] = useState([]);
 
     const [passwordVisible, setPasswordVisible] = useState(false);
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
     };
 
-    const getColleges = () => {
-        const apiKey = "qwertyuiopasdfghjklzxcvbnm123456";
+    const getColleges = async () => {
+        const apiKey = process.env.REACT_APP_API_KEY;
         const config = {
             headers:{
                 'Api-Key': apiKey
             }
         };
         
-        const response = api.get('university', config);
-        console.log(response)
-        
-    }
-    getColleges();
+        const response = await api.get('university', config);
 
-    const handleSubmit = (e: FormEvent) => {
+        setColleges(response.data);
+    }
+
+    useEffect(() => {
+        getColleges();
+    }, [])
+
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
 
-        api.post('user', {
+        const apiKey = process.env.REACT_APP_API_KEY;
+        const config = {
+            headers:{
+                'Api-Key': apiKey
+            }
+        };
+
+        await api.post('user', {
             name, 
             email, 
-            gender, 
             birthdate: birthDate, 
             password, 
             document_id: cpf,
             cellphone, 
             bio: '',
             course,
-            id_university: 0
-        }).then(() => {
+            id_university: college
+        }, config).then(() => {
             alert('Cadastro realizado com sucesso')
         }).catch(() => {
             alert('erro no cadastro')
         })
-        
     }
+
     return (
         <Container>
             <Header>
@@ -74,7 +92,7 @@ export default function UserRegister() {
             </Header>
             <CentralDiv>
                 <Title>Cadastro</Title>
-                <Form onSubmit={handleSubmit}>
+                <Form>
                     <FormDiv>
                         <FieldSet>
                             <Input 
@@ -139,11 +157,9 @@ export default function UserRegister() {
                                 onChange={(e) => {setCollege(e.target.value)}}
                                 name="college" 
                                 label="Universidade"
-                                options= {[
-                                    {value: 'FEMININE', label: 'Feminino'},
-                                    {value: 'MASCULINE', label: 'Masculino'},
-                                    {value: 'UNINFORMED', label: 'Não informado'}
-                                ]}
+                                options= {colleges.map((university: University) => {
+                                    return {value: university.id_university, label: university.slug};
+                                })}
                             />
                             <Input 
                                 name="course" 
@@ -161,7 +177,7 @@ export default function UserRegister() {
                             </Input>
                         </FieldSet>
                     </FormDiv>
-                    <button type="submit">Cadastrar</button>
+                    <Button onClick={handleSubmit}>Cadastrar</Button>
                 </Form>
             </CentralDiv>
         </Container>

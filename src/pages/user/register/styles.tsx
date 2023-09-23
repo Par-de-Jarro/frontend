@@ -47,6 +47,7 @@ export const Form = styled.form`
     margin-top: 40px;
     display: flex;
     flex-direction: column;
+    align-items: center;
 `
 
 export const FormDiv = styled.div`
@@ -70,5 +71,19 @@ export const CheckboxInput = styled.input`
     margin-left: 10px;
     width: 18px; 
     height: 18px;
+` 
+
+export const Button = styled.button`
+    width: 180px;
+    height: 50px;
+    background-color: var(--color-secondary);
+    font-size: 18px;
+    color: var(--color-primary-lighter);
+    border-radius: 24px;
+    font-weight: bold;
+    &:hover {
+        background-color: #ffffde;
+        transition: background-color 0.3s ease;
+    }
 ` 
   
