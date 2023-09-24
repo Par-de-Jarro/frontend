@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
-export const InputDiv = styled.div`
+export const SelectDiv = styled.div`
     display: flex;
     flex-direction: column;
     width: 90%;
     font-weight: bold;
 `
 
-export const InputBox = styled.input`
+export const SelectBox = styled.select`
     height: 40px;
     border-radius: 8px;
     border: none;
