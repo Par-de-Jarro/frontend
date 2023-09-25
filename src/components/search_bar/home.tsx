@@ -1,6 +1,7 @@
 import { Heading, Input, Box, InputGroup, InputLeftElement, InputRightElement } from '@chakra-ui/react';
-import ButtonArrow from "../Button";
+import ButtonArrow from "../button";
 import { PinIcon } from '../pin_icon';
+import { Link } from 'react-router-dom';
 
 export const HomeSearchBar = () => {
   const handleClick = () => { };
@@ -18,9 +19,11 @@ export const HomeSearchBar = () => {
         <PinIcon ml={2} />
       </InputLeftElement>
       <Input variant='unstyled' size='md' color='#606060' />
-      <InputRightElement mt={2} mr={8}>
-        <ButtonArrow text="Buscar" borderRadius={40} onClick={handleClick} />
-      </InputRightElement>
+      <Link to="/search">
+        <InputRightElement mt={2} mr={8}>
+          <ButtonArrow text="Buscar" borderRadius={40} onClick={handleClick}/>
+        </InputRightElement>
+      </Link>
     </InputGroup>
   </Box>
 }
