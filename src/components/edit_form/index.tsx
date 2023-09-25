@@ -1,9 +1,13 @@
 import { Input, FormControl, FormLabel, Select, Textarea, Grid, GridItem, Button } from '@chakra-ui/react'
+
 import React from 'react';
+import { useNavigate } from "react-router-dom";
+
 import ButtonArrow from '../button';
 
 export default function EditForm() {
-    let [value, setValue] = React.useState('')
+    let [value, setValue] = React.useState('');
+    const navigate = useNavigate();
 
     let handleInputChange = (e: { target: { value: any; }; }) => {
         let inputValue = e.target.value
@@ -44,7 +48,7 @@ export default function EditForm() {
                     <Input type='text' placeholder='Seu curso' />
                 </FormControl>
 
-                <Button type='submit' >
+                <Button marginY={4} type='submit' bgColor="primaryLight" color='white'>
                     Editar Perfil
                 </Button>
 
@@ -74,8 +78,9 @@ export default function EditForm() {
                         height={120}
                     />
                 </FormControl>
-
-                <ButtonArrow text='Meus Locais' onClick={() => console.log('Meus Locais')}/>
+                <GridItem my={4}>
+                    <ButtonArrow text='Meus Locais' borderRadius={12} onClick={() => navigate("/")} />
+                </GridItem>
             </GridItem >
         </Grid>
     </form>

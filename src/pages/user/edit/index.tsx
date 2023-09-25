@@ -10,8 +10,8 @@ export default function EditUser() {
         <Box minW={60} p={2}>
             <Logo />
         </Box>
-        <Center gap={4} p={2}>
-            <Wrap>
+        <Center gap={8} p={4}>
+            <Wrap mr={8}>
                 <WrapItem>
                     <Avatar
                         size='2xl'
