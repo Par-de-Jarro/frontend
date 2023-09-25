@@ -1,5 +1,5 @@
 import { Heading, Input, Box, InputGroup, InputLeftElement, InputRightElement } from '@chakra-ui/react';
-import ButtonArrow from "../Button";
+import ButtonArrow from "../button";
 import { PinIcon } from '../pin_icon';
 
 export const HomeSearchBar = () => {

@@ -1,6 +1,11 @@
 import styled from "styled-components";
 import cityBackground from '../../../assets/images/CityBackground.png';
 
+export const Title = styled.h1`
+    font-size: 37px;
+    font-weight: bold;
+`
+
 export const Container = styled.div`
     width: 100%;
     height: 100%;
@@ -40,6 +45,9 @@ export const Form = styled.form`
     width: 100%; 
     height: 100%;
     margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `
 
 export const FormDiv = styled.div`
@@ -48,6 +56,7 @@ export const FormDiv = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
+    margin-bottom: 30px;
 `
 
 export const FieldSet = styled.div`
@@ -62,4 +71,18 @@ export const CheckboxInput = styled.input`
     margin-left: 10px;
     width: 18px; 
     height: 18px;
-`
+` 
+
+export const Button = styled.button`
+    width: 180px;
+    height: 50px;
+    background-color: var(--color-secondary);
+    font-size: 18px;
+    color: var(--color-primary-lighter);
+    border-radius: 24px;
+    font-weight: bold;
+    &:hover {
+        background-color: #ffffde;
+        transition: background-color 0.3s ease;
+    }
+` 
