@@ -1,8 +1,11 @@
 import AppRoutes from './routes';
-
+import GlobalSytle from './styles/global';
 function App() {
   return (
-    <AppRoutes/>
+    <>
+      <GlobalSytle />
+      <AppRoutes/>
+    </>
   );
 }
 
