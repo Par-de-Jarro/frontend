@@ -100,11 +100,11 @@ function SpotsProvider({ children }: SpotsProviderProps) {
         long: -35.9097543 
       }
     });
-    
-    const orders: Record<string, Spot[]> = response?.data;
+
+    const spots: Spot[] = response?.data;
 
     setLoadingSpots(false);
-    setSpots(orders?.PLACED ?? []);
+    setSpots(spots);
   };
 
   const loadSpots = useCallback(async (): Promise<void> => {
