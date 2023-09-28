@@ -1,5 +1,5 @@
-import React from 'react';
-import { Container, NavButton, UserIcon, SearchIcon, BillsIcon, HouseIcon } from './styles';
+import React from 'react'
+import { Container, NavButton, UserIcon, SearchIcon, BillsIcon, HouseIcon } from './styles'
 
 const NavBar: React.FC = () => (
   <>
@@ -11,6 +11,6 @@ const NavBar: React.FC = () => (
     </Container>
 
   </>
-);
+)
 
-export default NavBar;
+export default NavBar

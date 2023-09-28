@@ -1,7 +1,7 @@
-import AppProvider from './hooks';
-import AppRoutes from './routes';
-import GlobalSytle from './styles/global';
-function App() {
+import AppProvider from './hooks'
+import AppRoutes from './routes'
+import GlobalSytle from './styles/global'
+function App () {
   return (
     <>
       <GlobalSytle />
@@ -9,7 +9,7 @@ function App() {
         <AppRoutes/>
       </AppProvider>
     </>
-  );
+  )
 }
 
-export default App;
+export default App

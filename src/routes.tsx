@@ -1,8 +1,8 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import SearchPage from './pages/search';
-import UserPage from './pages/user';
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import SearchPage from './pages/search'
+import UserPage from './pages/user'
 
-export default function AppRoutes() {
+export default function AppRoutes () {
   return (
     <BrowserRouter>
       <Routes>
@@ -10,5 +10,5 @@ export default function AppRoutes() {
         <Route path="/user" element={<UserPage />} />
       </Routes>
     </BrowserRouter>
-  );
+  )
 }

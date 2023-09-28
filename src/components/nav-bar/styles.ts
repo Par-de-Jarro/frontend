@@ -1,8 +1,8 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 import { FaSearch, FaMoneyBillWave } from 'react-icons/fa'
 import { BsHouses } from 'react-icons/bs'
 import { PiUserCircleFill } from 'react-icons/pi'
-import { NavLink } from "react-router-dom";
+import { NavLink } from 'react-router-dom'
 
 export const SearchIcon = styled(FaSearch)`
   height: 20px;
@@ -42,7 +42,7 @@ export const Container = styled.nav`
     /* Estilos para dispositivos móveis (largura máxima de 768px) */
     display: none;
   }
-`;
+`
 
 export const NavButton = styled(NavLink)`
     display: flex;

@@ -1,7 +1,7 @@
-import styled from "styled-components";
-import SearchBar from "../search-bar";
-import { NavLink } from "react-router-dom";
-import { PiUserCircleFill } from "react-icons/pi";
+import styled from 'styled-components'
+import SearchBar from '../search-bar'
+import { NavLink } from 'react-router-dom'
+import { PiUserCircleFill } from 'react-icons/pi'
 
 export const Container = styled.nav`
   align-items: center;
@@ -24,7 +24,7 @@ export const Container = styled.nav`
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
   }
-`;
+`
 
 export const StyledSearchBar = styled(SearchBar)`
   justify-self: center;

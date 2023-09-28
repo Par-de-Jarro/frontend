@@ -1,7 +1,7 @@
-import React from 'react';
-import PageContainer from '../../components/page-container';
-import { Button, Container } from './styles';
-import NavBar from '../../components/nav-bar';
+import React from 'react'
+import PageContainer from '../../components/page-container'
+import { Button, Container } from './styles'
+import NavBar from '../../components/nav-bar'
 
 const UserPage: React.FC = () => (
   <>
@@ -12,6 +12,6 @@ const UserPage: React.FC = () => (
     </PageContainer>
     <NavBar/>
   </>
-);
+)
 
-export default UserPage;
+export default UserPage

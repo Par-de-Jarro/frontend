@@ -2,25 +2,24 @@ import React, {
   useCallback,
   createContext,
   useContext,
-  ReactNode,
+  type ReactNode,
   useMemo,
   useState,
-  useEffect,
-} from 'react';
-import api from '../services/api';
+  useEffect
+} from 'react'
+import api from '../services/api'
 
+interface SpotsProviderProps {
+  children: ReactNode
+}
 
-type SpotsProviderProps = {
-  children: ReactNode;
-};
+interface SpotContextData {
+  loadingSpots: boolean
+  spots: Spot[]
+  loadSpots: () => void
+}
 
-type SpotContextData = {
-  loadingSpots: boolean;
-  spots: Array<Spot>;
-  loadSpots(): void
-};
-
-type Spot ={
+interface Spot {
   name: string
   description: string
   personal_quota: number
@@ -41,28 +40,28 @@ type Spot ={
   distance: number
 }
 
-type Image = {
+interface Image {
   image_url: string
   image_order: number
 }
 
-type Key = {
+interface Key {
   convenience: Convenience
   allowance: Allowance
 }
 
-type Convenience = {
+interface Convenience {
   rooms_quantity: number
   bathrooms_quantity: number
   has_elevator: boolean
 }
 
-type Allowance = {
+interface Allowance {
   allow_pet: boolean
   allow_smoker: boolean
 }
 
-type Owner = {
+interface Owner {
   name: string
   email: string
   cellphone: string
@@ -76,7 +75,7 @@ type Owner = {
   university: University
 }
 
-type University = {
+interface University {
   name: string
   slug: string
   lat: number
@@ -84,32 +83,31 @@ type University = {
   id_university: string
 }
 
+const SpotContext = createContext<SpotContextData>({} as SpotContextData)
 
-const SpotContext = createContext<SpotContextData>({} as SpotContextData);
-
-function SpotsProvider({ children }: SpotsProviderProps) {
-  const [loadingSpots, setLoadingSpots] = useState<boolean>(false);
-  const [spots, setSpots] = useState<Array<Spot>>([]);
+function SpotsProvider ({ children }: SpotsProviderProps) {
+  const [loadingSpots, setLoadingSpots] = useState<boolean>(false)
+  const [spots, setSpots] = useState<Spot[]>([])
 
   const getSpots = async () => {
-    setLoadingSpots(true);
+    setLoadingSpots(true)
 
     const response = await api.get('/spot/search', {
-      params : {
+      params: {
         lat: -7.2171368,
-        long: -35.9097543 
+        long: -35.9097543
       }
-    });
+    })
 
-    const spots: Spot[] = response?.data;
+    const spots: Spot[] = response?.data
 
-    setLoadingSpots(false);
-    setSpots(spots);
-  };
+    setLoadingSpots(false)
+    setSpots(spots)
+  }
 
   const loadSpots = useCallback(async (): Promise<void> => {
-    await getSpots();
-  }, []);
+    await getSpots()
+  }, [])
 
   const value = useMemo(
     () => ({
@@ -117,27 +115,26 @@ function SpotsProvider({ children }: SpotsProviderProps) {
       spots,
       loadSpots
     }),
-    [spots, loadingSpots, loadSpots],
-  );
-
+    [spots, loadingSpots, loadSpots]
+  )
 
   useEffect(() => {
     loadSpots()
-  }, []);
+  }, [])
 
   return (
     <SpotContext.Provider value={value}>{children}</SpotContext.Provider>
-  );
+  )
 }
 
-function useSpots(): SpotContextData {
-  const context = useContext(SpotContext);
+function useSpots (): SpotContextData {
+  const context = useContext(SpotContext)
 
   if (!context) {
-    throw new Error('useSpots must be used withing an SpotsProvider');
+    throw new Error('useSpots must be used withing an SpotsProvider')
   }
 
-  return context;
+  return context
 }
 
-export { SpotsProvider, useSpots };
+export { SpotsProvider, useSpots }

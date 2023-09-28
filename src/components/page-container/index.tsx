@@ -1,14 +1,14 @@
-import React, { ReactNode } from 'react';
-import { Container } from './styles';
+import React, { type ReactNode } from 'react'
+import { Container } from './styles'
 
-type PageContainerProps = {
-  children: ReactNode;
-};
+interface PageContainerProps {
+  children: ReactNode
+}
 
 const PageContainer: React.FC<PageContainerProps> = ({ children }) => (
   <Container>
    {children}
   </Container>
-);
+)
 
-export default PageContainer;
+export default PageContainer

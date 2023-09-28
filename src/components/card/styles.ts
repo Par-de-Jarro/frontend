@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const Container = styled.div`
     display: flex;
@@ -36,7 +36,6 @@ export const PrimaryText = styled.p`
     color: #2b2b2b;
     font-weight: 400;
 `
-
 
 export const SecondaryText = styled.p`
     font-size: 13px;

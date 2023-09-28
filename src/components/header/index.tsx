@@ -1,5 +1,5 @@
-import React from 'react';
-import { Container, StyledSearchBar, NavIcon, UserIcon, UserNavIcon} from './styles';
+import React from 'react'
+import { Container, StyledSearchBar, NavIcon, UserIcon, UserNavIcon } from './styles'
 
 const Header: React.FC = () => (
   <Container>
@@ -7,6 +7,6 @@ const Header: React.FC = () => (
     <StyledSearchBar/>
     <UserNavIcon to='/user'><UserIcon/></UserNavIcon>
   </Container>
-);
+)
 
-export default Header;
+export default Header
