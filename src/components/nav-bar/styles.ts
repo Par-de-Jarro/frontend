@@ -1,11 +1,8 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { FaSearch, FaMoneyBillWave } from 'react-icons/fa'
 import { BsHouses } from 'react-icons/bs'
 import { PiUserCircleFill } from 'react-icons/pi'
-
-interface IconProps {
-  isSelected?: boolean
-}
+import { NavLink } from "react-router-dom";
 
 export const SearchIcon = styled(FaSearch)`
   height: 20px;
@@ -28,7 +25,7 @@ export const UserIcon = styled(PiUserCircleFill)`
   width: 30px;
 `
 
-export const Container = styled.div`
+export const Container = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -42,7 +39,7 @@ export const Container = styled.div`
   bottom: 0;
 `;
 
-export const NavButton = styled.button<IconProps>`
+export const NavButton = styled(NavLink)`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -54,14 +51,14 @@ export const NavButton = styled.button<IconProps>`
     background-color: transparent;
     border: 0;
     padding: 0;
+    cursor: pointer;
 
-    svg {
-        color: #cfcfcf;
-    }
-
-    ${(props) => props.isSelected && css`
+    &.active {
       svg {
         color: #513422;
       }
-  `}
+    }
+    svg {
+        color: #cfcfcf;
+    }
 `

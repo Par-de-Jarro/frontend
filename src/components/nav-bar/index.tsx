@@ -1,21 +1,15 @@
 import React from 'react';
 import { Container, NavButton, UserIcon, SearchIcon, BillsIcon, HouseIcon } from './styles';
-import { isDesktop } from '../../utils/window';
 
 const NavBar: React.FC = () => (
   <>
-  {
-  !isDesktop ? 
-  (
     <Container>
-      <NavButton isSelected={true}><UserIcon/></NavButton>
-      <NavButton><SearchIcon/></NavButton>
-      <NavButton><BillsIcon/></NavButton>
-      <NavButton><HouseIcon/></NavButton>
+      <NavButton to='/user'><UserIcon/></NavButton>
+      <NavButton to='/'><SearchIcon/></NavButton>
+      <NavButton to='/bills'><BillsIcon/></NavButton>
+      <NavButton to='/spot'><HouseIcon/></NavButton>
     </Container>
-  ) 
-    : null
-  }
+
   </>
 );
 
