@@ -1,9 +1,11 @@
 import React from 'react';
-import { Container } from './styles';
-import SearchBar from '../search-bar';
+import { Container, StyledSearchBar, Logo} from './styles';
+import { isDesktop } from '../../utils/window';
+
 const Header: React.FC = () => (
   <Container>
-    <SearchBar/>
+    { isDesktop ? <Logo to='/'>🪴 Par de Jarro</Logo> : null}
+    <StyledSearchBar/>
   </Container>
 );
 
