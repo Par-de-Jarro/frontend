@@ -37,6 +37,11 @@ export const Container = styled.nav`
   border-top: 1px solid #ebebeb;
   position: fixed;
   bottom: 0;
+
+  @media (min-width: 769px) {
+    /* Estilos para dispositivos móveis (largura máxima de 768px) */
+    display: none;
+  }
 `;
 
 export const NavButton = styled(NavLink)`
