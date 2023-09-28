@@ -13,6 +13,7 @@ export const Container = styled.div`
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
     padding: 5px 15px 5px 15px;
     border: 0;
+    max-width: 400px;
 `
 
 export const Input = styled.input`
