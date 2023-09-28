@@ -15,7 +15,7 @@ export const CardsContainer = styled.div`
     
     }
 
-    padding: 30px 35px 30px 35px;
+    padding: 30px 0px 30px 0px;
     gap: 25px;
     align-items: center;
 `
