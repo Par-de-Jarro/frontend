@@ -1,16 +1,18 @@
 import React from 'react';
 import Card from '../../components/card';
-import PageContainer from '../../components/page_container';
-import { Container } from './styles';
+import PageContainer from '../../components/page-container';
+import { CardsContainer } from './styles';
+import Header from '../../components/header';
 const SearchPage: React.FC = () => (
   <PageContainer>
-    <Container>
+    <Header/>
+    <CardsContainer>
       <Card title='Lindo Apartamento no Benvenutto' distance={0.1} empty_quota={2} value={450}/>
       <Card title='Prime Residence' distance={0.5} empty_quota={3} value={250}/>
       <Card title='Prime Residence' distance={0.5} empty_quota={3} value={250}/>
       <Card title='Prime Residence' distance={0.5} empty_quota={3} value={250}/>
       <Card title='Prime Residence' distance={0.5} empty_quota={3} value={250}/>
-    </Container>
+    </CardsContainer>
   </PageContainer>
 );
 

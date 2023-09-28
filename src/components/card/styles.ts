@@ -5,8 +5,9 @@ export const Container = styled.div`
     flex: auto;
     flex-direction: column;
     justify-content: center;
-    width: 286px;
+    width: 100%;
     height: 380px;
+    cursor: pointer;
 `
 
 export const CardImage = styled.img`
