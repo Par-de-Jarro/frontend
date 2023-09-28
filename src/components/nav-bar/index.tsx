@@ -1,9 +1,12 @@
 import React from 'react';
-import { Container } from './styles';
-import SearchBar from '../search-bar';
+import { Container, NavButton, UserIcon, SearchIcon, BillsIcon, HouseIcon } from './styles';
+
 const Header: React.FC = () => (
   <Container>
-    <SearchBar/>
+    <NavButton isSelected={true}><UserIcon/></NavButton>
+    <NavButton><SearchIcon/></NavButton>
+    <NavButton><BillsIcon/></NavButton>
+    <NavButton><HouseIcon/></NavButton>
   </Container>
 );
 
