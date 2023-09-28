@@ -4,8 +4,6 @@ import { NavLink } from "react-router-dom";
 import { PiUserCircleFill } from "react-icons/pi";
 
 export const Container = styled.nav`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
   justify-content: space-between; 
 
@@ -16,6 +14,16 @@ export const Container = styled.nav`
 
   background-color: #ffffff;
   border-bottom: 1px solid #ebebeb;
+
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media (min-width: 769px) {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 `;
 
 export const StyledSearchBar = styled(SearchBar)`

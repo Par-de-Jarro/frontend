@@ -1,4 +1,4 @@
-import AppProvider from './components/hooks';
+import AppProvider from './hooks';
 import AppRoutes from './routes';
 import GlobalSytle from './styles/global';
 function App() {

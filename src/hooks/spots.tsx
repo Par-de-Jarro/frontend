@@ -5,6 +5,7 @@ import React, {
   ReactNode,
   useMemo,
   useState,
+  useEffect,
 } from 'react';
 import api from '../services/api';
 
@@ -16,6 +17,7 @@ type SpotsProviderProps = {
 type SpotContextData = {
   loadingSpots: boolean;
   spots: Array<Spot>;
+  loadSpots(): void
 };
 
 type Spot ={
@@ -92,7 +94,13 @@ function SpotsProvider({ children }: SpotsProviderProps) {
   const getSpots = async () => {
     setLoadingSpots(true);
 
-    const response = await api.get('/spot/search');
+    const response = await api.get('/spot/search', {
+      params : {
+        lat: -7.2171368,
+        long: -35.9097543 
+      }
+    });
+    
     const orders: Record<string, Spot[]> = response?.data;
 
     setLoadingSpots(false);
@@ -111,6 +119,11 @@ function SpotsProvider({ children }: SpotsProviderProps) {
     }),
     [spots, loadingSpots, loadSpots],
   );
+
+
+  useEffect(() => {
+    loadSpots()
+  }, []);
 
   return (
     <SpotContext.Provider value={value}>{children}</SpotContext.Provider>
