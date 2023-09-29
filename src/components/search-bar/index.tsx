@@ -9,17 +9,14 @@ const SearchBar: React.FC = () => {
 
   useEffect(() => {
     spots.loadSpots()
-  },[]) 
+  },[])
+
+  const recommendations = [{"description":"UFCG - Campus Campina Grande - Rua Aprígio Veloso - Universitário, Campina Grande - State of Paraíba, Brazil","term":"UFCG - Campus Campina Grande"},{"description":"UFCG, Universidade Federal de Campina Grande - Campus Cajazeiras-PB - Rua Sérgio Moreira de Figueiredo - Populares, Cajazeiras - State of Paraíba, Brazil","term":"UFCG, Universidade Federal de Campina Grande - Campus Cajazeiras-PB"},{"description":"UFCG - Avenida Universitária - Santa Cecilia, Patos - State of Paraíba, Brazil","term":"UFCG"},{"description":"UFCG - Campus Cuité - Cuité, State of Paraíba, Brazil","term":"UFCG - Campus Cuité"},{"description":"UFCG - Rua Sinfrônio Nazaré - Centro, Sousa - State of Paraíba, Brazil","term":"UFCG"}]
 
   return (
     <Container>
       <FilterButton><TbAdjustmentsHorizontal color='#513422'/></FilterButton>
-      <Input onSelectLocation={(location) => console.log(location)}></Input>
-      {/* <Input 
-          apiKey='AIzaSyCLK9gM38YaYXZckB0oFNhZWTMpjIKHvhY'
-          selectProps={{ placeholder: 'Qualquer Lugar' }}
-          apiOptions={{ language: 'pt-br', region: 'br' }}
-      /> */}
+      <Input recommendations={recommendations} onSelectLocation={(location) => console.log(location)}></Input>
       <SearchButton><FaSearch color='#513422'/></SearchButton>
     </Container>
   )
