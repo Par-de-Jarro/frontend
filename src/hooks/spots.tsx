@@ -7,6 +7,7 @@ import React, {
   useState
 } from 'react'
 import api from '../services/api'
+import { useFilters } from './useFilters'
 
 interface SpotsProviderProps {
   children: ReactNode
@@ -85,6 +86,8 @@ interface University {
 const SpotContext = createContext<SpotContextData>({} as SpotContextData)
 
 function SpotsProvider ({ children }: SpotsProviderProps) {
+  const filters  = useFilters()
+
   const [loadingSpots, setLoadingSpots] = useState<boolean>(false)
   const [spots, setSpots] = useState<Spot[]>([])
 
@@ -92,8 +95,8 @@ function SpotsProvider ({ children }: SpotsProviderProps) {
     setLoadingSpots(true)
     const response = await api.get('/spot/search', {
       params: {
-        lat: -7.2171368,
-        long: -35.9097543
+        lat: filters.coordinates.latitude,
+        long: filters.coordinates.longitude
       }
     })
 

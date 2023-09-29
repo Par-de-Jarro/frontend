@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { useDebounce } from 'use-debounce'
 import { FaSearch } from 'react-icons/fa'
 import { TbAdjustmentsHorizontal } from 'react-icons/tb'
-import { Container, Input, SearchButton, FilterButton } from './styles'
-
+import { Container, SearchButton, FilterButton, InputField } from './styles'
+import { useFilters } from '../../hooks/useFilters'
 import api from '../../services/api'
+import { useDebounce } from 'use-debounce'
 interface Recommendation {
   description: string
   term: string
 }
+
 const SearchBar: React.FC = () => {
+
+  const filters = useFilters()
   const [recommendations, setRecommendations] = useState<Array<Recommendation>>([])
   const [searchTerm, setSearchTerm] = useState<string>('')
   const [debouncedSearchterm] = useDebounce(searchTerm, 500)
@@ -22,7 +25,8 @@ const SearchBar: React.FC = () => {
     (
       api.get('/google/geocode', {  params: { location: item.description } })
       .then((response) => {
-          console.log(response.data)
+          const { lat, long } = response.data
+          filters.setCoordinates({ latitude: lat, longitude: long })
       })
     )
   }
@@ -35,11 +39,11 @@ const SearchBar: React.FC = () => {
       })
     )
   }, [debouncedSearchterm])
-
+  
   return (
     <Container>
       <FilterButton><TbAdjustmentsHorizontal color='#513422'/></FilterButton>
-      <Input onSearch={handleChangeOnInput} recommendations={recommendations} onSelectItem={handleSelectItem}></Input>
+        <InputField onSearch={handleChangeOnInput} recommendations={recommendations} onSelectItem={handleSelectItem}></InputField>
       <SearchButton><FaSearch color='#513422'/></SearchButton>
     </Container>
   )

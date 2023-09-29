@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import InputField from '../input'
+import Input from '../input'
 
 export const Container = styled.div`
     display: flex;
@@ -17,7 +17,7 @@ export const Container = styled.div`
     max-width: 400px;
 `
 
-export const Input = styled(InputField)`
+export const InputField = styled(Input)`
     width: 100%;
     height: 100%;
     border: none;
