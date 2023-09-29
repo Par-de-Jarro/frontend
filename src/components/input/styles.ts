@@ -12,7 +12,7 @@ export const InputContainer = styled.div`
   border: 0;
 `;
 
-export const Input = styled.input`
+export const InputField = styled.input`
   width: 100%;
   border: 0;
 `;

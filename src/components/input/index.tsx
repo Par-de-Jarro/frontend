@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Dropdown, DropdownItemContainer, IconContainer, Input, InputContainer, LocationIcon } from './styles';
+import { Dropdown, DropdownItemContainer, IconContainer, InputField, InputContainer, LocationIcon } from './styles';
 interface Location {
   lat: number;
   lng: number;
@@ -10,12 +10,12 @@ interface Recommendation {
   term: string
 }
 
-interface AutocompleteInputProps {
+interface InputProps {
   recommendations: Array<Recommendation>
   onSelectLocation: (location: Location) => void;
 }
 
-const AutocompleteInput: React.FC<AutocompleteInputProps> = ({ onSelectLocation, recommendations }) => {
+const Input: React.FC<InputProps> = ({ onSelectLocation, recommendations }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState('');
   const [showDropdown, setShowDropdown] = useState(false)
@@ -30,10 +30,8 @@ const AutocompleteInput: React.FC<AutocompleteInputProps> = ({ onSelectLocation,
     }
   };
 
-  const handleOptionClick = (option: Recommendation) => {
-    console.log(option);
-    
-    setInputValue(option.term)
+  const handleOptionClick = (option: Recommendation) => {    
+    setInputValue(option.description)
     setShowDropdown(false);
   };
 
@@ -46,7 +44,7 @@ const AutocompleteInput: React.FC<AutocompleteInputProps> = ({ onSelectLocation,
 
   return (
     <InputContainer ref={inputRef}>
-      <Input 
+      <InputField 
         value={inputValue} 
         onClick={() => { setShowDropdown(true) }} 
         onChange={handleInputChange}
@@ -68,4 +66,4 @@ const AutocompleteInput: React.FC<AutocompleteInputProps> = ({ onSelectLocation,
 };
 
 
-export default AutocompleteInput
+export default Input

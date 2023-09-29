@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import LocationInput from '../location-input'
+import InputField from '../input'
 
 export const Container = styled.div`
     display: flex;
@@ -17,7 +17,7 @@ export const Container = styled.div`
     max-width: 400px;
 `
 
-export const Input = styled(LocationInput)`
+export const Input = styled(InputField)`
     width: 100%;
     height: 100%;
     border: none;
