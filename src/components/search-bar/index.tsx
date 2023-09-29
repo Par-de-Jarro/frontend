@@ -1,22 +1,45 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDebounce } from 'use-debounce'
 import { FaSearch } from 'react-icons/fa'
 import { TbAdjustmentsHorizontal } from 'react-icons/tb'
 import { Container, Input, SearchButton, FilterButton } from './styles'
 
-import { useSpots } from '../../hooks/spots'
+import api from '../../services/api'
+interface Recommendation {
+  description: string
+  term: string
+}
 const SearchBar: React.FC = () => {
-  const spots = useSpots()
+  const [recommendations, setRecommendations] = useState<Array<Recommendation>>([])
+  const [searchTerm, setSearchTerm] = useState<string>('')
+  const [debouncedSearchterm] = useDebounce(searchTerm, 500)
+
+  const handleChangeOnInput = (item: string) => {
+    setSearchTerm(item)
+  }
+
+  const handleSelectItem = (item: Recommendation) => {
+    (
+      api.get('/google/geocode', {  params: { location: debouncedSearchterm } })
+      .then((response) => {
+          console.log(response.data)
+      })
+    )
+  }
 
   useEffect(() => {
-    spots.loadSpots()
-  },[])
-
-  const recommendations = [{"description":"UFCG - Campus Campina Grande - Rua Aprígio Veloso - Universitário, Campina Grande - State of Paraíba, Brazil","term":"UFCG - Campus Campina Grande"},{"description":"UFCG, Universidade Federal de Campina Grande - Campus Cajazeiras-PB - Rua Sérgio Moreira de Figueiredo - Populares, Cajazeiras - State of Paraíba, Brazil","term":"UFCG, Universidade Federal de Campina Grande - Campus Cajazeiras-PB"},{"description":"UFCG - Avenida Universitária - Santa Cecilia, Patos - State of Paraíba, Brazil","term":"UFCG"},{"description":"UFCG - Campus Cuité - Cuité, State of Paraíba, Brazil","term":"UFCG - Campus Cuité"},{"description":"UFCG - Rua Sinfrônio Nazaré - Centro, Sousa - State of Paraíba, Brazil","term":"UFCG"}]
+    (
+      api.get('/google/autocomplete', {  params: { location: debouncedSearchterm } })
+      .then((response) => {
+          setRecommendations(response.data)
+      })
+    )
+  }, [debouncedSearchterm])
 
   return (
     <Container>
       <FilterButton><TbAdjustmentsHorizontal color='#513422'/></FilterButton>
-      <Input recommendations={recommendations} onSelectLocation={(location) => console.log(location)}></Input>
+      <Input onSearch={handleChangeOnInput} recommendations={recommendations} onSelectItem={handleSelectItem}></Input>
       <SearchButton><FaSearch color='#513422'/></SearchButton>
     </Container>
   )

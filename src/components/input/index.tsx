@@ -1,9 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Dropdown, DropdownItemContainer, IconContainer, InputField, InputContainer, LocationIcon } from './styles';
-interface Location {
-  lat: number;
-  lng: number;
-}
 
 interface Recommendation {
   description: string
@@ -12,16 +8,18 @@ interface Recommendation {
 
 interface InputProps {
   recommendations: Array<Recommendation>
-  onSelectLocation: (location: Location) => void;
+  onSelectItem: (item: Recommendation) => void;
+  onSearch: (item: string) => void;
 }
 
-const Input: React.FC<InputProps> = ({ onSelectLocation, recommendations }) => {
+const Input: React.FC<InputProps> = ({ onSearch, onSelectItem, recommendations }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState('');
   const [showDropdown, setShowDropdown] = useState(false)
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
+    onSearch(event.target.value)
   };
 
   const handleOutsideClick = (event: MouseEvent) => {
@@ -33,6 +31,7 @@ const Input: React.FC<InputProps> = ({ onSelectLocation, recommendations }) => {
   const handleOptionClick = (option: Recommendation) => {    
     setInputValue(option.description)
     setShowDropdown(false);
+    onSelectItem(option)
   };
 
   useEffect(() => {
@@ -49,7 +48,7 @@ const Input: React.FC<InputProps> = ({ onSelectLocation, recommendations }) => {
         onClick={() => { setShowDropdown(true) }} 
         onChange={handleInputChange}
       />
-      {showDropdown && (
+      {showDropdown && recommendations.length > 0 && (
         <Dropdown>
           {recommendations.map((option, index) => (
             <DropdownItemContainer key={index} onClick={() => handleOptionClick(option)}>
