@@ -4,8 +4,7 @@ import React, {
   useContext,
   type ReactNode,
   useMemo,
-  useState,
-  useEffect
+  useState
 } from 'react'
 import api from '../services/api'
 
@@ -91,7 +90,6 @@ function SpotsProvider ({ children }: SpotsProviderProps) {
 
   const getSpots = async () => {
     setLoadingSpots(true)
-
     const response = await api.get('/spot/search', {
       params: {
         lat: -7.2171368,
@@ -117,10 +115,6 @@ function SpotsProvider ({ children }: SpotsProviderProps) {
     }),
     [spots, loadingSpots, loadSpots]
   )
-
-  useEffect(() => {
-    loadSpots()
-  }, [])
 
   return (
     <SpotContext.Provider value={value}>{children}</SpotContext.Provider>

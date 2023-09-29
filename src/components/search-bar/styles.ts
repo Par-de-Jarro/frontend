@@ -1,5 +1,6 @@
 import styled from 'styled-components'
-import AutoComplete from 'react-google-autocomplete'
+import LocationInput from '../location-input'
+
 export const Container = styled.div`
     display: flex;
     justify-content: space-between;
@@ -16,11 +17,12 @@ export const Container = styled.div`
     max-width: 400px;
 `
 
-export const Input = styled(AutoComplete)`
+export const Input = styled(LocationInput)`
     width: 100%;
     height: 100%;
-    border: 0;
+    border: none;
     background-color: transparent;
+    
 `
 
 export const SearchButton = styled.button`
