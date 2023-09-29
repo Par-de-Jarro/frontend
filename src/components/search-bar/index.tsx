@@ -2,20 +2,32 @@ import React, { useEffect, useState } from 'react'
 import { FaSearch } from 'react-icons/fa'
 import { TbAdjustmentsHorizontal } from 'react-icons/tb'
 import { Container, SearchButton, FilterButton, InputField } from './styles'
-import { useFilters } from '../../hooks/useFilters'
-import api from '../../services/api'
 import { useDebounce } from 'use-debounce'
+import { useSpots } from '../../hooks/spots'
+import api from '../../services/api'
 interface Recommendation {
   description: string
   term: string
 }
 
-const SearchBar: React.FC = () => {
+interface Coordinates {
+  lat: number,
+  long: number
+}
 
-  const filters = useFilters()
+const SearchBar: React.FC = () => {
+  const { loadSpots } = useSpots()
   const [recommendations, setRecommendations] = useState<Array<Recommendation>>([])
   const [searchTerm, setSearchTerm] = useState<string>('')
   const [debouncedSearchterm] = useDebounce(searchTerm, 500)
+  const [coordinates, setCoordinates] = useState<Coordinates>({ lat: -7.2171368, long: -35.9097543})
+
+  const handleSearch = () => {
+    loadSpots({
+      lat: coordinates.lat,
+      long: coordinates.long
+    })
+  }
 
   const handleChangeOnInput = (item: string) => {
     setSearchTerm(item)
@@ -26,7 +38,7 @@ const SearchBar: React.FC = () => {
       api.get('/google/geocode', {  params: { location: item.description } })
       .then((response) => {
           const { lat, long } = response.data
-          filters.setCoordinates({ latitude: lat, longitude: long })
+          setCoordinates({ lat, long })          
       })
     )
   }
@@ -39,12 +51,19 @@ const SearchBar: React.FC = () => {
       })
     )
   }, [debouncedSearchterm])
+
+
+
+  useEffect(() => {
+    handleSearch()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   
   return (
     <Container>
       <FilterButton><TbAdjustmentsHorizontal color='#513422'/></FilterButton>
         <InputField onSearch={handleChangeOnInput} recommendations={recommendations} onSelectItem={handleSelectItem}></InputField>
-      <SearchButton><FaSearch color='#513422'/></SearchButton>
+      <SearchButton onClick={handleSearch}><FaSearch color='#513422'/></SearchButton>
     </Container>
   )
 

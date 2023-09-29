@@ -7,16 +7,17 @@ import React, {
   useState
 } from 'react'
 import api from '../services/api'
-import { useFilters } from './useFilters'
-
 interface SpotsProviderProps {
   children: ReactNode
 }
-
+interface PossibleFilters {
+  lat: number
+  long: number
+}
 interface SpotContextData {
   loadingSpots: boolean
   spots: Spot[]
-  loadSpots: () => void
+  loadSpots: (possible_filters: PossibleFilters) => void
 }
 
 interface Spot {
@@ -86,17 +87,15 @@ interface University {
 const SpotContext = createContext<SpotContextData>({} as SpotContextData)
 
 function SpotsProvider ({ children }: SpotsProviderProps) {
-  const filters  = useFilters()
 
   const [loadingSpots, setLoadingSpots] = useState<boolean>(false)
   const [spots, setSpots] = useState<Spot[]>([])
 
-  const getSpots = async () => {
-    setLoadingSpots(true)
+  const getSpots = async (possible_filters: PossibleFilters) => {
     const response = await api.get('/spot/search', {
       params: {
-        lat: filters.coordinates.latitude,
-        long: filters.coordinates.longitude
+        lat: possible_filters.lat,
+        long: possible_filters.long
       }
     })
 
@@ -106,9 +105,9 @@ function SpotsProvider ({ children }: SpotsProviderProps) {
     setSpots(spots)
   }
 
-  const loadSpots = useCallback(async (): Promise<void> => {
-    await getSpots()
-  }, [])
+  const loadSpots = useCallback(async (possible_filters: PossibleFilters): Promise<void> => {
+    await getSpots(possible_filters);
+  }, []);
 
   const value = useMemo(
     () => ({

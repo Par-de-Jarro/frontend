@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Card from '../../components/card'
 import PageContainer from '../../components/page-container'
 import { CardsContainer } from './styles'
@@ -8,11 +8,7 @@ import { useSpots } from '../../hooks/spots'
 
 export default function SearchPage () {
   const spots = useSpots()
-
-  useEffect(() => {
-    spots.loadSpots()
-  }, [])
-
+  
   return (
     <>
       <Header/>
