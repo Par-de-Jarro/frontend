@@ -20,7 +20,7 @@ const SearchBar: React.FC = () => {
 
   const handleSelectItem = (item: Recommendation) => {
     (
-      api.get('/google/geocode', {  params: { location: debouncedSearchterm } })
+      api.get('/google/geocode', {  params: { location: item.description } })
       .then((response) => {
           console.log(response.data)
       })
