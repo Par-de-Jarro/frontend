@@ -1,10 +1,15 @@
-import './assets/styles/global.css';
-import AppRoutes from './routes';
-
-function App() {
+import AppProvider from './hooks'
+import AppRoutes from './routes'
+import GlobalSytle from './styles/global'
+function App () {
   return (
-    <AppRoutes/>
-  );
+    <>
+      <GlobalSytle />
+      <AppProvider>
+        <AppRoutes/>
+      </AppProvider>
+    </>
+  )
 }
 
-export default App;
+export default App

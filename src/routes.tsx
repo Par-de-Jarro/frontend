@@ -1,15 +1,18 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import UserRegister from '../src/pages/user/register';
-import Home from './pages/home';
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import SearchPage from './pages/search'
+import UserPage from './pages/user'
+import SignUp from './pages/signUp'
+import SignIn from './pages/signIn'
 
-
-export default function AppRoutes() {
+export default function AppRoutes () {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/register" element={<UserRegister />} />
+        <Route path="/" element={<SearchPage />} />
+        <Route path="/user" element={<UserPage />} />
+        <Route path="/signUp" element={<SignUp />} />
+        <Route path="/signIn" element={<SignIn />} />
       </Routes>
     </BrowserRouter>
-  );
+  )
 }

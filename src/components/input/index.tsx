@@ -1,23 +1,32 @@
-import React, {InputHTMLAttributes} from 'react';
-import {
-    InputDiv,
-    InputBox
-} from "./styles"
+import React from "react";
+import { Container } from "./styles";
+import { Recommendation } from "../../types/input";
+import InputField from "../input-field";
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement>{
-    label: string;
-    name: string;
-    type: string;
-
+interface InputProps {
+  recommendations?: Array<Recommendation>
+  onSelectItem?: (item: Recommendation) => void;
+  onSearch?: (item: string) => void;
+  inputValue: string
+  onInputValueChange?: (value: string) => void
+  label?: string
+  type?: string
 }
 
-const Input: React.FC<InputProps> = ({label, name, type, ...rest}) => {
-    return (
-        <InputDiv>
-            <label htmlFor ={name}>{label}</label>
-            <InputBox type={type} id={name} {...rest}></InputBox>
-        </InputDiv>
-    );
+const Input: React.FC<InputProps> = ({ recommendations, onSelectItem, onSearch, inputValue, onInputValueChange, label, type }: InputProps) => {  
+  return (
+      <Container>
+        <InputField 
+          recommendations={recommendations} 
+          onSelectItem={onSelectItem}
+          onSearch={onSearch} 
+          inputValue={inputValue} 
+          onInputValueChange={onInputValueChange} 
+          label={label}
+          type={type}
+        />
+      </Container>
+  )
 }
 
-export default Input;
+export default Input
