@@ -1,14 +1,18 @@
 import React from 'react'
-import PageContainer from '../../components/page-container'
-import { Button, Container } from './styles'
+import { UserContainer, UserImage, UserInfoContainer, UserName } from './styles'
 import NavBar from '../../components/nav-bar'
+import PageContainer from '../../components/page-container'
 
 const UserPage: React.FC = () => (
   <>
     <PageContainer>
-      <Container>
-        <Button to='/signin'>Criar Conta</Button>
-      </Container>
+      <UserContainer>
+        <UserImage src='https://avatars.githubusercontent.com/u/38543529?v=4'/>
+        <UserInfoContainer>
+            <UserName>Antonio Neto</UserName>
+            Mostrar Perfil
+        </UserInfoContainer>
+      </UserContainer>
     </PageContainer>
     <NavBar/>
   </>
