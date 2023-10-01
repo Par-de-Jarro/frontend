@@ -1,25 +1,25 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Dropdown, DropdownItemContainer, IconContainer, InputField, InputContainer, LocationIcon } from './styles';
+import { Dropdown, DropdownItemContainer, IconContainer, Input, InputContainer, LocationIcon, Label } from './styles';
+import { Recommendation } from '../../types/input';
 
-interface Recommendation {
-  description: string
-  term: string
+interface InputFieldProps {
+  recommendations?: Array<Recommendation>
+  onSelectItem?: (item: Recommendation) => void;
+  onSearch?: (item: string) => void;
+  inputValue: string
+  onInputValueChange: (value: string) => void
+  label?: string
 }
 
-interface InputProps {
-  recommendations: Array<Recommendation>
-  onSelectItem: (item: Recommendation) => void;
-  onSearch: (item: string) => void;
-}
-
-const AutoCompleteInput: React.FC<InputProps> = ({ onSearch, onSelectItem, recommendations }) => {
+const InputField: React.FC<InputFieldProps> = ({ onSearch, onSelectItem, onInputValueChange, inputValue, recommendations, label }) => {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [inputValue, setInputValue] = useState('');
   const [showDropdown, setShowDropdown] = useState(false)
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
-    onSearch(event.target.value)
+    onInputValueChange(event.target.value)
+    if (onSearch) {
+        onSearch(event.target.value)
+    }
   };
 
   const handleOutsideClick = (event: MouseEvent) => {
@@ -29,9 +29,12 @@ const AutoCompleteInput: React.FC<InputProps> = ({ onSearch, onSelectItem, recom
   };
 
   const handleOptionClick = (option: Recommendation) => {    
-    setInputValue(option.description)
+    onInputValueChange(option.value)
     setShowDropdown(false);
-    onSelectItem(option)
+
+    if (onSelectItem) {
+      onSelectItem(option)
+    }
   };
 
   useEffect(() => {
@@ -43,19 +46,25 @@ const AutoCompleteInput: React.FC<InputProps> = ({ onSearch, onSelectItem, recom
 
   return (
     <InputContainer ref={inputRef}>
-      <InputField 
+      { label && (
+          <Label>
+            {label}
+          </Label>
+        ) 
+      }
+      <Input 
         value={inputValue} 
         onClick={() => { setShowDropdown(true) }} 
         onChange={handleInputChange}
       />
-      {showDropdown && recommendations.length > 0 && (
+      {showDropdown && recommendations && recommendations.length > 0  && (
         <Dropdown>
-          {recommendations.map((option, index) => (
+          {recommendations?.map((option, index) => (
             <DropdownItemContainer key={index} onClick={() => handleOptionClick(option)}>
               <IconContainer>
                 <LocationIcon/>
               </IconContainer>            
-              {option.description}
+              {option.label}
             </DropdownItemContainer>
           ))}
         </Dropdown>
@@ -65,4 +74,4 @@ const AutoCompleteInput: React.FC<InputProps> = ({ onSearch, onSelectItem, recom
 };
 
 
-export default AutoCompleteInput
+export default InputField

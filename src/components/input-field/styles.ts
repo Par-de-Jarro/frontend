@@ -1,18 +1,28 @@
 import styled from "styled-components";
 import { SlLocationPin } from 'react-icons/sl'
 
+export const Label = styled.p`
+  width: 100%;
+  font-size: 12px;
+  color: #513422;
+  margin-bottom: 2px;
+  text-align: left;
+`
+
 export const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   width: 100%;
   height: 100%;
+  min-height: 50px;
+  padding-left: 15px;
   position: relative;
   border: 0;
 `;
 
-export const InputField = styled.input`
+export const Input = styled.input`
   width: 100%;
   border: 0;
 `;

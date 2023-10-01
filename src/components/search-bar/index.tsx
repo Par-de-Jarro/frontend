@@ -1,19 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { FaSearch } from 'react-icons/fa'
 import { TbAdjustmentsHorizontal } from 'react-icons/tb'
-import { Container, SearchButton, FilterButton, InputField } from './styles'
+import { Container, SearchButton, FilterButton } from './styles'
 import { useDebounce } from 'use-debounce'
 import { useSpots } from '../../hooks/spots'
 import api from '../../services/api'
-interface Recommendation {
-  description: string
-  term: string
-}
-
-interface Coordinates {
-  lat: number,
-  long: number
-}
+import InputField from '../input-field'
+import { Recommendation } from '../../types/input'
+import { Coordinates } from '../../types/search'
 
 const SearchBar: React.FC = () => {
   const { loadSpots } = useSpots()
@@ -21,6 +15,7 @@ const SearchBar: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>('')
   const [debouncedSearchterm] = useDebounce(searchTerm, 500)
   const [coordinates, setCoordinates] = useState<Coordinates>({ lat: -7.2171368, long: -35.9097543})
+  const [searchBarValue, setSearchBarValue] = useState('')
 
   const handleSearch = () => {
     loadSpots({
@@ -35,7 +30,7 @@ const SearchBar: React.FC = () => {
 
   const handleSelectItem = (item: Recommendation) => {
     (
-      api.get('/google/geocode', {  params: { location: item.description } })
+      api.get('/google/geocode', {  params: { location: item.label } })
       .then((response) => {
           const { lat, long } = response.data
           setCoordinates({ lat, long })          
@@ -47,7 +42,14 @@ const SearchBar: React.FC = () => {
     (
       api.get('/google/autocomplete', {  params: { location: debouncedSearchterm } })
       .then((response) => {
-          setRecommendations(response.data)
+          const recommendations = response.data.map((elem: { term: string, description: string}) => {
+            return {
+              value: elem.term,
+              label: elem.description
+            }
+          })
+
+          setRecommendations(recommendations)
       })
     )
   }, [debouncedSearchterm])
@@ -62,7 +64,7 @@ const SearchBar: React.FC = () => {
   return (
     <Container>
       <FilterButton><TbAdjustmentsHorizontal color='#513422'/></FilterButton>
-        <InputField onSearch={handleChangeOnInput} recommendations={recommendations} onSelectItem={handleSelectItem}></InputField>
+        <InputField inputValue={searchBarValue} onInputValueChange={setSearchBarValue} onSearch={handleChangeOnInput} recommendations={recommendations} onSelectItem={handleSelectItem}></InputField>
       <SearchButton onClick={handleSearch}><FaSearch color='#513422'/></SearchButton>
     </Container>
   )
