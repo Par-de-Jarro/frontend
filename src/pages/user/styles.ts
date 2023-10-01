@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import { NavLink } from 'react-router-dom'
 
-export const UserContainer = styled.nav`
+export const UserContainer = styled(NavLink)`
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -10,6 +10,32 @@ export const UserContainer = styled.nav`
     gap: 20px;
     border-bottom: 1px solid #ebebeb;
     padding-bottom: 10px;
+    text-decoration: none;
+    
+    &:hover {
+        background-color: #f2f2f2;
+    }
+`
+
+export const Title = styled.p`
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    font-size: 25px;
+    color: #2b2b2b;
+    font-weight: 500;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    
+`
+
+export const CardsContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 `
 
 export const UserInfoContainer = styled.div`
@@ -32,19 +58,4 @@ export const UserImage = styled.img`
     height: 80px;
     border-radius: 50%;
 
-`
-
-export const Button = styled(NavLink)`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    height: 40px;
-    width: 100px;
-
-    cursor: pointer;
-    background-color: black;
-    color: white;
-    border-radius: 20px;
 `

@@ -1,18 +1,35 @@
 import React from 'react'
-import { UserContainer, UserImage, UserInfoContainer, UserName } from './styles'
+import { CardsContainer, Title, UserContainer, UserImage, UserInfoContainer, UserName } from './styles'
 import NavBar from '../../components/nav-bar'
 import PageContainer from '../../components/page-container'
+import NavCard from '../../components/nav-card'
+import { BsHouses } from 'react-icons/bs'
+import { PiUserCircleFill } from 'react-icons/pi'
+import { FaMoneyBillWave } from 'react-icons/fa'
 
 const UserPage: React.FC = () => (
   <>
     <PageContainer>
-      <UserContainer>
+      <Title>Perfil</Title>
+      <UserContainer to='/'>
         <UserImage src='https://avatars.githubusercontent.com/u/38543529?v=4'/>
         <UserInfoContainer>
             <UserName>Antonio Neto</UserName>
             Mostrar Perfil
         </UserInfoContainer>
       </UserContainer>
+      <CardsContainer>
+        <Title>Configurações</Title>
+        <NavCard label='Meu Perfil' redicted_to='/'>
+          <PiUserCircleFill />
+        </NavCard>
+        <NavCard label='Minhas Contas' redicted_to='/'>
+          <FaMoneyBillWave/>
+        </NavCard>
+        <NavCard label='Meus Locais' redicted_to='/'>
+          <BsHouses/>
+        </NavCard>
+      </CardsContainer>
     </PageContainer>
     <NavBar/>
   </>

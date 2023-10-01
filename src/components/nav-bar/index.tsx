@@ -4,10 +4,10 @@ import { Container, NavButton, UserIcon, SearchIcon, BillsIcon, HouseIcon } from
 const NavBar: React.FC = () => (
   <>
     <Container>
-      <NavButton to='/user'><UserIcon/></NavButton>
       <NavButton to='/'><SearchIcon/></NavButton>
       <NavButton to='/bills'><BillsIcon/></NavButton>
       <NavButton to='/spot'><HouseIcon/></NavButton>
+      <NavButton to='/user'><UserIcon/></NavButton>
     </Container>
 
   </>
