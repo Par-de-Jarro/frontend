@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { FaSearch } from 'react-icons/fa'
 import { TbAdjustmentsHorizontal } from 'react-icons/tb'
-import { Container, SearchButton, FilterButton } from './styles'
+import { Container, SearchButton, FilterButton, LocationIcon } from './styles'
 import { useDebounce } from 'use-debounce'
 import { useSpots } from '../../hooks/spots'
 import api from '../../services/api'
@@ -45,7 +45,8 @@ const SearchBar: React.FC = () => {
           const recommendations = response.data.map((elem: { term: string, description: string}) => {
             return {
               value: elem.term,
-              label: elem.description
+              label: elem.description,
+              icon: (<LocationIcon/>)
             }
           })
 

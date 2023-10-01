@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Dropdown, DropdownItemContainer, IconContainer, Input, InputContainer, LocationIcon, Label } from './styles';
+import { Dropdown, DropdownItemContainer, IconContainer, Input, InputContainer, Label } from './styles';
 import { Recommendation } from '../../types/input';
 
 interface InputFieldProps {
@@ -62,7 +62,7 @@ const InputField: React.FC<InputFieldProps> = ({ onSearch, onSelectItem, onInput
           {recommendations?.map((option, index) => (
             <DropdownItemContainer key={index} onClick={() => handleOptionClick(option)}>
               <IconContainer>
-                <LocationIcon/>
+                {option.icon}
               </IconContainer>            
               {option.label}
             </DropdownItemContainer>

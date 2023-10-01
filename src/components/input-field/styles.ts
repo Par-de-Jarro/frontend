@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { SlLocationPin } from 'react-icons/sl'
 
 export const Label = styled.p`
   width: 100%;
@@ -74,9 +73,4 @@ export const IconContainer = styled.div`
   min-height: 45px;
   background-color: #ebebeb;
   border-radius: 10px;
-`
-
-export const LocationIcon = styled(SlLocationPin)`
-  height: 23px;
-  width: 23px;
 `

@@ -1,3 +1,4 @@
+import { SlLocationPin } from 'react-icons/sl'
 import styled from 'styled-components'
 
 export const Container = styled.div`
@@ -42,4 +43,10 @@ export const FilterButton = styled.button`
     background-color: transparent;
     border: 1px solid #f8f4e8;
     padding: 0;
+`
+
+
+export const LocationIcon = styled(SlLocationPin)`
+  height: 23px;
+  width: 23px;
 `
