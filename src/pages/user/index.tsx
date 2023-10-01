@@ -28,7 +28,7 @@ const UserPage: React.FC = () => {
           { !user && (
               <LoggedOffUserContainer>
                 <Button to=''>Entrar</Button>
-                Você ainda não tem conta? <RedirectLink to='/'>Cadastrar-se</RedirectLink>
+                Você ainda não tem conta? <RedirectLink to='/signIn'>Cadastrar-se</RedirectLink>
               </LoggedOffUserContainer>
             )
           }

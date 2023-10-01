@@ -45,7 +45,6 @@ export const Title = styled.p`
     font-weight: 500;
     margin-top: 20px;
     margin-bottom: 20px;
-    
 `
 
 export const CardsContainer = styled.div`
