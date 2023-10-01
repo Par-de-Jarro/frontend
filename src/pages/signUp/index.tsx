@@ -6,7 +6,7 @@ import { Recommendation } from '../../types/input';
 import api from '../../services/api';
 import { Button, CloseIcon, FemaleIcon, Form, LocationIcon, MaleIcon, NonBinaryIcon, Title, TitleContainer, UninformedGenderIcon } from './styles';
 
-export default function SignIn () {
+export default function SignUp () {
   const [name, setName] = useState('')
   const [gender, setGender] = useState('')
   const [email, setEmail] = useState('')
