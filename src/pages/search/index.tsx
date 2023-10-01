@@ -16,7 +16,7 @@ export default function SearchPage () {
         <CardsContainer>
         {
           spots.spots.map((spot) => (
-          <Card key={spot.id_spot} title={spot.name} distance={spot.distance} empty_quota={spot.personal_quota} value={spot.value}/>
+          <Card image_url={spot.images[0].image_url} key={spot.id_spot} title={spot.name} distance={spot.distance} empty_quota={spot.personal_quota} value={spot.value}/>
           ))
         }
         </CardsContainer>

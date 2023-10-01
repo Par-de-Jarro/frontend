@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { CiImageOff } from 'react-icons/ci'
 
 export const Container = styled.div`
     display: flex;
@@ -15,6 +16,21 @@ export const CardImage = styled.img`
     width: 100%;
     height: 68%;
     border-radius: 12px;
+    background-color: #C3c3c3;
+`
+export const DefaultCardImage = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 68%;
+    border-radius: 12px;
+    background-color: #C3c3c3;
+`
+export const WithoutImageIcon = styled(CiImageOff)`
+    height: 150px;
+    width: 150px;
+
 `
 
 export const InfoContainer = styled.div`
