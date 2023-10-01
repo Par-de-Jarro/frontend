@@ -1,5 +1,5 @@
 import React from 'react'
-import { CardsContainer, Title, LoggedInUserContainer, LoggedOffUserContainer, UserImage, UserInfoContainer, UserName, Button, RedirectLink } from './styles'
+import { CardsContainer, Title, LoggedInUserContainer, LoggedOffUserContainer, UserImage, UserInfoContainer, UserName, Button, RedirectLink, LogOutButton } from './styles'
 import NavBar from '../../components/nav-bar'
 import PageContainer from '../../components/page-container'
 import NavCard from '../../components/nav-card'
@@ -7,9 +7,16 @@ import { BsHouses } from 'react-icons/bs'
 import { PiUserCircleFill } from 'react-icons/pi'
 import { FaMoneyBillWave } from 'react-icons/fa'
 import { useAuth } from '../../hooks/auth'
+import { useNavigate } from 'react-router-dom'
 
 const UserPage: React.FC = () => {
-  const { user } = useAuth()
+  const { user, signOut } = useAuth()
+  const navigate = useNavigate();
+
+  const logOut = () => {
+    signOut()
+    navigate('/')
+  }
 
   return (
       <>
@@ -17,9 +24,9 @@ const UserPage: React.FC = () => {
           <Title>Perfil</Title>
           { user && (
               <LoggedInUserContainer to='/'>
-                <UserImage src='https://avatars.githubusercontent.com/u/38543529?v=4'/>
+                <UserImage src={user.profile_img}/>
                   <UserInfoContainer>
-                      <UserName>Antonio Neto</UserName>
+                      <UserName>{user.name}</UserName>
                       Mostrar Perfil
                   </UserInfoContainer>
               </LoggedInUserContainer>
@@ -27,7 +34,7 @@ const UserPage: React.FC = () => {
           }
           { !user && (
               <LoggedOffUserContainer>
-                <Button to=''>Entrar</Button>
+                <Button to='/signIn'>Entrar</Button>
                 Você ainda não tem conta? <RedirectLink to='/signUp'>Cadastrar-se</RedirectLink>
               </LoggedOffUserContainer>
             )
@@ -43,6 +50,13 @@ const UserPage: React.FC = () => {
             <NavCard label='Meus Locais' redicted_to='/'>
               <BsHouses/>
             </NavCard>
+            {
+              user && (
+                <LogOutButton onClick={logOut}>
+                  Deslogar
+                </LogOutButton>
+              )
+            }
           </CardsContainer>
         </PageContainer>
         <NavBar/>

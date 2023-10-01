@@ -3,9 +3,30 @@ import React, {
 } from 'react'
 import api from '../services/api'
 
+export interface User {
+  name: string
+  email: string
+  cellphone: string
+  document_id: string
+  profile_img: string
+  birthdate: string
+  course: string
+  bio: string
+  gender: string
+  id_user: string
+  university: University
+}
+
+export interface University {
+  name: string
+  slug: string
+  lat: number
+  long: number
+  id_university: string
+}
 interface AuthState {
-  token: string
-  user: object
+  access_token: string
+  user: User
 }
 
 interface SignInCredentials {
@@ -14,7 +35,7 @@ interface SignInCredentials {
 }
 
 interface AuthContextData {
-  user: object
+  user: User
   signIn: (credentials: SignInCredentials) => Promise<void>
   signOut: () => void
 }
@@ -25,12 +46,12 @@ interface AuthProps {
 }
 const AuthProvider: React.FC<AuthProps> = ({ children }) => {
   const [data, setData] = useState<AuthState>(() => {
-    const token = localStorage.getItem('@ParDeJarro:token')
+    const access_token = localStorage.getItem('@ParDeJarro:token')
     const user = localStorage.getItem('@ParDeJarro:user')
 
-    if (token && user) {
+    if (access_token && user) {
       return {
-        token,
+        access_token,
         user: JSON.parse(user)
       }
     }
@@ -44,12 +65,12 @@ const AuthProvider: React.FC<AuthProps> = ({ children }) => {
       password
     })
 
-    const { token, user } = response.data
+    const { access_token, user } = response.data
 
-    localStorage.setItem('@ParDeJarro:token', token)
+    localStorage.setItem('@ParDeJarro:token', access_token)
     localStorage.setItem('@ParDeJarro:user', JSON.stringify(user))
 
-    setData({ user, token })
+    setData({ user, access_token })
   }, [])
 
   const signOut = useCallback(() => {
