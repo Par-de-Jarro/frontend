@@ -12,7 +12,7 @@ interface InputProps {
   onSearch: (item: string) => void;
 }
 
-const Input: React.FC<InputProps> = ({ onSearch, onSelectItem, recommendations }) => {
+const AutoCompleteInput: React.FC<InputProps> = ({ onSearch, onSelectItem, recommendations }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState('');
   const [showDropdown, setShowDropdown] = useState(false)
@@ -65,4 +65,4 @@ const Input: React.FC<InputProps> = ({ onSearch, onSelectItem, recommendations }
 };
 
 
-export default Input
+export default AutoCompleteInput

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import Input from '../input'
+import AutoCompleteInput from '../auto-complete-input'
 
 export const Container = styled.div`
     display: flex;
@@ -17,7 +17,7 @@ export const Container = styled.div`
     max-width: 400px;
 `
 
-export const InputField = styled(Input)`
+export const InputField = styled(AutoCompleteInput)`
     width: 100%;
     height: 100%;
     border: none;
