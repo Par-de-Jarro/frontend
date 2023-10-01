@@ -8,11 +8,12 @@ interface InputProps {
   onSelectItem?: (item: Recommendation) => void;
   onSearch?: (item: string) => void;
   inputValue: string
-  onInputValueChange: (value: string) => void
+  onInputValueChange?: (value: string) => void
   label?: string
+  type?: string
 }
 
-const Input: React.FC<InputProps> = ({ recommendations, onSelectItem, onSearch, inputValue, onInputValueChange, label }: InputProps) => {  
+const Input: React.FC<InputProps> = ({ recommendations, onSelectItem, onSearch, inputValue, onInputValueChange, label, type }: InputProps) => {  
   return (
       <Container>
         <InputField 
@@ -21,7 +22,9 @@ const Input: React.FC<InputProps> = ({ recommendations, onSelectItem, onSearch, 
           onSearch={onSearch} 
           inputValue={inputValue} 
           onInputValueChange={onInputValueChange} 
-          label={label}/>
+          label={label}
+          type={type}
+        />
       </Container>
   )
 }

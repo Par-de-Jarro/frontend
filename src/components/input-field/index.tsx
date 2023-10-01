@@ -7,16 +7,22 @@ interface InputFieldProps {
   onSelectItem?: (item: Recommendation) => void;
   onSearch?: (item: string) => void;
   inputValue: string
-  onInputValueChange: (value: string) => void
+  onInputValueChange?: (value: string) => void
   label?: string
+  type?: string
 }
 
-const InputField: React.FC<InputFieldProps> = ({ onSearch, onSelectItem, onInputValueChange, inputValue, recommendations, label }) => {
+const InputField: React.FC<InputFieldProps> = ({ onSearch, onSelectItem, onInputValueChange, inputValue, recommendations, label, type }: InputFieldProps ) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [showDropdown, setShowDropdown] = useState(false)
+  const [value, setValue] = useState('')
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onInputValueChange(event.target.value)
+    setValue(event.target.value)
+    if (onInputValueChange) {
+      onInputValueChange(event.target.value)
+    }
+
     if (onSearch) {
         onSearch(event.target.value)
     }
@@ -29,7 +35,11 @@ const InputField: React.FC<InputFieldProps> = ({ onSearch, onSelectItem, onInput
   };
 
   const handleOptionClick = (option: Recommendation) => {    
-    onInputValueChange(option.value)
+    if (onInputValueChange) {
+      onInputValueChange(option.value)
+    }
+    
+    setValue(option.label)
     setShowDropdown(false);
 
     if (onSelectItem) {
@@ -53,9 +63,10 @@ const InputField: React.FC<InputFieldProps> = ({ onSearch, onSelectItem, onInput
         ) 
       }
       <Input 
-        value={inputValue} 
+        value={value} 
         onClick={() => { setShowDropdown(true) }} 
         onChange={handleInputChange}
+        type={type || 'text'}
       />
       {showDropdown && recommendations && recommendations.length > 0  && (
         <Dropdown>

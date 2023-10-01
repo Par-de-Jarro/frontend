@@ -16,15 +16,34 @@ export default function SignIn () {
   const [cpf, setCpf] = useState('')
   const [course, setCourse] = useState('')
   const [university, setUniversity] = useState('')
-  const navigate = useNavigate();
-
   const [universityRecommendations, setUniversityRecommendations] = useState<Array<Recommendation>>([])
   const [genderRecommendations, setGenderRecommendations] = useState<Array<Recommendation>>([])
-
+  const navigate = useNavigate();
+  
 	const goBack = () => {
 		navigate(-1);
 	}
 
+  const createUser = () => {
+    (
+      api.post('/user', {
+          name: name,
+          email: email,
+          cellphone: cellphone,
+          document_id: cpf,
+          birthdate: "2000-04-03",
+          course: course,
+          bio: bio,
+          gender: gender,
+          password: password,
+          id_university: university
+      }).then(() => {
+        navigate('/')
+      }).catch(() => {
+        console.log('error');
+      })
+    )
+  }
   const getUniversities = () => {
     (
       api.get('/university').then((response) => {
@@ -74,6 +93,7 @@ export default function SignIn () {
     getUniversities()
   }, [])
 
+  
   return (
       <PageContainer>
         <Form>
@@ -88,10 +108,9 @@ export default function SignIn () {
           />
           <Input 
             recommendations={genderRecommendations} 
-            onSelectItem={(item) => {console.log(item.value);}} 
+            onSelectItem={(item) => {setGender(item.value)}} 
             label='Gênero' 
             inputValue={gender} 
-            onInputValueChange={setGender}
           />
           <Input 
             label='Email' 
@@ -102,6 +121,7 @@ export default function SignIn () {
             label='Senha' 
             inputValue={password}
             onInputValueChange={setPassword}
+            type='password'
           />
           <Input 
             label='Bio' 
@@ -125,12 +145,11 @@ export default function SignIn () {
           />
           <Input 
             recommendations={universityRecommendations} 
-            onSelectItem={(item) => {console.log(item.value);}} 
+            onSelectItem={(item) => {setUniversity(item.value)}} 
             label='Universidade' 
             inputValue={university} 
-            onInputValueChange={setUniversity}
           />
-          <Button onClick={() => {}}> Criar Conta </Button>
+          <Button onClick={createUser}> Criar Conta </Button>
         </Form>
       </PageContainer>
   )
