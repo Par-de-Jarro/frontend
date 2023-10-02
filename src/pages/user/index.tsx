@@ -23,7 +23,7 @@ const UserPage: React.FC = () => {
         <PageContainer>
           <Title>Perfil</Title>
           { user && (
-              <LoggedInUserContainer to='/'>
+              <LoggedInUserContainer to='/user/profile'>
                 <UserImage src={user.profile_img}/>
                   <UserInfoContainer>
                       <UserName>{user.name}</UserName>
@@ -41,7 +41,7 @@ const UserPage: React.FC = () => {
           }
           <CardsContainer>
             <Title>Configurações</Title>
-            <NavCard label='Meu Perfil' redicted_to='/'>
+            <NavCard label='Meu Perfil' redicted_to='/user/profile'>
               <PiUserCircleFill />
             </NavCard>
             <NavCard label='Minhas Contas' redicted_to='/'>
