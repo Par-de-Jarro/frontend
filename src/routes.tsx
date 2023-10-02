@@ -5,6 +5,7 @@ import SignUp from './pages/signUp'
 import SignIn from './pages/signIn'
 import AddSpot from './pages/spot'
 import AddSpotImage from './pages/spot/image'
+import UserProfile from './pages/userProfile'
 
 export default function AppRoutes () {
   return (
@@ -15,7 +16,8 @@ export default function AppRoutes () {
         <Route path="/signUp" element={<SignUp />} />
         <Route path="/signIn" element={<SignIn />} />
         <Route path="/spot" element={<AddSpot />} />
-        <Route path="/spot_image" element={<AddSpotImage />} />
+        <Route path="/spot_image/:id" element={<AddSpotImage />} />
+        <Route path="/user/profile" element={<UserProfile />} />
       </Routes>
     </BrowserRouter>
   )
