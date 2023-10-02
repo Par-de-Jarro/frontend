@@ -11,16 +11,20 @@ export const ProfileDiv = styled.div`
 `
 
 export const UserImage = styled.img`
-    width: 80px;
-    height: 80px;
+    width: 90px;
+    height: 90px;
     border-radius: 50%;
     margin-bottom: 30px;
 `
 
-export const UserInfoDiv = styled.div`
+export const UserInfo = styled.div`
     width: 100%;
     height: 80px;
-    margin-bottom: 10px;
+    margin-bottom: 25px;
+
+    @media (min-width: 768px) { 
+        max-width: 700px;
+    }
 `
 
 export const UserInfoTitle = styled.p`
@@ -34,4 +38,30 @@ export const UserInfoValue = styled.div`
     border-radius: 14px;    
     box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2); 
     padding: 16px;      
+`
+
+export const MainButton = styled.button`
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+
+    color: #513422;
+    border-radius: 12px;
+    border: 0;
+    height: 50px;
+
+    background-color: #f8f4e8;
+    &:hover {
+        background-color: #513422;
+        color: #f8f4e8;
+    }
+    
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+
+    @media (min-width: 768px) { 
+        max-width: 700px;
+    }
 `
