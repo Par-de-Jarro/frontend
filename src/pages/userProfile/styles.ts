@@ -1,4 +1,32 @@
 import styled from 'styled-components'
+import { IoMdFemale, IoMdMale } from "react-icons/io"
+import { PiGenderNonbinaryBold } from 'react-icons/pi'
+import { AiOutlineMinusSquare } from 'react-icons/ai'
+import { SlLocationPin } from "react-icons/sl"
+
+export const LocationIcon = styled(SlLocationPin)`
+  height: 23px;
+  width: 23px;
+`
+
+export const FemaleIcon = styled(IoMdFemale)`
+  height: 23px;
+  width: 23px;
+`
+
+export const MaleIcon = styled(IoMdMale)`
+  height: 23px;
+  width: 23px;
+`
+export const NonBinaryIcon = styled(PiGenderNonbinaryBold)`
+  height: 23px;
+  width: 23px;
+`
+
+export const UninformedGenderIcon = styled(AiOutlineMinusSquare)`
+  height: 23px;
+  width: 23px;
+`
 
 export const ProfileDiv = styled.div`
     width: 100%;
