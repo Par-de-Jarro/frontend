@@ -1,7 +1,6 @@
 import React from 'react'
 import PageContainer from '../../components/page-container'
-import { ProfileDiv, UserImage, UserInfoDiv, UserInfoTitle, UserInfoValue} from './styles'
-import { MainButton} from '../../components/button/styles'
+import { ProfileDiv, UserImage, UserInfo, UserInfoTitle, UserInfoValue, MainButton} from './styles'
 
 import { useAuth } from '../../hooks/auth'
 
@@ -17,42 +16,42 @@ const UserProfile: React.FC = () => {
         <PageContainer>
             <ProfileDiv>
                 <UserImage src={user.profile_img}/>
-                <UserInfoDiv>
+                <UserInfo>
                     <UserInfoTitle>Nome</UserInfoTitle>
                     <UserInfoValue>{user.name}</UserInfoValue>
-                </UserInfoDiv>
-                <UserInfoDiv>
+                </UserInfo>
+                <UserInfo>
                     <UserInfoTitle>Email</UserInfoTitle>
                     <UserInfoValue>{user.email}</UserInfoValue>
-                </UserInfoDiv>
-                <UserInfoDiv>
+                </UserInfo>
+                <UserInfo>
                     <UserInfoTitle>Telefone</UserInfoTitle>
                     <UserInfoValue>{user.cellphone}</UserInfoValue>
-                </UserInfoDiv>
-                <UserInfoDiv>
+                </UserInfo>
+                <UserInfo>
                     <UserInfoTitle>CPF</UserInfoTitle>
                     <UserInfoValue>{user.document_id}</UserInfoValue>
-                </UserInfoDiv>
-                <UserInfoDiv>
+                </UserInfo>
+                <UserInfo>
                     <UserInfoTitle>Data de nascimento</UserInfoTitle>
                     <UserInfoValue>{formatDate(user.birthdate)}</UserInfoValue>
-                </UserInfoDiv>
-                <UserInfoDiv>
+                </UserInfo>
+                <UserInfo>
                     <UserInfoTitle>Gênero</UserInfoTitle>
                     <UserInfoValue>{user.gender}</UserInfoValue>
-                </UserInfoDiv>
-                <UserInfoDiv>
+                </UserInfo>
+                <UserInfo>
                     <UserInfoTitle>Universidade</UserInfoTitle>
-                    <UserInfoValue>{user.gender}</UserInfoValue>
-                </UserInfoDiv>
-                <UserInfoDiv>
+                    <UserInfoValue>{user.university.slug}</UserInfoValue>
+                </UserInfo>
+                <UserInfo>
                     <UserInfoTitle>Curso</UserInfoTitle>
                     <UserInfoValue>{user.course}</UserInfoValue>
-                </UserInfoDiv>
-                <UserInfoDiv>
+                </UserInfo>
+                <UserInfo>
                     <UserInfoTitle>Bio</UserInfoTitle>
                     <UserInfoValue>{user.bio}</UserInfoValue>
-                </UserInfoDiv>
+                </UserInfo>
                 <MainButton>Editar</MainButton>
             </ProfileDiv>
         </PageContainer>
