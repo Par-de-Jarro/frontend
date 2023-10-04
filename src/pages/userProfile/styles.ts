@@ -3,7 +3,7 @@ import { IoMdFemale, IoMdMale } from "react-icons/io"
 import { PiGenderNonbinaryBold } from 'react-icons/pi'
 import { AiOutlineMinusSquare } from 'react-icons/ai'
 import { SlLocationPin } from "react-icons/sl"
-import cameraIcon from './assets/camera.png'
+import cameraIcon from './assets/cameraIcon.png'
 
 export const LocationIcon = styled(SlLocationPin)`
   height: 23px;
