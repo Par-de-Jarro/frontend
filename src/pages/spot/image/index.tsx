@@ -4,15 +4,16 @@ import { Title } from "../../user/styles";
 import { Button, Form, TitleContainer } from "../styles";
 
 import api from '../../../services/api'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useRef } from "react";
 
 
 export default function AddSpotImage() {
     const navigate = useNavigate();
+    const { id } = useParams();
 
-    const uploadImageSpot = async (id_spot: number, formData: FormData) => {
-        await api.post(`/spot/${id_spot}/upload`, formData,{
+    const uploadImageSpot = async (formData: FormData) => {
+        await api.post(`/spot/${id}/upload`, formData,{
             headers: {
                 "Content-Type": "multipart/form-data",
             }}
@@ -25,7 +26,7 @@ export default function AddSpotImage() {
         e.preventDefault();
         
         const formData = new FormData(formRef.current ?? undefined);
-        uploadImageSpot(12, formData);
+        uploadImageSpot(formData);
     }
 
     return (
@@ -38,7 +39,6 @@ export default function AddSpotImage() {
                     type="file"
                     inputValue="spot-image"
                     multiple={true}
-     //               ref={inputRef}
                 />
                 <Button>Enviar local</Button>
             </Form>

@@ -2,11 +2,12 @@ import PageContainer from '../../components/page-container'
 import Input from '../../components/input'
 
 import { useState } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import api from '../../services/api'
 import { Button, CloseIcon, Form, TitleContainer } from './styles'
 import { Title } from '../signUp/styles'
+import { useAuth } from '../../hooks/auth'
 
 export default function AddSpot() {
     const [name, setName] = useState('')
@@ -21,9 +22,9 @@ export default function AddSpot() {
     const [hasElevator, setHasElevator] = useState(false)
     const [allowPet, setAllowPet] = useState(false)
     const [allowSmoker, setAllowSmoker] = useState(false)
-
-    let [searchParams, setSearchParams] = useSearchParams();
+    
     const navigate = useNavigate();
+    const { user } = useAuth()
 
     const goBack = () => {
         navigate(-1);
@@ -51,13 +52,12 @@ export default function AddSpot() {
             zipcode,
             number,
             state,
-            key
+            key,
+            id_user: user.id_user
         })
-        if(response.status === 200){
+        if(response.status === 200) {
             const data = response.data
-            //let params = serializeFormQuery(data.id_spot);
-            //setSearchParams(params);
-            navigate('/spot_image/' + data.id_spot, )
+            navigate(`/spot_image/${data.id}`)
         }
     }
 
