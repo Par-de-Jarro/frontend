@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import PageContainer from '../../components/page-container'
-import { ProfileDiv, UserImage, MainButton, FemaleIcon, MaleIcon, NonBinaryIcon, UninformedGenderIcon, LocationIcon } from './styles'
+import { ProfileDiv, UserImage, MainButton, FemaleIcon, MaleIcon, NonBinaryIcon, UninformedGenderIcon, LocationIcon, ImageInput, ImageInputWrapper } from './styles'
 import { Recommendation } from '../../types/input';
 import Input from '../../components/input'
 import api from '../../services/api';
@@ -21,6 +21,35 @@ const UserProfile: React.FC = () => {
     const [birthdate, setBirthdate] = useState(user.birthdate)
     const [universityRecommendations, setUniversityRecommendations] = useState<Array<Recommendation>>([])
     const [genderRecommendations, setGenderRecommendations] = useState<Array<Recommendation>>([])
+
+    const token = localStorage.getItem('@ParDeJarro:token');
+
+    const headers = {
+      'Api-Key': 'zKVWMjBIxCxAfs40OqIdqgNwsyCIyCLMhL90T3t1iNOOt2G6M5wfgiej5mZPAIw',
+      'Authorization': `Bearer ${token}`, 
+    };
+
+    const updateUser = () => {
+      (
+        api.put('/user', {
+            name: name,
+            email: email,
+            cellphone: cellphone,
+            document_id: cpf,
+            birthdate: birthdate,
+            course: course,
+            bio: bio,
+            gender: gender,
+            id_university: user.university.id_university
+        }, {headers}).then((response) => {
+          alert("User updated with success")
+          const { user } = response.data
+        }).catch(() => {
+          alert("Something went wrong while updating user")
+          console.log('error');
+        })
+      )
+    }
 
     const getGenders = () => {
         const genders = [
@@ -76,13 +105,16 @@ const UserProfile: React.FC = () => {
         setCpf(user.document_id)
         setCourse(user.course)
         setUniversity(user.university.slug)
-      }, [])
+      }, [user.name, user.gender, user.email, user.bio, user.cellphone, user.document_id, user.course, user.university.slug])
 
   return (
       <>
         <PageContainer>
             <ProfileDiv>
                 <UserImage src={user.profile_img}/>
+                <ImageInputWrapper>
+                  <ImageInput type="file" accept="image/*"></ImageInput>
+                </ImageInputWrapper>
                 <Input 
                     label='Nome' 
                     inputValue={name}
@@ -131,7 +163,7 @@ const UserProfile: React.FC = () => {
                     inputValue={bio}
                     onInputValueChange={setBio}
                 />
-                <MainButton>Editar</MainButton>
+                <MainButton onClick={updateUser} >Editar</MainButton>
             </ProfileDiv>
         </PageContainer>
       </>

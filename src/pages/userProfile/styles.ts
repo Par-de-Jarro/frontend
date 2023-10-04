@@ -3,6 +3,7 @@ import { IoMdFemale, IoMdMale } from "react-icons/io"
 import { PiGenderNonbinaryBold } from 'react-icons/pi'
 import { AiOutlineMinusSquare } from 'react-icons/ai'
 import { SlLocationPin } from "react-icons/sl"
+import cameraIcon from './assets/camera.png'
 
 export const LocationIcon = styled(SlLocationPin)`
   height: 23px;
@@ -42,7 +43,33 @@ export const UserImage = styled.img`
     width: 90px;
     height: 90px;
     border-radius: 50%;
-    margin-bottom: 30px;
+`
+
+export const ImageInput = styled.input`
+  cursor: pointer;
+  height: 30px;
+  width: 30px;
+  position:absolute;
+  top: 0;
+  right: 0;
+  z-index: 99;
+  opacity: 0;
+  -moz-opacity: 0;
+  border-radius: 50%;
+`
+
+export const ImageInputWrapper = styled.div`
+  height: 35px;
+  width: 35px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  border-radius: 50%;
+  background-image: url(${cameraIcon}); 
+  background-size: 62%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #ECECEC;
 `
 
 export const UserInfo = styled.div`
