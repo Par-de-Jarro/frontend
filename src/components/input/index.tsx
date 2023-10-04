@@ -1,9 +1,9 @@
-import React from "react";
+import React, { InputHTMLAttributes } from "react";
 import { Container } from "./styles";
 import { Recommendation } from "../../types/input";
 import InputField from "../input-field";
 
-interface InputProps {
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   recommendations?: Array<Recommendation>
   onSelectItem?: (item: Recommendation) => void;
   onSearch?: (item: string) => void;
@@ -13,7 +13,7 @@ interface InputProps {
   type?: string
 }
 
-const Input: React.FC<InputProps> = ({ recommendations, onSelectItem, onSearch, inputValue, onInputValueChange, label, type }: InputProps) => {  
+const Input: React.FC<InputProps> = ({ recommendations, onSelectItem, onSearch, inputValue, onInputValueChange, label, type, ...rest }: InputProps) => {  
   return (
       <Container>
         <InputField 
@@ -24,6 +24,7 @@ const Input: React.FC<InputProps> = ({ recommendations, onSelectItem, onSearch, 
           onInputValueChange={onInputValueChange} 
           label={label}
           type={type}
+          {...rest}
         />
       </Container>
   )
