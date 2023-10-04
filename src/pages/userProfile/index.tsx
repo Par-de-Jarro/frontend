@@ -3,6 +3,7 @@ import PageContainer from '../../components/page-container'
 import { ProfileDiv, UserImage, MainButton, FemaleIcon, MaleIcon, NonBinaryIcon, UninformedGenderIcon, LocationIcon, ImageInput, ImageInputWrapper } from './styles'
 import { Recommendation } from '../../types/input';
 import Input from '../../components/input'
+import SimpleInput from '../../components/simple-input'
 import api from '../../services/api';
 
 import { useAuth } from '../../hooks/auth'
@@ -43,7 +44,8 @@ const UserProfile: React.FC = () => {
             id_university: user.university.id_university
         }, {headers}).then((response) => {
           alert("User updated with success")
-          const { user } = response.data
+          const user = response.data
+          localStorage.setItem('@ParDeJarro:user', JSON.stringify(user))
         }).catch(() => {
           alert("Something went wrong while updating user")
           console.log('error');
@@ -115,30 +117,40 @@ const UserProfile: React.FC = () => {
                 <ImageInputWrapper>
                   <ImageInput type="file" accept="image/*"></ImageInput>
                 </ImageInputWrapper>
-                <Input 
+                <SimpleInput 
                     label='Nome' 
-                    inputValue={name}
-                    onInputValueChange={setName}
+                    value={name}
+                    onChange={(e) => {
+                        setName(e.target.value)
+                    }}
                 />
-                <Input 
+                <SimpleInput 
                     label='Email' 
-                    inputValue={email}
-                    onInputValueChange={setEmail}
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value)
+                  }}
                 />
-                <Input 
+                <SimpleInput 
                     label='Telefone' 
-                    inputValue={cellphone}
-                    onInputValueChange={setCellphone}
+                    value={cellphone}
+                    onChange={(e) => {
+                      setCellphone(e.target.value)
+                  }}
                 />
-                <Input 
+                <SimpleInput 
                     label='CPF' 
-                    inputValue={cpf}
-                    onInputValueChange={setCpf}
+                    value={cpf}
+                    onChange={(e) => {
+                      setCpf(e.target.value)
+                  }}
                 />
-                <Input 
+                <SimpleInput 
                     label='Data de nascimento' 
-                    inputValue={birthdate}
-                    onInputValueChange={setBirthdate}
+                    value={birthdate}
+                    onChange={(e) => {
+                      setBirthdate(e.target.value)
+                    }}
                     type='date'
                 />
                 <Input 
@@ -153,15 +165,19 @@ const UserProfile: React.FC = () => {
                     label='Universidade' 
                     inputValue={university} 
                 />
-                <Input 
+                <SimpleInput 
                     label='Curso' 
-                    inputValue={course}
-                    onInputValueChange={setCourse}
+                    value={course}
+                    onChange={(e) => {
+                      setCourse(e.target.value)
+                    }}
                 />
-                <Input 
+                <SimpleInput 
                     label='Bio' 
-                    inputValue={bio}
-                    onInputValueChange={setBio}
+                    value={bio}
+                    onChange={(e) => {
+                      setBio(e.target.value)
+                    }}
                 />
                 <MainButton onClick={updateUser} >Editar</MainButton>
             </ProfileDiv>
