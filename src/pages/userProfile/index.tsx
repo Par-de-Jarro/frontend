@@ -103,21 +103,19 @@ const UserProfile: React.FC = () => {
     }
       yupUserValidator.validate(userToUpdate)
         .then(function(value) {
-          console.log(value); 
+          api.put('/user', userToUpdate).then((response) => {
+            alert("User updated with success")
+            const user = response.data
+            localStorage.setItem('@ParDeJarro:user', JSON.stringify(user))
+            
+          }).catch(() => {
+            alert("Something went wrong while updating user")
+            console.log('error');
+          })
         })
         .catch(function(err) {
-          console.log(err);
+          alert(err);
         });
-      
-      api.put('/user', userToUpdate).then((response) => {
-        alert("User updated with success")
-        const user = response.data
-        localStorage.setItem('@ParDeJarro:user', JSON.stringify(user))
-      }).catch(() => {
-        alert("Something went wrong while updating user")
-        console.log('error');
-      })
-      
     }
 
     const getGenders = () => {
