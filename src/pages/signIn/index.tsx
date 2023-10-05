@@ -19,7 +19,7 @@ export default function SignIn() {
     (
       signIn({ email: email, password: password })
       .then(() => {
-        navigate('/signIn')
+        navigate('/')
       })
     )
   }

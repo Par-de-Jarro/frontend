@@ -1,6 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import PageContainer from '../../components/page-container'
-import { ProfileDiv, UserImage, MainButton, FemaleIcon, MaleIcon, NonBinaryIcon, UninformedGenderIcon, LocationIcon, ImageInput, ImageInputWrapper } from './styles'
+import { 
+  ProfileDiv, 
+  UserImage, 
+  MainButton, 
+  FemaleIcon, 
+  MaleIcon, 
+  NonBinaryIcon, 
+  UninformedGenderIcon, 
+  LocationIcon, 
+  ImageInput, 
+  ImageInputWrapper } from './styles'
 import { Recommendation } from '../../types/input';
 import Input from '../../components/input'
 import SimpleInput from '../../components/simple-input'
@@ -12,6 +22,8 @@ const UserProfile: React.FC = () => {
     const { user } = useAuth()
 
     const [name, setName] = useState(user.name)
+    const [profileImage, setProfileImage] = useState(user.profile_img)
+    const [imageFile, setImageFile] = useState<File>();
     const [gender, setGender] = useState(user.gender)
     const [email, setEmail] = useState(user.email)
     const [bio, setBio] = useState(user.bio)
@@ -23,34 +35,54 @@ const UserProfile: React.FC = () => {
     const [universityRecommendations, setUniversityRecommendations] = useState<Array<Recommendation>>([])
     const [genderRecommendations, setGenderRecommendations] = useState<Array<Recommendation>>([])
 
-    const token = localStorage.getItem('@ParDeJarro:token');
+    const uploadImage = (file: File) => {
+      let image_url = null
+      
+      let formData = new FormData();
 
-    const headers = {
-      'Api-Key': 'zKVWMjBIxCxAfs40OqIdqgNwsyCIyCLMhL90T3t1iNOOt2G6M5wfgiej5mZPAIw',
-      'Authorization': `Bearer ${token}`, 
-    };
+      formData.append("file", file);
+
+      api.post('/user/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+      })
+      .then((response) => {
+        const user = response.data;
+        console.log('Image uploaded successfully:', response.data);
+        localStorage.setItem('@ParDeJarro:user', JSON.stringify(user))
+      })
+      .catch((error) => {
+        console.error('Image upload failed:', error);
+      });
+     
+      return image_url;
+    }
 
     const updateUser = () => {
-      (
-        api.put('/user', {
-            name: name,
-            email: email,
-            cellphone: cellphone,
-            document_id: cpf,
-            birthdate: birthdate,
-            course: course,
-            bio: bio,
-            gender: gender,
-            id_university: user.university.id_university
-        }, {headers}).then((response) => {
-          alert("User updated with success")
-          const user = response.data
-          localStorage.setItem('@ParDeJarro:user', JSON.stringify(user))
-        }).catch(() => {
-          alert("Something went wrong while updating user")
-          console.log('error');
-        })
-      )
+      if (imageFile != null) {
+        uploadImage(imageFile);
+      }
+      
+      api.put('/user', {
+          name: name,
+          email: email,
+          cellphone: cellphone,
+          document_id: cpf,
+          birthdate: birthdate,
+          course: course,
+          bio: bio,
+          gender: gender,
+          id_university: user.university.id_university
+      }).then((response) => {
+        alert("User updated with success")
+        const user = response.data
+        localStorage.setItem('@ParDeJarro:user', JSON.stringify(user))
+      }).catch(() => {
+        alert("Something went wrong while updating user")
+        console.log('error');
+      })
+      
     }
 
     const getGenders = () => {
@@ -96,10 +128,17 @@ const UserProfile: React.FC = () => {
         )
       }
 
+    const selectImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const selectedFiles = event.target.files as FileList;
+      setImageFile(selectedFiles?.[0]);
+      setProfileImage(URL.createObjectURL(selectedFiles?.[0]));
+    };
+
     useEffect(() => {
         getGenders()
         getUniversities()
         setName(user.name)
+        setProfileImage(user.profile_img)
         setGender(user.gender)
         setEmail(user.email)
         setBio(user.bio)
@@ -107,15 +146,23 @@ const UserProfile: React.FC = () => {
         setCpf(user.document_id)
         setCourse(user.course)
         setUniversity(user.university.slug)
-      }, [user.name, user.gender, user.email, user.bio, user.cellphone, user.document_id, user.course, user.university.slug])
+      }, [user.name, 
+          user.gender, 
+          user.email, 
+          user.bio, 
+          user.cellphone, 
+          user.document_id, 
+          user.course, 
+          user.university.slug, 
+          user.profile_img])
 
   return (
       <>
         <PageContainer>
             <ProfileDiv>
-                <UserImage src={user.profile_img}/>
+                <UserImage src={profileImage}/>
                 <ImageInputWrapper>
-                  <ImageInput type="file" accept="image/*"></ImageInput>
+                  <ImageInput type="file" accept="image/*" onChange={selectImage}></ImageInput>
                 </ImageInputWrapper>
                 <SimpleInput 
                     label='Nome' 
@@ -179,7 +226,7 @@ const UserProfile: React.FC = () => {
                       setBio(e.target.value)
                     }}
                 />
-                <MainButton onClick={updateUser} >Editar</MainButton>
+                <MainButton onClick={updateUser}>Editar</MainButton>
             </ProfileDiv>
         </PageContainer>
       </>
