@@ -3,6 +3,7 @@ import SearchPage from './pages/search'
 import UserPage from './pages/user'
 import SignUp from './pages/signUp'
 import SignIn from './pages/signIn'
+import UserProfile from './pages/userProfile'
 
 export default function AppRoutes () {
   return (
@@ -12,6 +13,7 @@ export default function AppRoutes () {
         <Route path="/user" element={<UserPage />} />
         <Route path="/signUp" element={<SignUp />} />
         <Route path="/signIn" element={<SignIn />} />
+        <Route path="/user/profile" element={<UserProfile />} />
       </Routes>
     </BrowserRouter>
   )
