@@ -32,7 +32,8 @@
 		"typescript": "*",
 		"use-debounce": "^9.0.4",
 		"uuid": "^9.0.1",
-		"web-vitals": "^2.1.4"
+		"web-vitals": "^2.1.4",
+		"yup": "^1.3.2"
 	},
 	"scripts": {
 		"start": "react-scripts start",

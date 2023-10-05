@@ -17,8 +17,35 @@ import SimpleInput from '../../components/simple-input'
 import api from '../../services/api';
 
 import { useAuth } from '../../hooks/auth'
+import * as yup from 'yup';
 
 const UserProfile: React.FC = () => {
+  const yupUserValidator = yup.object().shape({
+    name: yup.string(),
+    email: yup.string().email('Invalid email format'),
+    cellphone: yup
+    .number()
+    .test('length', 'Document ID must be exactly 11 digits', (value) => {
+      if (value == null) {
+        return false
+      }
+      return value.toString().length === 11;
+    }),
+    document_id: yup
+    .number()
+    .test('length', 'Document ID must be exactly 11 digits', (value) => {
+      if (value == null) {
+        return false
+      }
+      return value.toString().length === 11;
+    }),
+    birthdate: yup.date(),
+    course: yup.string(),
+    bio: yup.string(),
+    gender: yup.string(),
+    id_university: yup.string(),
+  });
+
     const { user } = useAuth()
 
     const [name, setName] = useState(user.name)
@@ -63,18 +90,26 @@ const UserProfile: React.FC = () => {
       if (imageFile != null) {
         uploadImage(imageFile);
       }
+      const userToUpdate = {
+        name: name,
+        email: email,
+        cellphone: cellphone,
+        document_id: cpf,
+        birthdate: birthdate,
+        course: course,
+        bio: bio,
+        gender: gender,
+        id_university: user.university.id_university
+    }
+      yupUserValidator.validate(userToUpdate)
+        .then(function(value) {
+          console.log(value); 
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
       
-      api.put('/user', {
-          name: name,
-          email: email,
-          cellphone: cellphone,
-          document_id: cpf,
-          birthdate: birthdate,
-          course: course,
-          bio: bio,
-          gender: gender,
-          id_university: user.university.id_university
-      }).then((response) => {
+      api.put('/user', userToUpdate).then((response) => {
         alert("User updated with success")
         const user = response.data
         localStorage.setItem('@ParDeJarro:user', JSON.stringify(user))
