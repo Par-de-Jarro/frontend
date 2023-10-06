@@ -6,6 +6,7 @@ import SignIn from './pages/signIn'
 import AddSpot from './pages/spot'
 import AddSpotImage from './pages/spot/image'
 import UserProfile from './pages/userProfile'
+import SpotDetails from './pages/spotDetails'
 
 export default function AppRoutes () {
   return (
@@ -18,6 +19,7 @@ export default function AppRoutes () {
         <Route path="/spot" element={<AddSpot />} />
         <Route path="/spot_image/:id" element={<AddSpotImage />} />
         <Route path="/user/profile" element={<UserProfile />} />
+        <Route path="/spots" element={<SpotDetails />} />
       </Routes>
     </BrowserRouter>
   )
