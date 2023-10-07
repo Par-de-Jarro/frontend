@@ -15,7 +15,7 @@ export default function AppRoutes () {
         <Route path="/signUp" element={<SignUp />} />
         <Route path="/signIn" element={<SignIn />} />
         <Route path="/user/profile" element={<UserProfile />} />
-        <Route path="/spots" element={<SpotDetails />} />
+        <Route path="/spots/:id" element={<SpotDetails />} />
       </Routes>
     </BrowserRouter>
   )
