@@ -1,3 +1,5 @@
+import { University } from "./university"
+
 export interface Spot {
     name: string
     description: string
@@ -24,23 +26,23 @@ export interface Image {
     image_order: number
 }
   
-  interface Key {
+interface Key {
     convenience: Convenience
     allowance: Allowance
 }
   
-  interface Convenience {
+interface Convenience {
     rooms_quantity: number
     bathrooms_quantity: number
     has_elevator: boolean
 }
   
-  interface Allowance {
+interface Allowance {
     allow_pet: boolean
     allow_smoker: boolean
 }
   
-  interface Owner {
+interface Owner {
     name: string
     email: string
     cellphone: string
@@ -52,12 +54,4 @@ export interface Image {
     gender: string
     id_user: string
     university: University
-}
-  
-  interface University {
-    name: string
-    slug: string
-    lat: number
-    long: number
-    id_university: string
 }
