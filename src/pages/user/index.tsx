@@ -8,6 +8,7 @@ import { PiUserCircleFill } from 'react-icons/pi'
 import { FaMoneyBillWave } from 'react-icons/fa'
 import { useAuth } from '../../hooks/auth'
 import { useNavigate } from 'react-router-dom'
+import UserPic from '../../styles/assets/User.jpg'
 
 const UserPage: React.FC = () => {
   const { user, signOut } = useAuth()
@@ -24,7 +25,7 @@ const UserPage: React.FC = () => {
           <Title>Perfil</Title>
           { user && (
               <LoggedInUserContainer to='/user/profile'>
-                <UserImage src={user.profile_img}/>
+                <UserImage src={user.profile_img || UserPic}/>
                   <UserInfoContainer>
                       <UserName>{user.name}</UserName>
                       Mostrar Perfil

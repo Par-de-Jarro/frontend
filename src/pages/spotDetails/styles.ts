@@ -1,20 +1,16 @@
 import styled from "styled-components"
 import { SlLocationPin } from "react-icons/sl"
 import { PiHouseLineBold } from 'react-icons/pi'
-import { IoBedOutline } from 'react-icons/io5'
-import { FaShower } from 'react-icons/fa6'
-import { LuDog, LuCigarette } from 'react-icons/lu'
-import { FaRegMap, FaMoneyBillWaveAlt } from 'react-icons/fa'
+import { IoBedOutline, IoClose } from 'react-icons/io5'
+import { LuDog, LuCigarette, LuShowerHead } from 'react-icons/lu'
+import { FaRegMap } from 'react-icons/fa'
+import { LiaMoneyBillWaveSolid} from 'react-icons/lia'
+import { AiOutlineCloseCircle} from 'react-icons/ai'
 
 export const SpotTitle = styled.p`
     font-size: 20px;
     font-weight: 400;
-    color: black;
-`
-
-export const SpotPrice = styled.p`
-    color: #717171;
-    font-size: 20px;
+    color: #2b2b2b;
 `
 
 export const SpotContainer = styled.div`
@@ -33,6 +29,10 @@ export const MainInfoDiv = styled.div`
     & > :first-child {
     margin-bottom: 15px; 
   }
+
+  & > :last-child {
+    margin-bottom: 20px; 
+  }
 `
 
 export const SubInfo = styled.div`
@@ -41,7 +41,7 @@ export const SubInfo = styled.div`
   width: 100%;
   min-height: 50px;
   max-height: 80px;
-  color: #222222;
+  color: #2b2b2b;
   border-bottom: 1px solid #ebebeb;
   padding: 10px 0px 10px 0px;
   text-decoration: none;  
@@ -54,41 +54,59 @@ export const SubInfo = styled.div`
 export const LocationIcon = styled(SlLocationPin)`
   height: 20px;
   width: 20px;
+  color: #2b2b2b;
 `
 
 export const HouseIcon = styled(PiHouseLineBold)`
   height: 20px;
   width: 20px;
+  color: #2b2b2b;
 `
 
 export const BedIcon = styled(IoBedOutline)`
   height: 20px;
   width: 20px;
+  color: #2b2b2b;
 `
 
-export const ShowerIcon = styled(FaShower)`
+export const ShowerIcon = styled(LuShowerHead)`
   height: 20px;
   width: 20px;
+  color: #2b2b2b;
 `
 
 export const PetIcon = styled(LuDog)`
   height: 20px;
   width: 20px;
+  color: #2b2b2b;
 `
 
 export const MapIcon = styled(FaRegMap)`
   height: 20px;
   width: 20px;
+  color: #2b2b2b;
 `
 
 export const CigaretteIcon = styled(LuCigarette)`
   height: 20px;
   width: 20px;
+  color: #2b2b2b;
 `
 
-export const MoneyIcon = styled(FaMoneyBillWaveAlt)`
+export const MoneyIcon = styled(LiaMoneyBillWaveSolid)`
   height: 20px;
   width: 20px;
+  color: #2b2b2b;
+`
+
+export const CloseIcon = styled(AiOutlineCloseCircle)`
+  height: 27px;
+  width: 27px;
+  color: 	#F5F5F5;
+  cursor: pointer;
+  position: absolute;
+  margin-top: 5px;
+  margin-left: 5px;
 `
 
 export const MainButton = styled.button`
@@ -133,6 +151,15 @@ export const UserImage = styled.img`
     border-radius: 50%;
 `
 
-export const SpotImage = styled.img`
-    border-radius: 16px;
+export const DescriptionDiv = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    
+
+    & > :first-child {
+     margin-top: 25px; 
+     margin-bottom: 10px; 
+     color: #2b2b2b;
+  }
 `
