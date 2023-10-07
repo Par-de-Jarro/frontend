@@ -97,7 +97,7 @@ const SpotDetails: React.FC = () => {
                     <p>{spot?.key.allowance.allow_smoker ? "Permite fumantes" : "Não permite fumantes"}</p>
                 </SubInfo>
               </SpotContainer>
-              <MainButton>{user.id_user === spot?.owner.id_user ? 'Editar local' : 'Solicitar entrada'}</MainButton>
+              <MainButton>{user && user.id_user === spot?.owner.id_user ? 'Editar local' : 'Solicitar entrada'}</MainButton>
             </PageContainer>
         </>
       )
