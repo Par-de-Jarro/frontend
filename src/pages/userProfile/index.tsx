@@ -15,6 +15,7 @@ import { Recommendation } from '../../types/input';
 import Input from '../../components/input'
 import SimpleInput from '../../components/simple-input'
 import api from '../../services/api';
+import UserPic from '../../styles/assets/User.jpg'
 
 import { useAuth } from '../../hooks/auth'
 import * as yup from 'yup';
@@ -193,7 +194,7 @@ const UserProfile: React.FC = () => {
       <>
         <PageContainer>
             <ProfileDiv>
-                <UserImage src={profileImage}/>
+                <UserImage src={profileImage || UserPic}/>
                 <ImageInputWrapper>
                   <ImageInput type="file" accept="image/*" onChange={selectImage}></ImageInput>
                 </ImageInputWrapper>

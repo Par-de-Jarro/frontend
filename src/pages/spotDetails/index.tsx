@@ -4,18 +4,34 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 import { useParams } from 'react-router-dom';
 import api from '../../services/api';
+import UserPic from '../../styles/assets/User.jpg'
+import { useAuth } from '../../hooks/auth'
+import { useNavigate } from 'react-router-dom';
+
 import { 
     SpotContainer, MainInfoDiv, MoneyIcon, OwnerDiv, UserImage, SubInfo, LocationIcon, SpotTitle, CigaretteIcon, MainButton, 
-    HouseIcon, BedIcon, ShowerIcon, PetIcon, MapIcon, SpotImage
+    HouseIcon, BedIcon, ShowerIcon, PetIcon, MapIcon, CloseIcon
 } from './styles';
 
 import {Spot, Image} from '../../types/spot'
+
+const spotTypeMap = new Map([
+    ['apartment', 'Apartamento'],
+    ['house', 'Casa'],
+]);
 
 
 const SpotDetails: React.FC = () => {
     const [spot, setSpot] = useState<Spot>()
 
     const { id } = useParams();
+    const { user } = useAuth()
+
+    const navigate = useNavigate();
+  
+	const goBack = () => {
+		navigate(-1);
+	}
 
     const getSpot = () => {
         api.get(`/spot/${id}`).then((response) => {
@@ -24,23 +40,24 @@ const SpotDetails: React.FC = () => {
         })
     }
 
-    useEffect(() => { getSpot() })
+    useEffect(() => { getSpot() }, [])
 
     return (
         <>
-            <PageContainer>
-              <SpotContainer>
-                <Carousel showThumbs={false}>
+            <Carousel showThumbs={false}>
                 {
                     spot?.images.map((image: Image) => (
                         <div>
-                            <SpotImage src={image.image_url} alt={`spot ${id}`}/>
+                            <CloseIcon onClick={goBack} size={30}/>
+                            <img src={image.image_url} alt={`spot ${id}`}/>
                         </div>
                     ))
                 }
-                </Carousel>
+            </Carousel>
+            <PageContainer>
+              <SpotContainer>
                 <OwnerDiv>
-                    <UserImage src={spot?.owner.profile_img}/>
+                    <UserImage src={spot?.owner.profile_img || UserPic}/>
                     <p>{spot?.owner.name}</p>
                 </OwnerDiv>
                 <MainInfoDiv>
@@ -53,7 +70,7 @@ const SpotDetails: React.FC = () => {
                 </SubInfo>
                 <SubInfo>
                     <HouseIcon></HouseIcon>
-                    <p>{spot?.type}</p>
+                    <p>{spotTypeMap.get(spot?.type || "")}</p>
                 </SubInfo>
                 <SubInfo>
                     <MapIcon></MapIcon>
@@ -80,7 +97,7 @@ const SpotDetails: React.FC = () => {
                     <p>{spot?.key.allowance.allow_smoker ? "Permite fumantes" : "Não permite fumantes"}</p>
                 </SubInfo>
               </SpotContainer>
-              <MainButton>Solicitar entrada</MainButton>
+              <MainButton>{user.id_user === spot?.owner.id_user ? 'Editar local' : 'Solicitar entrada'}</MainButton>
             </PageContainer>
         </>
       )
