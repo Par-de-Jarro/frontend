@@ -28,8 +28,11 @@ export const SpotContainer = styled.div`
 export const MainInfoDiv = styled.div`
     width: 100%;
     display: flex;
-    flex-direction: row; 
-    justify-content: space-between;
+    flex-direction: column; 
+
+    & > :first-child {
+    margin-bottom: 15px; 
+  }
 `
 
 export const SubInfo = styled.div`
@@ -128,4 +131,8 @@ export const UserImage = styled.img`
     width: 30px;
     height: 30px;
     border-radius: 50%;
+`
+
+export const SpotImage = styled.img`
+    border-radius: 16px;
 `

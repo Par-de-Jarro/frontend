@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import PageContainer from '../../components/page-container'
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
@@ -6,72 +6,78 @@ import { useParams } from 'react-router-dom';
 import api from '../../services/api';
 import { 
     SpotContainer, MainInfoDiv, MoneyIcon, OwnerDiv, UserImage, SubInfo, LocationIcon, SpotTitle, CigaretteIcon, MainButton, 
-    HouseIcon, BedIcon, ShowerIcon, PetIcon, MapIcon
+    HouseIcon, BedIcon, ShowerIcon, PetIcon, MapIcon, SpotImage
 } from './styles';
+
+import {Spot, Image} from '../../types/spot'
 
 
 const SpotDetails: React.FC = () => {
+    const [spot, setSpot] = useState<Spot>()
+
     const { id } = useParams();
 
     const getSpot = () => {
-        (
-          api.get('/spot').then((response) => {
-            const spot = response.data
-          })
-        )
+        api.get(`/spot/${id}`).then((response) => {
+            const spot: Spot = response?.data
+            setSpot(spot)
+        })
     }
+
+    useEffect(() => { getSpot() })
 
     return (
         <>
             <PageContainer>
               <SpotContainer>
                 <Carousel showThumbs={false}>
-                    <div>
-                        <img src="https://img.freepik.com/free-photo/blue-house-with-blue-roof-sky-background_1340-25953.jpg" alt="demo"/>
-                    </div>
-                    <div>
-                        <img src="https://img.freepik.com/free-photo/blue-house-with-blue-roof-sky-background_1340-25953.jpg" alt="demo"/>
-                    </div>
+                {
+                    spot?.images.map((image: Image) => (
+                        <div>
+                            <SpotImage src={image.image_url} alt={`spot ${id}`}/>
+                        </div>
+                    ))
+                }
                 </Carousel>
                 <OwnerDiv>
-                    <UserImage src="{profileImage}"/>
-                    <p>Owner name</p>
+                    <UserImage src={spot?.owner.profile_img}/>
+                    <p>{spot?.owner.name}</p>
                 </OwnerDiv>
                 <MainInfoDiv>
-                    <SpotTitle>image name</SpotTitle>
+                    <SpotTitle>{spot?.name}</SpotTitle>
+                    <p>{spot?.description}</p>
                 </MainInfoDiv>
-                <p>description description description description description description description description</p>
                 <SubInfo>
                     <MoneyIcon></MoneyIcon>
-                    <p>R$ 200,00</p>
+                    <p>R$ {spot?.value}</p>
                 </SubInfo>
                 <SubInfo>
                     <HouseIcon></HouseIcon>
-                    <p>Tipo</p>
+                    <p>{spot?.type}</p>
                 </SubInfo>
                 <SubInfo>
                     <MapIcon></MapIcon>
-                    <p>city</p>
+                    <p>{spot?.city}, {spot?.state}</p>
                 </SubInfo>
                 <SubInfo>
                     <LocationIcon></LocationIcon>
-                    <p>address</p>
+                    <p>{spot?.street}</p>
                 </SubInfo>
                 <SubInfo>
                     <BedIcon></BedIcon>
-                    <p>Qtd de quartos</p>
+                    <p>{spot?.key.convenience.rooms_quantity} quartos</p>
                 </SubInfo>
                 <SubInfo>
                     <ShowerIcon></ShowerIcon>
-                    <p>Qtd banheiros</p>
+                    <p>{spot?.key.convenience.bathrooms_quantity} banheiros</p>
                 </SubInfo>
                 <SubInfo>
                     <PetIcon></PetIcon>
-                    <p>Permite pet</p>
+                    <p>{spot?.key.allowance.allow_pet ? "Permite pets" : "Não permite pets"}</p>
                 </SubInfo>
                 <SubInfo>
                     <CigaretteIcon></CigaretteIcon>
-                    <p>Permite fuamnte</p>
+                    <p>{spot?.key.allowance.allow_smoker ? "Permite fumantes" : "Não permite fumantes"}</p>
                 </SubInfo>
               </SpotContainer>
               <MainButton>Solicitar entrada</MainButton>
