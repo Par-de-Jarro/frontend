@@ -31,7 +31,6 @@ export default function AddSpot() {
     }
 
     const createSpot = async () => {
-
         const key = {
             "convenience": {
                 "rooms_quantity": roomsQuantity,
@@ -138,6 +137,7 @@ export default function AddSpot() {
                     onInputValueChange={(value) => setAllowSmoker(value === "")}
                     type='checkbox'
                 />
+                                
                 <Button onClick={createSpot}>Continuar</Button>
             </Form>
 
