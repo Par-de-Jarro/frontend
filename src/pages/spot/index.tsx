@@ -1,5 +1,6 @@
 import PageContainer from '../../components/page-container'
 import Input from '../../components/input'
+import CustomNumberInput from '../../components/numeric-input'
 
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -16,7 +17,11 @@ export default function AddSpot() {
     const [zipcode, setZipcode] = useState('')
     const [number, setNumber] = useState('')
     const [state, setState] = useState('')
-    const [key, setKey] = useState('')
+    const [roomsQuantity, setRoomsQuantity] = useState(0)
+    const [bathroomsQuantity, setBathroomsQuantity] = useState(0)
+    const [hasElevator, setHasElevator] = useState(false)
+    const [allowPet, setAllowPet] = useState(false)
+    const [allowSmoker, setAllowSmoker] = useState(false)
     const navigate = useNavigate();
 
     const goBack = () => {
@@ -24,6 +29,19 @@ export default function AddSpot() {
     }
 
     const createSpot = async () => {
+        
+        const key = {
+            "convenience": {
+                "rooms_quantity": roomsQuantity,
+                "bathrooms_quantity": bathroomsQuantity,
+                "has_elevator": hasElevator
+            },
+            "allowance": {
+                "allow_pet": allowPet,
+                "allow_smoker": allowSmoker
+            }
+        }
+
         await api.post('/spot', {
             name,
             description,
@@ -80,11 +98,15 @@ export default function AddSpot() {
                     inputValue={state}
                     onInputValueChange={setState}
                 />
-                <Input
-                    label='Identificador do local'
-                    inputValue={key}
-                    onInputValueChange={setKey}
+                <TitleContainer>
+                    <Title>Detalhes de um local</Title>
+                </TitleContainer>
+
+                <CustomNumberInput
+                    inputValue={roomsQuantity}
+                    onInputValueChange={setRoomsQuantity}
                 />
+                                
                 <Button onClick={createSpot}>Continuar</Button>
             </Form>
 
