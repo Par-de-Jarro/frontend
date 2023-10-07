@@ -19,7 +19,7 @@ export default function AppRoutes () {
         <Route path="/spot" element={<AddSpot />} />
         <Route path="/spot_image/:id" element={<AddSpotImage />} />
         <Route path="/user/profile" element={<UserProfile />} />
-        <Route path="/spots" element={<SpotDetails />} />
+        <Route path="/spots/:id" element={<SpotDetails />} />
       </Routes>
     </BrowserRouter>
   )
