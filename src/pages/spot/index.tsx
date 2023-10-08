@@ -29,7 +29,7 @@ export default function AddSpot() {
     }
 
     const createSpot = async () => {
-        
+
         const key = {
             "convenience": {
                 "rooms_quantity": roomsQuantity,
@@ -54,6 +54,10 @@ export default function AddSpot() {
         })
         navigate('/spot_image')
     }
+
+    const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (event: React.FocusEvent<HTMLInputElement, Element>) => {
+        setRoomsQuantity(parseInt(event.target.value))
+    };
 
     return (
         <PageContainer>
@@ -101,12 +105,12 @@ export default function AddSpot() {
                 <TitleContainer>
                     <Title>Detalhes de um local</Title>
                 </TitleContainer>
-
-                <CustomNumberInput
-                    inputValue={roomsQuantity}
-                    onInputValueChange={setRoomsQuantity}
+                <Input
+                    label='Quartos'
+                    inputValue={roomsQuantity.toString()}
+                    onInputValueChange={(value) => setRoomsQuantity(parseInt(value))}
+                    type='number'
                 />
-                                
                 <Button onClick={createSpot}>Continuar</Button>
             </Form>
 

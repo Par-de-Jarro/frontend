@@ -24,6 +24,16 @@ export const InputContainer = styled.div`
 export const Input = styled.input`
   width: 100%;
   border: 0;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  &[type=number] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
 `;
 
 export const Dropdown = styled.div`
