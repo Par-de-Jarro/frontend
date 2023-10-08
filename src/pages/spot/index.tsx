@@ -1,6 +1,5 @@
 import PageContainer from '../../components/page-container'
 import Input from '../../components/input'
-import CustomNumberInput from '../../components/numeric-input'
 
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
