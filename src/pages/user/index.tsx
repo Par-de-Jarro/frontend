@@ -1,71 +1,83 @@
-import React from 'react'
-import { CardsContainer, Title, LoggedInUserContainer, LoggedOffUserContainer, UserImage, UserInfoContainer, UserName, Button, RedirectLink, LogOutButton } from './styles'
+import React, {useEffect, useState} from 'react'
 import NavBar from '../../components/nav-bar'
 import PageContainer from '../../components/page-container'
-import NavCard from '../../components/nav-card'
-import { BsHouses } from 'react-icons/bs'
-import { PiUserCircleFill } from 'react-icons/pi'
-import { FaMoneyBillWave } from 'react-icons/fa'
-import { useAuth } from '../../hooks/auth'
-import { useNavigate } from 'react-router-dom'
+import { UserImage, Title, MainDiv, AboutSection, SubInfo, BackIcon, FirstElement, UniIcon, CourseIcon, GenderIcon, AgeIcon, ContactDiv, EmailIcon, PhoneIcon } from './styles'
 import UserPic from '../../styles/assets/User.jpg'
+import { useNavigate, useParams } from 'react-router-dom'
+import api from '../../services/api';
+import { User } from '../../types/user'
+
 
 const UserPage: React.FC = () => {
-  const { user, signOut } = useAuth()
+  const [user, SetUser] = useState<User>()
   const navigate = useNavigate();
+  const { id } = useParams();
 
-  const logOut = () => {
-    signOut()
-    navigate('/')
-  }
+  const genderMap = new Map([
+    ['male', 'Masculino'],
+    ['female', 'Feminino'],
+    ['non-binary', 'Não binário'],
+    ['uninformed', 'Nãao informado']
+]);
+
+  const getSpot = () => {
+    api.get(`/user/${id}`).then((response) => {
+        const user: User = response?.data
+        SetUser(user)
+    })
+}
+
+useEffect(() => { getSpot() }, [])
+
+  const goBack = () => {
+		navigate(-1);
+	}
 
   return (
       <>
+        <MainDiv>
+          <FirstElement>
+            <BackIcon onClick={goBack}></BackIcon>
+          </FirstElement>
+          <UserImage src={user?.profile_img || UserPic}/>
+          <Title>{user?.name}</Title>
+        </MainDiv>
         <PageContainer>
-          <Title>Perfil</Title>
-          { user && (
-              <LoggedInUserContainer to='/user/profile'>
-                <UserImage src={user.profile_img || UserPic}/>
-                  <UserInfoContainer>
-                      <UserName>{user.name}</UserName>
-                      Mostrar Perfil
-                  </UserInfoContainer>
-              </LoggedInUserContainer>
-            )
-          }
-          { !user && (
-              <LoggedOffUserContainer>
-                <Button to='/signIn'>Entrar</Button>
-                Você ainda não tem conta? <RedirectLink to='/signUp'>Cadastrar-se</RedirectLink>
-              </LoggedOffUserContainer>
-            )
-          }
-          <CardsContainer>
-            <Title>Configurações</Title>
-            <NavCard label='Meu Perfil' redicted_to='/user/profile'>
-              <PiUserCircleFill />
-            </NavCard>
-            <NavCard label='Minhas Contas' redicted_to='/'>
-              <FaMoneyBillWave/>
-            </NavCard>
-            <NavCard label='Meus Locais' redicted_to='/'>
-              <BsHouses/>
-            </NavCard>
-            {
-              user && (
-                <LogOutButton onClick={logOut}>
-                  Deslogar
-                </LogOutButton>
-              )
-            }
-          </CardsContainer>
+            <AboutSection>
+                <p>Sobre</p>
+                <p>{user?.bio}</p>
+            </AboutSection>
+            <SubInfo>
+              <GenderIcon></GenderIcon>
+              <p>{genderMap.get(user?.gender || 'Não informado')}</p>
+            </SubInfo>
+            <SubInfo>
+              <AgeIcon></AgeIcon>
+              <p>{user?.birthdate}</p>
+            </SubInfo>
+            <SubInfo>
+              <UniIcon></UniIcon>
+              <p>{user?.university.slug}</p>
+            </SubInfo>
+            <SubInfo>
+              <CourseIcon></CourseIcon>
+              <p>{user?.course}</p>
+            </SubInfo>
+            <ContactDiv>
+              <p>Contato</p>
+              <SubInfo>
+                <EmailIcon></EmailIcon>
+                <p>{user?.email}</p>
+              </SubInfo>
+              <SubInfo>
+                <PhoneIcon></PhoneIcon>
+                <p>{user?.cellphone}</p>
+              </SubInfo>
+            </ContactDiv>
         </PageContainer>
         <NavBar/>
       </>
     )
-
-
-
 }
 
 export default UserPage

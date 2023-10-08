@@ -1,122 +1,130 @@
 import styled from 'styled-components'
+import { LiaUniversitySolid, LiaBookSolid } from 'react-icons/lia'
+import { BsGenderAmbiguous, BsCalendarEvent, BsPhone } from 'react-icons/bs'
+import { AiOutlineMail } from 'react-icons/ai'
+import { IoIosArrowBack } from 'react-icons/io'
 
-import { NavLink } from 'react-router-dom'
 
-export const LoggedInUserContainer = styled(NavLink)`
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 20px;
-    border-bottom: 1px solid #ebebeb;
-    padding-bottom: 10px;
-    text-decoration: none;
-
-    &:hover {
-        background-color: #f2f2f2;
-    }
+export const UserImage = styled.img`
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 8px solid #ffffff;
+    background-color: #ffffff;
 `
 
-export const LoggedOffUserContainer = styled.div`
+export const MainDiv = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
-    border-bottom: 1px solid #ebebeb;
-    padding-bottom: 10px;
-
-    color: #717171;
-`
-
-export const RedirectLink = styled(NavLink)`
-    color: #2b2b2b;
-
+    justify-content: center;
+    background: linear-gradient(to bottom, #f8dfc1 0%, #f8dfc1 33%, transparent 33%, transparent 100%);
+    font-weight: 500;
+    height: 230px;
 `
 
 export const Title = styled.p`
-    height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content: left;
-    align-items: center;
     font-size: 25px;
-    color: #2b2b2b;
-    font-weight: 500;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    font-weight: 400;
+    color: #c9834a;
 `
 
-export const CardsContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-`
-
-export const UserInfoContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    color: #717171;
-    font-size: 14px;
-    gap: 5px;
-`
-
-export const UserName = styled.p`
-    font-size: 18px;
-    color: #2b2b2b;
-    width: 400;
-`
-
-export const UserImage = styled.img`
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-`
-
-export const Button = styled(NavLink)`
-    height: 50px;
+export const AboutSection = styled.div`
     width: 100%;
+    font-size: 19px;
+    color: #a7a8ac;
+    font-weight: 400;
+    margin-bottom: 35px;
 
-    display: flex;
-    justify-content: center;
-    align-items:  center;
-
-    text-decoration: none;
-    font-size: 16px;
-
-    background-color: #f8f4e8;
-    color: #513422;
-    border-radius: 12px;
-
-
-    &:hover {
-        background-color: #513422;
-        color: #f8f4e8;
-    }
+    & > :first-child {
+     color: #c9834a;
+     font-size: 22px;
+     font-weight: 400;
+     margin-bottom: 15px;
+  }
     
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 `
 
-export const LogOutButton = styled.button`
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-
-    color: #513422;
-    border-radius: 12px;
-    border: 0;
-    height: 50px;
-
-    background-color: #f8f4e8;
-    &:hover {
-        background-color: #513422;
-        color: #f8f4e8;
-    }
-    
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+export const SubInfo = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  min-height: 50px;
+  max-height: 80px;
+  color: #6b6c70;
+  border-bottom: 1px solid #ebebeb;
+  padding: 10px 0px 10px 0px;
+  text-decoration: none;  
+  
+  & > :first-child {
+    margin-right: 25px; 
+  }
 `
+
+export const UniIcon = styled(LiaUniversitySolid)`
+  height: 20px;
+  width: 20px;
+  color: #a7a8ac;
+`
+
+export const CourseIcon = styled(LiaBookSolid)`
+  height: 20px;
+  width: 20px;
+  color: #a7a8ac;
+`
+
+export const GenderIcon = styled(BsGenderAmbiguous)`
+  height: 20px;
+  width: 20px;
+  color: #a7a8ac;
+`
+
+export const AgeIcon = styled(BsCalendarEvent)`
+  height: 20px;
+  width: 20px;
+  color: #a7a8ac;
+`
+
+export const EmailIcon = styled(AiOutlineMail)`
+  height: 20px;
+  width: 20px;
+  color: #c9834a;
+`
+
+export const PhoneIcon = styled(BsPhone)`
+  height: 20px;
+  width: 20px;
+  color: #c9834a;
+`
+
+export const ContactDiv = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  & > :first-child {
+     color: #c9834a;
+     font-size: 22px;
+     font-weight: 400;
+     margin-bottom: 15px;
+     margin-top: 30px;
+  }
+`
+
+export const BackIcon = styled(IoIosArrowBack)`
+  height: 30px;
+  width: 30px;
+  color: 	#d2bc95;
+  cursor: pointer;
+  margin-top: 5px;
+  margin-left: 5px;
+`
+
+export const FirstElement = styled.div`
+  
+  align-self: flex-start; 
+  justify-self: flex-start; 
+  display: inline-block; 
+`;
+
