@@ -1,42 +1,79 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import NavBar from '../../components/nav-bar'
 import PageContainer from '../../components/page-container'
-import { UserImage, Title, MainDiv, AboutSection, SubInfo, UniIcon, CourseIcon, GenderIcon, AgeIcon } from './styles'
+import { UserImage, Title, MainDiv, AboutSection, SubInfo, BackIcon, FirstElement, UniIcon, CourseIcon, GenderIcon, AgeIcon, ContactDiv, EmailIcon, PhoneIcon } from './styles'
 import UserPic from '../../styles/assets/User.jpg'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import api from '../../services/api';
+import { User } from '../../types/user'
 
 
 const UserPage: React.FC = () => {
+  const [user, SetUser] = useState<User>()
   const navigate = useNavigate();
+  const { id } = useParams();
+
+  const genderMap = new Map([
+    ['male', 'Masculino'],
+    ['female', 'Feminino'],
+    ['non-binary', 'Não binário'],
+    ['uninformed', 'Nãao informado']
+]);
+
+  const getSpot = () => {
+    api.get(`/user/${id}`).then((response) => {
+        const user: User = response?.data
+        SetUser(user)
+    })
+}
+
+useEffect(() => { getSpot() }, [])
+
+  const goBack = () => {
+		navigate(-1);
+	}
 
   return (
       <>
         <MainDiv>
-          <UserImage src={UserPic}/>
-          <Title>User name</Title>
+          <FirstElement>
+            <BackIcon onClick={goBack}></BackIcon>
+          </FirstElement>
+          <UserImage src={user?.profile_img || UserPic}/>
+          <Title>{user?.name}</Title>
         </MainDiv>
         <PageContainer>
             <AboutSection>
                 <p>Sobre</p>
-                <p>descrição descrição descrição</p>
+                <p>{user?.bio}</p>
             </AboutSection>
             <SubInfo>
               <GenderIcon></GenderIcon>
-              <p>Genero x</p>
+              <p>{genderMap.get(user?.gender || 'Não informado')}</p>
             </SubInfo>
             <SubInfo>
               <AgeIcon></AgeIcon>
-              <p>Idade x</p>
+              <p>{user?.birthdate}</p>
             </SubInfo>
             <SubInfo>
               <UniIcon></UniIcon>
-              <p>Universidade x</p>
+              <p>{user?.university.slug}</p>
             </SubInfo>
             <SubInfo>
               <CourseIcon></CourseIcon>
-              <p>Curso x</p>
+              <p>{user?.course}</p>
             </SubInfo>
-            <div>Contato</div>
+            <ContactDiv>
+              <p>Contato</p>
+              <SubInfo>
+                <EmailIcon></EmailIcon>
+                <p>{user?.email}</p>
+              </SubInfo>
+              <SubInfo>
+                <PhoneIcon></PhoneIcon>
+                <p>{user?.cellphone}</p>
+              </SubInfo>
+            </ContactDiv>
         </PageContainer>
         <NavBar/>
       </>

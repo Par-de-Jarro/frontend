@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 import { LiaUniversitySolid, LiaBookSolid } from 'react-icons/lia'
-import { BsGenderAmbiguous, BsCalendarEvent } from 'react-icons/bs'
+import { BsGenderAmbiguous, BsCalendarEvent, BsPhone } from 'react-icons/bs'
+import { AiOutlineMail } from 'react-icons/ai'
+import { IoIosArrowBack } from 'react-icons/io'
 
 
 export const UserImage = styled.img`
@@ -8,6 +10,7 @@ export const UserImage = styled.img`
     height: 120px;
     border-radius: 50%;
     border: 8px solid #ffffff;
+    background-color: #ffffff;
 `
 
 export const MainDiv = styled.div`
@@ -23,8 +26,8 @@ export const MainDiv = styled.div`
 
 export const Title = styled.p`
     font-size: 25px;
-    font-weight: bold;
-    color: #8a643b;
+    font-weight: 400;
+    color: #c9834a;
 `
 
 export const AboutSection = styled.div`
@@ -35,7 +38,7 @@ export const AboutSection = styled.div`
     margin-bottom: 35px;
 
     & > :first-child {
-     color: #6b6c70;
+     color: #c9834a;
      font-size: 22px;
      font-weight: 400;
      margin-bottom: 15px;
@@ -82,3 +85,46 @@ export const AgeIcon = styled(BsCalendarEvent)`
   width: 20px;
   color: #a7a8ac;
 `
+
+export const EmailIcon = styled(AiOutlineMail)`
+  height: 20px;
+  width: 20px;
+  color: #c9834a;
+`
+
+export const PhoneIcon = styled(BsPhone)`
+  height: 20px;
+  width: 20px;
+  color: #c9834a;
+`
+
+export const ContactDiv = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  & > :first-child {
+     color: #c9834a;
+     font-size: 22px;
+     font-weight: 400;
+     margin-bottom: 15px;
+     margin-top: 30px;
+  }
+`
+
+export const BackIcon = styled(IoIosArrowBack)`
+  height: 30px;
+  width: 30px;
+  color: 	#d2bc95;
+  cursor: pointer;
+  margin-top: 5px;
+  margin-left: 5px;
+`
+
+export const FirstElement = styled.div`
+  
+  align-self: flex-start; 
+  justify-self: flex-start; 
+  display: inline-block; 
+`;
+

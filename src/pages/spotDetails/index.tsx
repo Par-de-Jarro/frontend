@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import api from '../../services/api';
 import UserPic from '../../styles/assets/User.jpg'
 import { useAuth } from '../../hooks/auth'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 
 import { 
     SpotContainer, MainInfoDiv, MoneyIcon, OwnerDiv, UserImage, SubInfo, LocationIcon, SpotTitle, CigaretteIcon, MainButton, 
@@ -57,7 +57,9 @@ const SpotDetails: React.FC = () => {
             <PageContainer>
               <SpotContainer>
                 <OwnerDiv>
-                    <UserImage src={spot?.owner.profile_img || UserPic}/>
+                    <NavLink to={ user ? `/user/${spot?.owner.id_user}` : '/signIn'} style={{ textDecoration: 'none' }}>
+                        <UserImage src={spot?.owner.profile_img || UserPic}/>
+                    </NavLink>
                     <p>{spot?.owner.name}</p>
                 </OwnerDiv>
                 <MainInfoDiv>

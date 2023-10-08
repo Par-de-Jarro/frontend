@@ -2,28 +2,8 @@ import React, {
   createContext, useCallback, useState, useContext, type ReactNode
 } from 'react'
 import api from '../services/api'
+import { User } from '../types/user'
 
-export interface User {
-  name: string
-  email: string
-  cellphone: string
-  document_id: string
-  profile_img: string
-  birthdate: string
-  course: string
-  bio: string
-  gender: string
-  id_user: string
-  university: University
-}
-
-export interface University {
-  name: string
-  slug: string
-  lat: number
-  long: number
-  id_university: string
-}
 interface AuthState {
   access_token: string
   user: User
