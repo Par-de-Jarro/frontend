@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { SlLocationPin } from "react-icons/sl"
 import { PiHouseLineBold } from 'react-icons/pi'
-import { IoBedOutline, IoClose } from 'react-icons/io5'
+import { IoBedOutline } from 'react-icons/io5'
 import { LuDog, LuCigarette, LuShowerHead } from 'react-icons/lu'
 import { FaRegMap } from 'react-icons/fa'
 import { LiaMoneyBillWaveSolid} from 'react-icons/lia'
