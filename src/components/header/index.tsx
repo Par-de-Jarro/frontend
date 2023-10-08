@@ -7,7 +7,7 @@ const Header: React.FC = () => {
     <Container>
       <NavIcon to='/'>🪴 Par de Jarro</NavIcon>
         <StyledSearchBar/>
-      <UserNavIcon to='/user'><UserIcon/></UserNavIcon>
+      <UserNavIcon to='/userConfig'><UserIcon/></UserNavIcon>
     </Container>
   )
 }
