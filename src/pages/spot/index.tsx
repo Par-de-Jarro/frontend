@@ -2,7 +2,7 @@ import PageContainer from '../../components/page-container'
 import Input from '../../components/input'
 
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import api from '../../services/api'
 import { Button, CloseIcon, Form, TitleContainer } from './styles'
@@ -21,6 +21,8 @@ export default function AddSpot() {
     const [hasElevator, setHasElevator] = useState(false)
     const [allowPet, setAllowPet] = useState(false)
     const [allowSmoker, setAllowSmoker] = useState(false)
+
+    let [searchParams, setSearchParams] = useSearchParams();
     const navigate = useNavigate();
 
     const goBack = () => {
@@ -41,7 +43,7 @@ export default function AddSpot() {
             }
         }
 
-        await api.post('/spot', {
+        const response  = await api.post('/spot', {
             name,
             description,
             type,
@@ -51,7 +53,12 @@ export default function AddSpot() {
             state,
             key
         })
-        navigate('/spot_image')
+        if(response.status === 200){
+            const data = response.data
+            //let params = serializeFormQuery(data.id_spot);
+            //setSearchParams(params);
+            navigate('/spot_image/' + data.id_spot, )
+        }
     }
 
 
@@ -116,19 +123,19 @@ export default function AddSpot() {
                 <Input
                     label='Tem elevador'
                     inputValue={hasElevator.toString()}
-                    onInputValueChange={(value) => setHasElevator(value == "true")}
+                    onInputValueChange={(value) => setHasElevator(value === "")}
                     type='checkbox'
                 />
                 <Input
                     label='Permite Pets'
                     inputValue={allowPet.toString()}
-                    onInputValueChange={(value) => setAllowPet(value == "true")}
+                    onInputValueChange={(value) => setAllowPet(value === "")}
                     type='checkbox'
                 />
                 <Input
                     label='Permite Fumantes'
                     inputValue={allowSmoker.toString()}
-                    onInputValueChange={(value) => setAllowSmoker(value == "true")}
+                    onInputValueChange={(value) => setAllowSmoker(value === "")}
                     type='checkbox'
                 />
                 <Button onClick={createSpot}>Continuar</Button>
