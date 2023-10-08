@@ -8,7 +8,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   onSelectItem?: (item: Recommendation) => void;
   onSearch?: (item: string) => void;
   inputValue: string
-  onInputValueChange?: (value: string) => void
+  onInputValueChange?: (value: any) => void
   label?: string
   type?: string
 }

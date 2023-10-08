@@ -55,9 +55,6 @@ export default function AddSpot() {
         navigate('/spot_image')
     }
 
-    const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (event: React.FocusEvent<HTMLInputElement, Element>) => {
-        setRoomsQuantity(parseInt(event.target.value))
-    };
 
     return (
         <PageContainer>
@@ -106,10 +103,34 @@ export default function AddSpot() {
                     <Title>Detalhes de um local</Title>
                 </TitleContainer>
                 <Input
-                    label='Quartos'
+                    label='Quantidade de Quartos'
                     inputValue={roomsQuantity.toString()}
                     onInputValueChange={(value) => setRoomsQuantity(parseInt(value))}
                     type='number'
+                />
+                <Input
+                    label='Quantidade de Banheiros'
+                    inputValue={bathroomsQuantity.toString()}
+                    onInputValueChange={(value) => setBathroomsQuantity(parseInt(value))}
+                    type='number'
+                />
+                <Input
+                    label='Tem elevador'
+                    inputValue={hasElevator.toString()}
+                    onInputValueChange={(value) => setHasElevator(value == "true")}
+                    type='checkbox'
+                />
+                <Input
+                    label='Permite Pets'
+                    inputValue={allowPet.toString()}
+                    onInputValueChange={(value) => setAllowPet(value == "true")}
+                    type='checkbox'
+                />
+                <Input
+                    label='Permite Fumantes'
+                    inputValue={allowSmoker.toString()}
+                    onInputValueChange={(value) => setAllowSmoker(value == "true")}
+                    type='checkbox'
                 />
                 <Button onClick={createSpot}>Continuar</Button>
             </Form>
