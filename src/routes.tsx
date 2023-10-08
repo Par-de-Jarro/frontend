@@ -13,7 +13,7 @@ export default function AppRoutes () {
       <Routes>
         <Route path="/" element={<SearchPage />} />
         <Route path="/userConfig" element={<UserConfigPage />} />
-        <Route path="/user" element={<UserPage />} />
+        <Route path="/user/:id" element={<UserPage />} />
         <Route path="/signUp" element={<SignUp />} />
         <Route path="/signIn" element={<SignIn />} />
         <Route path="/user/profile" element={<UserProfile />} />
