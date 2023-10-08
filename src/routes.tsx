@@ -9,6 +9,7 @@ import SpotDetails from './pages/spotDetails'
 import AddSpot from './pages/spot'
 import AddSpotImage from './pages/spot/image'
 
+
 export default function AppRoutes () {
   return (
     <BrowserRouter>
@@ -22,6 +23,7 @@ export default function AppRoutes () {
         <Route path="/spot" element={<AddSpot />} />
         <Route path="/spots/:id" element={<SpotDetails />} />
         <Route path="/spot_image/:id" element={<AddSpotImage />} />
+
       </Routes>
     </BrowserRouter>
   )
