@@ -137,7 +137,6 @@ export default function AddSpot() {
                     onInputValueChange={(value) => setAllowSmoker(value === "")}
                     type='checkbox'
                 />
-                                
                 <Button onClick={createSpot}>Continuar</Button>
             </Form>
 
