@@ -1,11 +1,13 @@
 import Input from "../../../components/input";
 import PageContainer from "../../../components/page-container";
 import { Title } from "../../user/styles";
-import { Button, Form, TitleContainer } from "../styles";
+import { Button, TitleContainer } from "../styles";
+
 
 import api from '../../../services/api'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useRef } from "react";
+import { Form } from "./styles";
 
 
 export default function AddSpotImage() {

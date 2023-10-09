@@ -5,15 +5,15 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import api from '../../services/api'
-import { Button, CloseIcon, Form, TitleContainer, LocationIcon } from './styles'
+import { Button, CloseIcon, Div, TitleContainer, LocationIcon } from './styles'
 import { Title } from '../signUp/styles'
-import { useAuth } from '../../hooks/auth'
 import { Recommendation } from '../../types/input';
 export default function AddSpot() {
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
     const [type, setType] = useState('')
     const [personalQuota, setPersonalQuota] = useState('')
+    const [street, setStreet] = useState('')
     const [zipcode, setZipcode] = useState('')
     const [number, setNumber] = useState('')
     const [state, setState] = useState('')
@@ -22,9 +22,10 @@ export default function AddSpot() {
     const [hasElevator, setHasElevator] = useState(false)
     const [allowPet, setAllowPet] = useState(false)
     const [allowSmoker, setAllowSmoker] = useState(false)
-    const navigate = useNavigate();
-    const { user } = useAuth()
     const [typeRecommendations, setTypesRecommendations] = useState<Array<Recommendation>>([])
+    
+    const navigate = useNavigate()
+    
     const goBack = () => {
         navigate(-1);
     }
@@ -41,21 +42,28 @@ export default function AddSpot() {
                 "allow_smoker": allowSmoker
             }
         }
-        const response = await api.post('/spot', {
-            name,
-            description,
-            type,
-            personalQuota,
-            zipcode,
-            number,
-            state,
-            key,
-            id_user: user.id_user
-        })
-        if (response.status === 200) {
-            const data = response.data
-            navigate(`/spot_image/${data.id}`)
+        try {
+            const response = await api.post('/spot/', {
+                name,
+                description,
+                type,
+                personalQuota,
+                street,
+                zipcode,
+                number,
+                state,
+                key
+            })
+
+            if (response.status === 200) {
+                const data = response.data
+                navigate(`/spot_image/${data.id}`)
+            }
+        } 
+        catch (err) {
+            console.log(err);
         }
+        
     }
 
     const getTypes = () => {
@@ -79,7 +87,7 @@ export default function AddSpot() {
     }, [])
     return (
         <PageContainer>
-            <Form>
+            <Div>
                 <TitleContainer>
                     <CloseIcon onClick={goBack} size={30} color='black' />
                     <Title>Cadastre um local</Title>
@@ -106,6 +114,11 @@ export default function AddSpot() {
                     label='Aluguel'
                     inputValue={personalQuota}
                     onInputValueChange={setPersonalQuota}
+                />
+                <Input
+                    label='Rua'
+                    inputValue={street}
+                    onInputValueChange={setStreet}
                 />
                 <Input
                     label='CEP'
@@ -156,7 +169,7 @@ export default function AddSpot() {
                     type='checkbox'
                 />
                 <Button onClick={createSpot}>Continuar</Button>
-            </Form>
+            </Div>
 
         </PageContainer>
     )

@@ -7,7 +7,7 @@ export const LocationIcon = styled(SlLocationPin)`
   width: 23px;
 `
 
-export const Form = styled.form`
+export const Div = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
