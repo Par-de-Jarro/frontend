@@ -1,10 +1,9 @@
-import Input from "../../../components/input";
-import PageContainer from "../../../components/page-container";
-import { Title } from "../../user/styles";
-import { Button, TitleContainer } from "../styles";
+import Input from "../../components/input";
+import PageContainer from "../../components/page-container";
+import { Button, Title, TitleContainer } from "./styles";
 
 
-import api from '../../../services/api'
+import api from '../../services/api'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useRef } from "react";
 import { Form } from "./styles";

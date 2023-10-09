@@ -5,9 +5,9 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import api from '../../services/api'
-import { Button, CloseIcon, Div, TitleContainer, LocationIcon } from './styles'
-import { Title } from '../signUp/styles'
+import { Button, CloseIcon, Div, Title, TitleContainer, LocationIcon } from './styles'
 import { Recommendation } from '../../types/input';
+
 export default function AddSpot() {
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')

@@ -1,13 +1,6 @@
-import { IoClose } from "react-icons/io5"
-import { SlLocationPin } from "react-icons/sl"
 import styled from "styled-components"
 
-export const LocationIcon = styled(SlLocationPin)`
-  height: 23px;
-  width: 23px;
-`
-
-export const Div = styled.div`
+export const Form = styled.form`
   width: 100%;
   height: 100%;
   display: flex;
@@ -17,24 +10,10 @@ export const Div = styled.div`
   gap: 20px;
 `
 
-export const CloseIcon = styled(IoClose)`
-  height: 25px;
-  width: 25px;
-  color: #513422;
-  cursor: pointer;
-`
-
 export const Title = styled.p`
-    height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    font-size: 22px;
-    color: #2b2b2b;
-    font-weight: 500;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    font-size: 25px;
+    font-weight: 400;
+    color: #c9834a;
 `
 
 export const TitleContainer = styled.div`
