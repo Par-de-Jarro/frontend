@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useEffect} from 'react'
 import PageContainer from '../../components/page-container'
 import "react-responsive-carousel/lib/styles/carousel.min.css";
