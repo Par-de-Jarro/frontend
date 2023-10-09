@@ -1,12 +1,9 @@
-import { CardsContainer, CloseIcon, MainButton, OwnerDiv, SpotContainer, UserImage } from "./styles"
-import { Carousel } from 'react-responsive-carousel';
+import { CardsContainer } from "./styles"
 import Card from '../../components/card'
-import { Spot, Image } from '../../types/spot'
-import { useEffect, useState } from "react";
+import { Spot } from '../../types/spot'
+import { useState } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
-import api from "../../services/api";
 import PageContainer from "../../components/page-container";
-import UserPic from '../../styles/assets/User.jpg'
 import { useAuth } from "../../hooks/auth";
 import NavBar from "../../components/nav-bar";
 import { NavLink } from "react-router-dom";
@@ -14,7 +11,7 @@ import { useSpots } from "../../hooks/spots";
 import Header from "../../components/header";
 
 
-const MySpot: React.FC = () => {
+const Spots: React.FC = () => {
 	const [spot, setSpot] = useState<Spot>();
 
 
@@ -46,4 +43,4 @@ const MySpot: React.FC = () => {
 		</>
 	)
 }
-export default MySpot
+export default Spots
