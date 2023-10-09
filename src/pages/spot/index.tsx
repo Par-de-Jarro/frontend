@@ -12,10 +12,12 @@ export default function AddSpot() {
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
     const [type, setType] = useState('')
-    const [personalQuota, setPersonalQuota] = useState('')
+    const [personalQuota, setPersonalQuota] = useState(0)
+    const [value, setValue] = useState(0)
     const [street, setStreet] = useState('')
     const [zipcode, setZipcode] = useState('')
     const [number, setNumber] = useState('')
+    const [city, setCity] = useState('')
     const [state, setState] = useState('')
     const [roomsQuantity, setRoomsQuantity] = useState(0)
     const [bathroomsQuantity, setBathroomsQuantity] = useState(0)
@@ -46,18 +48,20 @@ export default function AddSpot() {
             const response = await api.post('/spot/', {
                 name,
                 description,
+                personal_quota: personalQuota,
                 type,
-                personalQuota,
+                value,
                 street,
-                zipcode,
+                zip_code: zipcode,
                 number,
+                city,
                 state,
                 key
             })
 
             if (response.status === 200) {
                 const data = response.data
-                navigate(`/spot_image/${data.id}`)
+                navigate(`/spot_image/${data.id_spot}`)
             }
         } 
         catch (err) {
@@ -100,6 +104,7 @@ export default function AddSpot() {
                 />
                 <Input
                     label='Descrição do local'
+                    placeholder='Opcional'
                     inputValue={description}
                     onInputValueChange={setDescription}
                 />
@@ -112,13 +117,23 @@ export default function AddSpot() {
                 />
                 <Input
                     label='Aluguel'
-                    inputValue={personalQuota}
-                    onInputValueChange={setPersonalQuota}
+                    inputValue={personalQuota.toString()}
+                    onInputValueChange={(value) => setPersonalQuota(parseInt(value))}
+                />
+                <Input
+                    label='Valor'
+                    inputValue={value.toString()}
+                    onInputValueChange={(v) => setValue(parseInt(v))}
                 />
                 <Input
                     label='Rua'
                     inputValue={street}
                     onInputValueChange={setStreet}
+                />
+                <Input
+                    label='Cidade'
+                    inputValue={city}
+                    onInputValueChange={setCity}
                 />
                 <Input
                     label='CEP'

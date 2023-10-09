@@ -56,9 +56,39 @@ export const UserNavIcon = styled(NavLink)`
     display: none;
   }
 `
-
+export const Div = styled.div`
+  display: flex;
+  height: 50px;
+  width: 30%;
+  margin-left: 10%;
+  justify-content: space-around;
+`
 export const UserIcon = styled(PiUserCircleFill)`
   display: flex;
   height: 35px;
   width: 35px;
+`
+export const Button = styled(NavLink)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 100%;
+  width: 50%;
+  color: #513422;
+  border-radius: 12px;
+  border: 0;
+
+  background-color: #f8f4e8;
+  &:hover {
+      background-color: #513422;
+      color: #f8f4e8;
+  }
+  
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 768px) {
+    /* Estilos para dispositivos móveis (largura máxima de 768px) */
+    display: none;
+  }
 `
