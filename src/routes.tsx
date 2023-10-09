@@ -7,7 +7,7 @@ import UserProfile from './pages/userProfile'
 import UserPage from './pages/user'
 import SpotDetails from './pages/spotDetails'
 import AddSpot from './pages/spot'
-import AddSpotImage from './pages/spot/image'
+import AddSpotImage from './pages/spotImage'
 
 
 export default function AppRoutes () {
