@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react'
 import NavBar from '../../components/nav-bar'
 import PageContainer from '../../components/page-container'
@@ -57,7 +58,7 @@ useEffect(() => { getSpot() }, [])
             </SubInfo>
             <SubInfo>
               <UniIcon></UniIcon>
-              <p>{user?.university.slug}</p>
+              <p>{user?.university.name}</p>
             </SubInfo>
             <SubInfo>
               <CourseIcon></CourseIcon>

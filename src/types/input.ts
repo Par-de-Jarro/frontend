@@ -1,6 +1,6 @@
 import { ReactNode } from "react"
 
-export interface Recommendation {
+export interface DropdownItem {
   label: string
   value: string
   icon?: ReactNode

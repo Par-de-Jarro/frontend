@@ -5,35 +5,31 @@ import { Container, SearchButton, FilterButton, LocationIcon } from './styles'
 import { useDebounce } from 'use-debounce'
 import { useSpots } from '../../hooks/spots'
 import api from '../../services/api'
-import InputField from '../input-field'
-import { Recommendation } from '../../types/input'
-import { Coordinates } from '../../types/search'
+import InputField from '../dropdown-input-field'
+import { DropdownItem } from '../../types/input'
+import FiltersModal from '../filters-modal'
 
 const SearchBar: React.FC = () => {
-  const { loadSpots } = useSpots()
-  const [recommendations, setRecommendations] = useState<Array<Recommendation>>([])
-  const [searchTerm, setSearchTerm] = useState<string>('')
-  const [debouncedSearchterm] = useDebounce(searchTerm, 500)
-  const [coordinates, setCoordinates] = useState<Coordinates>({ lat: -7.2171368, long: -35.9097543})
-  const [searchBarValue, setSearchBarValue] = useState('')
+  const { loadSpots, filters, setFilters } = useSpots()
+  const [recommendations, setRecommendations] = useState<Array<DropdownItem>>([])
+  const [searchBarValue, setSearchBarValue] = useState(filters.local_name)
+  const [debouncedSearchterm] = useDebounce(searchBarValue, 500)
+  const [showFilters, setShowFilters] = useState<boolean>(false)
 
   const handleSearch = () => {
-    loadSpots({
-      lat: coordinates.lat,
-      long: coordinates.long
-    })
+    loadSpots()
   }
 
-  const handleChangeOnInput = (item: string) => {
-    setSearchTerm(item)
+  const handleSearchInput = (value: string) => {
+    setSearchBarValue(value)
+    setFilters({...filters, local_name: value })
   }
-
-  const handleSelectItem = (item: Recommendation) => {
+  const handleSelectItem = (item: DropdownItem) => {
     (
       api.get('/google/geocode', {  params: { location: item.label } })
       .then((response) => {
           const { lat, long } = response.data
-          setCoordinates({ lat, long })          
+          setFilters({...filters, lat, long});          
       })
     )
   }
@@ -55,17 +51,12 @@ const SearchBar: React.FC = () => {
     )
   }, [debouncedSearchterm])
 
-
-
-  useEffect(() => {
-    handleSearch()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
   
   return (
     <Container>
-      <FilterButton><TbAdjustmentsHorizontal color='#513422'/></FilterButton>
-        <InputField inputValue={searchBarValue} onInputValueChange={setSearchBarValue} onSearch={handleChangeOnInput} recommendations={recommendations} onSelectItem={handleSelectItem}></InputField>
+      <FilterButton onClick={() => {setShowFilters(true)}}><TbAdjustmentsHorizontal color='#513422'/></FilterButton>
+        {showFilters && <FiltersModal  onSearch={() => { setShowFilters(false); handleSearch() }} onClose={() => { setFilters(false) }} />}
+        <InputField inputValue={filters.local_name} onInputValueChange={handleSearchInput} recommendations={recommendations} onSelectItem={handleSelectItem}></InputField>
       <SearchButton onClick={handleSearch}><FaSearch color='#513422'/></SearchButton>
     </Container>
   )

@@ -11,8 +11,8 @@ import {
   LocationIcon, 
   ImageInput, 
   ImageInputWrapper } from './styles'
-import { Recommendation } from '../../types/input';
-import Input from '../../components/input'
+import { DropdownItem } from '../../types/input';
+import DropDownInput from '../../components/dropdown-input'
 import SimpleInput from '../../components/simple-input'
 import api from '../../services/api';
 import UserPic from '../../styles/assets/User.jpg'
@@ -58,10 +58,10 @@ const UserProfile: React.FC = () => {
     const [cellphone, setCellphone] = useState(user.cellphone)
     const [cpf, setCpf] = useState(user.document_id)
     const [course, setCourse] = useState(user.course)
-    const [university, setUniversity] = useState(user.university.slug)
+    const [university, setUniversity] = useState(user.university.name)
     const [birthdate, setBirthdate] = useState(user.birthdate)
-    const [universityRecommendations, setUniversityRecommendations] = useState<Array<Recommendation>>([])
-    const [genderRecommendations, setGenderRecommendations] = useState<Array<Recommendation>>([])
+    const [universityRecommendations, setUniversityRecommendations] = useState<Array<DropdownItem>>([])
+    const [genderRecommendations, setGenderRecommendations] = useState<Array<DropdownItem>>([])
 
     const uploadImage = (file: File) => {
       let image_url = null
@@ -179,7 +179,7 @@ const UserProfile: React.FC = () => {
         setCellphone(user.cellphone)
         setCpf(user.document_id)
         setCourse(user.course)
-        setUniversity(user.university.slug)
+        setUniversity(user.university.name)
       }, [user.name, 
           user.gender, 
           user.email, 
@@ -187,7 +187,7 @@ const UserProfile: React.FC = () => {
           user.cellphone, 
           user.document_id, 
           user.course, 
-          user.university.slug, 
+          user.university.name, 
           user.profile_img])
 
   return (
@@ -234,17 +234,19 @@ const UserProfile: React.FC = () => {
                     }}
                     type='date'
                 />
-                <Input 
+                <DropDownInput 
                     recommendations={genderRecommendations} 
                     onSelectItem={(item) => {setGender(item.value)}} 
                     label='Gênero' 
                     inputValue={gender} 
+                    onInputValueChange={setGender}
                 />
-                <Input 
+                <DropDownInput 
                     recommendations={universityRecommendations} 
                     onSelectItem={(item) => {setUniversity(item.value)}} 
                     label='Universidade' 
-                    inputValue={university} 
+                    inputValue={university}
+                    onInputValueChange={setUniversity}
                 />
                 <SimpleInput 
                     label='Curso' 

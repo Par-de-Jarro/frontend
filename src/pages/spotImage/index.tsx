@@ -1,4 +1,4 @@
-import Input from "../../components/input";
+import Input from "../../components/dropdown-input";
 import PageContainer from "../../components/page-container";
 import { Button, Title, TitleContainer } from "./styles";
 
@@ -36,11 +36,13 @@ export default function AddSpotImage() {
                 <TitleContainer>
                     <Title>Adicione as imagens do local</Title>
                 </TitleContainer>
-                <Input
+                {/* <Input
                     type="file"
                     inputValue="spot-image"
                     multiple={true}
-                />
+                    onInputValueChange={() => {console.log('oi');
+                    }}
+                /> */}
                 <Button>Enviar local</Button>
             </Form>
         </PageContainer>

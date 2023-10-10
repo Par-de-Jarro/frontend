@@ -1,12 +1,13 @@
 import PageContainer from '../../components/page-container'
-import Input from '../../components/input'
+import Input from '../../components/dropdown-input'
 
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import api from '../../services/api'
 import { Button, CloseIcon, Div, Title, TitleContainer, LocationIcon } from './styles'
-import { Recommendation } from '../../types/input';
+import { DropdownItem } from '../../types/input';
+import SimpleInput from '../../components/simple-input'
 
 export default function AddSpot() {
     const [name, setName] = useState('')
@@ -24,7 +25,7 @@ export default function AddSpot() {
     const [hasElevator, setHasElevator] = useState(false)
     const [allowPet, setAllowPet] = useState(false)
     const [allowSmoker, setAllowSmoker] = useState(false)
-    const [typeRecommendations, setTypesRecommendations] = useState<Array<Recommendation>>([])
+    const [typeRecommendations, setTypesRecommendations] = useState<Array<DropdownItem>>([])
     
     const navigate = useNavigate()
     
@@ -97,90 +98,89 @@ export default function AddSpot() {
                     <Title>Cadastre um local</Title>
                 </TitleContainer>
 
-                <Input
+                <SimpleInput
                     label='Nome do local'
-                    inputValue={name}
-                    onInputValueChange={setName}
+                    value={name}
+                    onChange={(e) => { setName(e.target.value) } }
                 />
-                <Input
+                <SimpleInput
                     label='Descrição do local'
-                    placeholder='Opcional'
-                    inputValue={description}
-                    onInputValueChange={setDescription}
+                    value={description}
+                    onChange={(e) => { setDescription(e.target.value) } }
                 />
                 <Input
                     recommendations={typeRecommendations}
                     onSelectItem={(item) => { setType(item.value) }}
                     label='Tipo de Local'
                     inputValue={type}
-
+                    onInputValueChange={setType}
                 />
-                <Input
+                <SimpleInput
                     label='Aluguel'
-                    inputValue={personalQuota.toString()}
-                    onInputValueChange={(value) => setPersonalQuota(parseInt(value))}
+                    value={personalQuota.toString()}
+                    onChange={(e) => setPersonalQuota(parseInt(e.target.value))}
                 />
-                <Input
+                <SimpleInput
                     label='Valor'
-                    inputValue={value.toString()}
-                    onInputValueChange={(v) => setValue(parseInt(v))}
+                    value={value.toString()}
+                    onChange={(e) => setValue(parseInt(e.target.value))}
                 />
-                <Input
+                <SimpleInput
                     label='Rua'
-                    inputValue={street}
-                    onInputValueChange={setStreet}
+                    value={street}
+                    onChange={(e) => { setStreet(e.target.value) }}
                 />
-                <Input
+                <SimpleInput
                     label='Cidade'
-                    inputValue={city}
-                    onInputValueChange={setCity}
+                    value={city}
+                    onChange={(e) => { setCity(e.target.value) }}
                 />
-                <Input
+                <SimpleInput
                     label='CEP'
-                    inputValue={zipcode}
-                    onInputValueChange={setZipcode}
+                    value={zipcode}
+                    onChange={(e) => { setZipcode(e.target.value) }}
                 />
-                <Input
+                <SimpleInput
                     label='Número do local'
-                    inputValue={number}
-                    onInputValueChange={setNumber}
+                    value={number}
+                    onChange={(e) => { setNumber(e.target.value) }}
                 />
-                <Input
+                <SimpleInput
                     label='Estado'
-                    inputValue={state}
-                    onInputValueChange={setState}
+                    value={state}
+                    onChange={(e) => { setState(e.target.value) }}
                 />
                 <TitleContainer>
                     <Title>Detalhes de um local</Title>
                 </TitleContainer>
-                <Input
+                <SimpleInput
                     label='Quantidade de Quartos'
-                    inputValue={roomsQuantity.toString()}
-                    onInputValueChange={(value) => setRoomsQuantity(parseInt(value))}
+                    value={roomsQuantity.toString()}
+                    onChange={(e) => { setRoomsQuantity(parseInt(e.target.value)) }}
                     type='number'
-                />
-                <Input
+                /> 
+                <SimpleInput
                     label='Quantidade de Banheiros'
-                    inputValue={bathroomsQuantity.toString()}
-                    onInputValueChange={(value) => setBathroomsQuantity(parseInt(value))}
+                    value={bathroomsQuantity.toString()}
+                    onChange={(e) => { setBathroomsQuantity(parseInt(e.target.value)) }}
                     type='number'
                 />
-                <Input
+                <SimpleInput
                     label='Tem elevador'
-                    inputValue={hasElevator.toString()}
-                    onInputValueChange={(value) => setHasElevator(value === "")}
+                    value={hasElevator.toString()}
+                    onChange={(e) => { setHasElevator(e.target.value === '') }}
                     type='checkbox'
                 />
-                <Input
+                <SimpleInput
                     label='Permite Pets'
-                    inputValue={allowPet.toString()}
-                    onInputValueChange={(value) => setAllowPet(value === "")}
+                    value={allowPet.toString()}
+                    onChange={(e) => { setAllowPet(e.target.value === '') }}
                     type='checkbox'
                 />
-                <Input
+                <SimpleInput
                     label='Permite Fumantes'
-                    inputValue={allowSmoker.toString()}
-                    onInputValueChange={(value) => setAllowSmoker(value === "")}
+                    value={allowSmoker.toString()}
+                    onChange={(e) => { setAllowSmoker(e.target.value === '') }}
                     type='checkbox'
                 />
                 <Button onClick={createSpot}>Continuar</Button>

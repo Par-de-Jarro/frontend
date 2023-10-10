@@ -1,31 +1,23 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Dropdown, DropdownItemContainer, IconContainer, Input, InputContainer, Label } from './styles';
-import { Recommendation } from '../../types/input';
+import { DropdownItem } from '../../types/input';
 
-interface InputFieldProps {
-  recommendations?: Array<Recommendation>
-  onSelectItem?: (item: Recommendation) => void;
-  onSearch?: (item: string) => void;
+interface DropdownInputFieldProps {
+  recommendations: Array<DropdownItem>
   inputValue: string
-  onInputValueChange?: (value: string) => void
+  onInputValueChange: (value: string) => void
+  onSelectItem: (item: DropdownItem) => void;
   label?: string
-  type?: string
 }
 
-const InputField: React.FC<InputFieldProps> = ({ onSearch, onSelectItem, onInputValueChange, inputValue, recommendations, label, type }: InputFieldProps ) => {
+const DropdownInputFields: React.FC<DropdownInputFieldProps> = ({ onSelectItem, onInputValueChange, inputValue, recommendations, label }: DropdownInputFieldProps ) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [showDropdown, setShowDropdown] = useState(false)
-  const [value, setValue] = useState('')
+  const [internalValue, setInternalValue] = useState('')
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value)
-    if (onInputValueChange) {
-      onInputValueChange(event.target.value)
-    }
-
-    if (onSearch) {
-        onSearch(event.target.value)
-    }
+    onInputValueChange(event.target.value)
+    setInternalValue(event.target.value)
   };
 
   const handleOutsideClick = (event: MouseEvent) => {
@@ -34,17 +26,11 @@ const InputField: React.FC<InputFieldProps> = ({ onSearch, onSelectItem, onInput
     }
   };
 
-  const handleOptionClick = (option: Recommendation) => {    
-    if (onInputValueChange) {
-      onInputValueChange(option.value)
-    }
-    
-    setValue(option.label)
+  const handleOptionClick = (option: DropdownItem) => {    
+    onInputValueChange(option.value)
     setShowDropdown(false);
-
-    if (onSelectItem) {
-      onSelectItem(option)
-    }
+    onSelectItem(option)
+    setInternalValue(option.label)
   };
 
   useEffect(() => {
@@ -53,6 +39,24 @@ const InputField: React.FC<InputFieldProps> = ({ onSearch, onSelectItem, onInput
       document.removeEventListener('mousedown', handleOutsideClick);
     };
   }, []);
+
+  useEffect(() => {
+    if (recommendations) {
+      const aux = recommendations.filter(elem => elem.value === inputValue)[0]?.label
+      
+      
+      if (aux) {
+        
+        setInternalValue(aux);
+        return
+        
+      }
+      setInternalValue(inputValue)
+      return
+    }
+    setInternalValue(inputValue)
+    return
+  },[recommendations, inputValue])
 
   return (
     <InputContainer ref={inputRef}>
@@ -63,10 +67,9 @@ const InputField: React.FC<InputFieldProps> = ({ onSearch, onSelectItem, onInput
         ) 
       }
       <Input 
-        value={value} 
+        value={internalValue} 
         onClick={() => { setShowDropdown(true) }} 
         onChange={handleInputChange}
-        type={type || 'text'}
       />
       {showDropdown && recommendations && recommendations.length > 0  && (
         <Dropdown>
@@ -85,4 +88,4 @@ const InputField: React.FC<InputFieldProps> = ({ onSearch, onSelectItem, onInput
 };
 
 
-export default InputField
+export default DropdownInputFields

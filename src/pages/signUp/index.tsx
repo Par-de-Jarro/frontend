@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import PageContainer from '../../components/page-container'
-import Input from '../../components/input'
+import DropDownInput from '../../components/dropdown-input'
 import { useNavigate } from 'react-router-dom';
-import { Recommendation } from '../../types/input';
+import { DropdownItem } from '../../types/input';
 import api from '../../services/api';
 import { Button, CloseIcon, FemaleIcon, Form, LocationIcon, MaleIcon, NonBinaryIcon, Title, TitleContainer, UninformedGenderIcon } from './styles';
+import SimpleInput from '../../components/simple-input';
 
 export default function SignUp () {
   const [name, setName] = useState('')
@@ -16,8 +17,8 @@ export default function SignUp () {
   const [cpf, setCpf] = useState('')
   const [course, setCourse] = useState('')
   const [university, setUniversity] = useState('')
-  const [universityRecommendations, setUniversityRecommendations] = useState<Array<Recommendation>>([])
-  const [genderRecommendations, setGenderRecommendations] = useState<Array<Recommendation>>([])
+  const [universityRecommendations, setUniversityRecommendations] = useState<Array<DropdownItem>>([])
+  const [genderRecommendations, setGenderRecommendations] = useState<Array<DropdownItem>>([])
   const navigate = useNavigate();
   
 	const goBack = () => {
@@ -92,7 +93,6 @@ export default function SignUp () {
     getGenders()
     getUniversities()
   }, [])
-
   
   return (
       <PageContainer>
@@ -101,53 +101,55 @@ export default function SignUp () {
             <CloseIcon onClick={goBack} size={30} color='black'/>
             <Title>Cadastre-se no Par de Jarro</Title>
           </TitleContainer>
-          <Input 
+          <SimpleInput 
             label='Nome Completo' 
-            inputValue={name}
-            onInputValueChange={setName}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
-          <Input 
+          <DropDownInput 
             recommendations={genderRecommendations} 
             onSelectItem={(item) => {setGender(item.value)}} 
             label='Gênero' 
             inputValue={gender} 
+            onInputValueChange={setGender}
           />
-          <Input 
+          <SimpleInput
             label='Email' 
-            inputValue={email}
-            onInputValueChange={setEmail}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
-          <Input 
+          <SimpleInput 
             label='Senha' 
-            inputValue={password}
-            onInputValueChange={setPassword}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             type='password'
           />
-          <Input 
+          <SimpleInput 
             label='Bio' 
-            inputValue={bio}
-            onInputValueChange={setBio}
+            value={bio}
+            onChange={(e) => setBio(e.target.value)}
           />
-          <Input 
+          <SimpleInput 
             label='Telefone' 
-            inputValue={cellphone}
-            onInputValueChange={setCellphone}
+            value={cellphone}
+            onChange={(e) => setCellphone(e.target.value)}
           />
-          <Input 
+          <SimpleInput 
             label='CPF' 
-            inputValue={cpf}
-            onInputValueChange={setCpf}
+            value={cpf}
+            onChange={(e) => setCpf(e.target.value)}
           />
-          <Input 
+          <SimpleInput 
             label='Curso' 
-            inputValue={course}
-            onInputValueChange={setCourse}
+            value={course}
+            onChange={(e) => setCourse(e.target.value)}
           />
-          <Input 
+          <DropDownInput 
             recommendations={universityRecommendations} 
+            inputValue={university} 
             onSelectItem={(item) => {setUniversity(item.value)}} 
             label='Universidade' 
-            inputValue={university} 
+            onInputValueChange={setUniversity}
           />
           <Button onClick={createUser}> Criar Conta </Button>
         </Form>
