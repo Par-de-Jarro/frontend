@@ -1,74 +1,76 @@
-import React, {
-  useCallback,
-  createContext,
-  useContext,
-  type ReactNode,
-  useMemo,
-  useState
-} from 'react'
+import React, { createContext, useContext, ReactNode, useState } from 'react';
+import { Spot } from '../types/spot';
+import api from '../services/api';
+import { useAuth } from './auth';
 
-import { Spot } from '../types/spot'
-import api from '../services/api'
-interface SpotsProviderProps {
-  children: ReactNode
+interface Filters {
+  lat: number;
+  long: number;
+  local_name: string
 }
-interface PossibleFilters {
-  lat: number
-  long: number
-}
+
 interface SpotContextData {
-  loadingSpots: boolean
-  spots: Spot[]
-  loadSpots: (possible_filters: PossibleFilters) => void
+  spots: Spot[];
+  loadSpots: () => void;
+  filters: Filters,
+  setFilters: (a: any) => void;
+  loadingSpots: boolean;
 }
 
-const SpotContext = createContext<SpotContextData>({} as SpotContextData)
+const SpotContext = createContext<SpotContextData | undefined>(undefined);
 
-function SpotsProvider ({ children }: SpotsProviderProps) {
+export function SpotsProvider({ children }: { children: ReactNode }) {
+  const { user } = useAuth()
+  const [loadingSpots, setLoadingSpots] = useState<boolean>(false);
+  const [spots, setSpots] = useState<Spot[]>([]);
+  const [filters, setFilters] = useState<Filters>(() => {
+    let lat =  -7.2171368
+    let long =  -35.9097543
+    let local_name = 'UFCG - Campus Campina Grande'
 
-  const [loadingSpots, setLoadingSpots] = useState<boolean>(false)
-  const [spots, setSpots] = useState<Spot[]>([])
+    if (user) {
+      lat = user.university.lat
+      long = user.university.long
+      local_name = user.university.name
+    }
 
-  const getSpots = async (possible_filters: PossibleFilters) => {
-    const response = await api.get('/spot/search', {
-      params: {
-        lat: possible_filters.lat,
-        long: possible_filters.long
-      }
-    })
+    return { lat, long, local_name }
+  })
 
-    const spots: Spot[] = response?.data
+  const loadSpots = async () => {
+    try {      
+      setLoadingSpots(true);
+      
+      const response = await api.get('/spot/search', {
+        params: {
+          lat: filters?.lat,
+          long: filters?.long,
+        },
+      });
+      const spots: Spot[] = response?.data;
+      setSpots(spots);
+    } finally {
+      setLoadingSpots(false);
+    }
+  };
 
-    setLoadingSpots(false)
-    setSpots(spots)
-  }
+  const value: SpotContextData = {
+    loadingSpots,
+    spots,
+    loadSpots,
+    filters,
+    setFilters
+  };
 
-  const loadSpots = useCallback(async (possible_filters: PossibleFilters): Promise<void> => {
-    await getSpots(possible_filters);
-  }, []);
-
-  const value = useMemo(
-    () => ({
-      loadingSpots,
-      spots,
-      loadSpots
-    }),
-    [spots, loadingSpots, loadSpots]
-  )
-
-  return (
-    <SpotContext.Provider value={value}>{children}</SpotContext.Provider>
-  )
+  return <SpotContext.Provider value={value}>{children}</SpotContext.Provider>;
 }
 
-function useSpots (): SpotContextData {
-  const context = useContext(SpotContext)
+export function useSpots() {
+  const context = useContext(SpotContext);
 
   if (!context) {
-    throw new Error('useSpots must be used withing an SpotsProvider')
+    throw new Error('useSpots must be used within a SpotsProvider');
   }
 
-  return context
+  return context;
 }
-
-export { SpotsProvider, useSpots }
