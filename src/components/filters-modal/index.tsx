@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Counter from '../counter';
 import { useSpots } from '../../hooks/spots';
+import CheckBox from '../checkbox';
 
 
 const ModalWrapper = styled.div`
@@ -98,6 +99,20 @@ const FiltersModal: React.FC<FilterPModalProps> = ({ onClose, onSearch }) => {
     setFilters({...filters, bathrooms_quantity:value})
   }
 
+  const updateAllowPet = () => {
+    const actual = filters.allow_pet || false
+    setFilters({...filters, allow_pet: !actual})
+  }
+
+  const updateAllowSmoker = () => {
+    const actual = filters.allow_smoker || false
+    setFilters({...filters, allow_smoker: !actual})
+  }
+
+  const updateHasElevator = () => {
+    const actual = filters.has_elevator || false
+    setFilters({...filters, has_elevator: !actual})
+  }
 
   return (
     <ModalWrapper>
@@ -116,6 +131,9 @@ const FiltersModal: React.FC<FilterPModalProps> = ({ onClose, onSearch }) => {
             </FilterItemInfoContainer>
             <Counter value={filters.bathrooms_quantity || 0} onChange={updateBathrooms} min={0} max={20}/>
           </FilterItemContainer>
+          <CheckBox value={filters.allow_pet|| false } onChange={updateAllowPet} label='Permite Pets'/>
+          <CheckBox value={filters.allow_smoker || false } onChange={updateAllowSmoker} label='Permite Fumante'/>
+          <CheckBox value={filters.has_elevator || false } onChange={updateHasElevator} label='Possui Elevador'/>
           <Button onClick={onSearch} >Pesquisar</Button>
         </ModalContainer>
     </ModalWrapper>
