@@ -4,11 +4,19 @@ import api from '../services/api';
 import { useAuth } from './auth';
 
 interface Filters {
-  lat: number;
-  long: number;
+  lat?: number;
+  long?: number;
   local_name: string
+  type?: string
+  allow_pet?: boolean
+  allow_smoker?:  boolean
+  rooms_quantity?: number
+  bathrooms_quantity?: number
+  has_elevator?: boolean
+  value_max?: number
+  value_min?: number
+  distance_range?: number
 }
-
 interface SpotContextData {
   spots: Spot[];
   loadSpots: () => void;
@@ -43,8 +51,7 @@ export function SpotsProvider({ children }: { children: ReactNode }) {
       
       const response = await api.get('/spot/search', {
         params: {
-          lat: filters?.lat,
-          long: filters?.long,
+          ...filters
         },
       });
       const spots: Spot[] = response?.data;

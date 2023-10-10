@@ -7,12 +7,14 @@ import { useSpots } from '../../hooks/spots'
 import api from '../../services/api'
 import InputField from '../dropdown-input-field'
 import { DropdownItem } from '../../types/input'
+import FiltersModal from '../filters-modal'
 
 const SearchBar: React.FC = () => {
   const { loadSpots, filters, setFilters } = useSpots()
   const [recommendations, setRecommendations] = useState<Array<DropdownItem>>([])
   const [searchBarValue, setSearchBarValue] = useState(filters.local_name)
   const [debouncedSearchterm] = useDebounce(searchBarValue, 500)
+  const [showFilters, setShowFilters] = useState<boolean>(false)
 
   const handleSearch = () => {
     loadSpots()
@@ -52,7 +54,8 @@ const SearchBar: React.FC = () => {
   
   return (
     <Container>
-      <FilterButton><TbAdjustmentsHorizontal color='#513422'/></FilterButton>
+      <FilterButton onClick={() => {setShowFilters(true)}}><TbAdjustmentsHorizontal color='#513422'/></FilterButton>
+        {showFilters && <FiltersModal  onSearch={() => { setShowFilters(false); handleSearch() }} onClose={() => { setFilters(false) }} />}
         <InputField inputValue={filters.local_name} onInputValueChange={handleSearchInput} recommendations={recommendations} onSelectItem={handleSelectItem}></InputField>
       <SearchButton onClick={handleSearch}><FaSearch color='#513422'/></SearchButton>
     </Container>
