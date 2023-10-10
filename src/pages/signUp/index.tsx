@@ -126,7 +126,7 @@ export default function SignUp () {
           />
           <SimpleInput 
             label='Bio' 
-            value={name}
+            value={bio}
             onChange={(e) => setBio(e.target.value)}
           />
           <SimpleInput 
