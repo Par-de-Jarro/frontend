@@ -5,7 +5,7 @@ import { Container, SearchButton, FilterButton, LocationIcon } from './styles'
 import { useDebounce } from 'use-debounce'
 import { useSpots } from '../../hooks/spots'
 import api from '../../services/api'
-import InputField from '../input-field'
+import InputField from '../dropdown-input-field'
 import { DropdownItem } from '../../types/input'
 
 const SearchBar: React.FC = () => {

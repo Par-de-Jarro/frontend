@@ -1,5 +1,5 @@
 import PageContainer from '../../components/page-container'
-import Input from '../../components/input'
+import Input from '../../components/dropdown-input'
 
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'

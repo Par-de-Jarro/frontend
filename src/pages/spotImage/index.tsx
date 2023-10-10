@@ -1,4 +1,4 @@
-import Input from "../../components/input";
+import Input from "../../components/dropdown-input";
 import PageContainer from "../../components/page-container";
 import { Button, Title, TitleContainer } from "./styles";
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import PageContainer from '../../components/page-container'
-import Input from '../../components/input'
+import Input from '../../components/dropdown-input'
 import { useNavigate } from 'react-router-dom';
 import { DropdownItem } from '../../types/input';
 import api from '../../services/api';
@@ -128,7 +128,7 @@ export default function SignUp () {
           <SimpleInput 
             label='Bio' 
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => setBio(e.target.value)}
           />
           <SimpleInput 
             label='Telefone' 
@@ -147,9 +147,9 @@ export default function SignUp () {
           />
           <Input 
             recommendations={universityRecommendations} 
+            inputValue={university} 
             onSelectItem={(item) => {setUniversity(item.value)}} 
             label='Universidade' 
-            inputValue={university} 
             onInputValueChange={setUniversity}
           />
           <Button onClick={createUser}> Criar Conta </Button>

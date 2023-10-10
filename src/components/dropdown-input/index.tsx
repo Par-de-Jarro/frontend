@@ -1,7 +1,7 @@
 import React, { InputHTMLAttributes } from "react";
 import { Container } from "./styles";
 import { DropdownItem } from "../../types/input";
-import InputField from "../input-field";
+import InputField from "../dropdown-input-field";
 
 interface DropDownInputProps extends InputHTMLAttributes<HTMLInputElement> {
   recommendations: Array<DropdownItem>
