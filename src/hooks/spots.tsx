@@ -1,4 +1,4 @@
-import React, { createContext, useContext, ReactNode, useState, useEffect } from 'react';
+import React, { createContext, useContext, ReactNode, useState } from 'react';
 import { Spot } from '../types/spot';
 import api from '../services/api';
 import { useAuth } from './auth';
