@@ -18,6 +18,10 @@ const SearchBar: React.FC = () => {
     loadSpots()
   }
 
+  const handleSearchInput = (value: string) => {
+    setSearchBarValue(value)
+    setFilters({...filters, local_name: value })
+  }
   const handleSelectItem = (item: DropdownItem) => {
     (
       api.get('/google/geocode', {  params: { location: item.label } })
@@ -45,18 +49,11 @@ const SearchBar: React.FC = () => {
     )
   }, [debouncedSearchterm])
 
-
-
-  useEffect(() => {
-    handleSearch()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
   
   return (
     <Container>
       <FilterButton><TbAdjustmentsHorizontal color='#513422'/></FilterButton>
-        <InputField inputValue={searchBarValue} onInputValueChange={setSearchBarValue} recommendations={recommendations} onSelectItem={handleSelectItem}></InputField>
+        <InputField inputValue={filters.local_name} onInputValueChange={handleSearchInput} recommendations={recommendations} onSelectItem={handleSelectItem}></InputField>
       <SearchButton onClick={handleSearch}><FaSearch color='#513422'/></SearchButton>
     </Container>
   )

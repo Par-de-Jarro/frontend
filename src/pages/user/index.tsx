@@ -58,7 +58,7 @@ useEffect(() => { getSpot() }, [])
             </SubInfo>
             <SubInfo>
               <UniIcon></UniIcon>
-              <p>{user?.university.slug}</p>
+              <p>{user?.university.name}</p>
             </SubInfo>
             <SubInfo>
               <CourseIcon></CourseIcon>

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Dropdown, DropdownItemContainer, IconContainer, Input, InputContainer, Label } from './styles';
 import { DropdownItem } from '../../types/input';
 
-interface InputFieldProps {
+interface DropdownInputFieldProps {
   recommendations: Array<DropdownItem>
   inputValue: string
   onInputValueChange: (value: string) => void
@@ -10,12 +10,14 @@ interface InputFieldProps {
   label?: string
 }
 
-const InputField: React.FC<InputFieldProps> = ({ onSelectItem, onInputValueChange, inputValue, recommendations, label }: InputFieldProps ) => {
+const DropdownInputFields: React.FC<DropdownInputFieldProps> = ({ onSelectItem, onInputValueChange, inputValue, recommendations, label }: DropdownInputFieldProps ) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [showDropdown, setShowDropdown] = useState(false)
+  const [internalValue, setInternalValue] = useState('')
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onInputValueChange(event.target.value)
+    setInternalValue(event.target.value)
   };
 
   const handleOutsideClick = (event: MouseEvent) => {
@@ -28,6 +30,7 @@ const InputField: React.FC<InputFieldProps> = ({ onSelectItem, onInputValueChang
     onInputValueChange(option.value)
     setShowDropdown(false);
     onSelectItem(option)
+    setInternalValue(option.label)
   };
 
   useEffect(() => {
@@ -36,6 +39,24 @@ const InputField: React.FC<InputFieldProps> = ({ onSelectItem, onInputValueChang
       document.removeEventListener('mousedown', handleOutsideClick);
     };
   }, []);
+
+  useEffect(() => {
+    if (recommendations) {
+      const aux = recommendations.filter(elem => elem.value === inputValue)[0]?.label
+      
+      
+      if (aux) {
+        
+        setInternalValue(aux);
+        return
+        
+      }
+      setInternalValue(inputValue)
+      return
+    }
+    setInternalValue(inputValue)
+    return
+  },[recommendations, inputValue])
 
   return (
     <InputContainer ref={inputRef}>
@@ -46,7 +67,7 @@ const InputField: React.FC<InputFieldProps> = ({ onSelectItem, onInputValueChang
         ) 
       }
       <Input 
-        value={inputValue} 
+        value={internalValue} 
         onClick={() => { setShowDropdown(true) }} 
         onChange={handleInputChange}
       />
@@ -67,4 +88,4 @@ const InputField: React.FC<InputFieldProps> = ({ onSelectItem, onInputValueChang
 };
 
 
-export default InputField
+export default DropdownInputFields

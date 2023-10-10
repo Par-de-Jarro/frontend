@@ -1,4 +1,4 @@
-import React, { createContext, useContext, ReactNode, useState } from 'react';
+import React, { createContext, useContext, ReactNode, useState, useEffect } from 'react';
 import { Spot } from '../types/spot';
 import api from '../services/api';
 import { useAuth } from './auth';
@@ -53,6 +53,7 @@ export function SpotsProvider({ children }: { children: ReactNode }) {
       setLoadingSpots(false);
     }
   };
+
 
   const value: SpotContextData = {
     loadingSpots,

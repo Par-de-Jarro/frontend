@@ -58,7 +58,7 @@ const UserProfile: React.FC = () => {
     const [cellphone, setCellphone] = useState(user.cellphone)
     const [cpf, setCpf] = useState(user.document_id)
     const [course, setCourse] = useState(user.course)
-    const [university, setUniversity] = useState(user.university.slug)
+    const [university, setUniversity] = useState(user.university.name)
     const [birthdate, setBirthdate] = useState(user.birthdate)
     const [universityRecommendations, setUniversityRecommendations] = useState<Array<DropdownItem>>([])
     const [genderRecommendations, setGenderRecommendations] = useState<Array<DropdownItem>>([])
@@ -179,7 +179,7 @@ const UserProfile: React.FC = () => {
         setCellphone(user.cellphone)
         setCpf(user.document_id)
         setCourse(user.course)
-        setUniversity(user.university.slug)
+        setUniversity(user.university.name)
       }, [user.name, 
           user.gender, 
           user.email, 
@@ -187,7 +187,7 @@ const UserProfile: React.FC = () => {
           user.cellphone, 
           user.document_id, 
           user.course, 
-          user.university.slug, 
+          user.university.name, 
           user.profile_img])
 
   return (

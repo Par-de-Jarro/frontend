@@ -93,7 +93,6 @@ export default function SignUp () {
     getGenders()
     getUniversities()
   }, [])
-
   
   return (
       <PageContainer>
