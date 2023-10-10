@@ -11,7 +11,7 @@ import {
   LocationIcon, 
   ImageInput, 
   ImageInputWrapper } from './styles'
-import { Recommendation } from '../../types/input';
+import { DropdownItem } from '../../types/input';
 import Input from '../../components/input'
 import SimpleInput from '../../components/simple-input'
 import api from '../../services/api';
@@ -60,8 +60,8 @@ const UserProfile: React.FC = () => {
     const [course, setCourse] = useState(user.course)
     const [university, setUniversity] = useState(user.university.slug)
     const [birthdate, setBirthdate] = useState(user.birthdate)
-    const [universityRecommendations, setUniversityRecommendations] = useState<Array<Recommendation>>([])
-    const [genderRecommendations, setGenderRecommendations] = useState<Array<Recommendation>>([])
+    const [universityRecommendations, setUniversityRecommendations] = useState<Array<DropdownItem>>([])
+    const [genderRecommendations, setGenderRecommendations] = useState<Array<DropdownItem>>([])
 
     const uploadImage = (file: File) => {
       let image_url = null
@@ -239,12 +239,14 @@ const UserProfile: React.FC = () => {
                     onSelectItem={(item) => {setGender(item.value)}} 
                     label='Gênero' 
                     inputValue={gender} 
+                    onInputValueChange={setGender}
                 />
                 <Input 
                     recommendations={universityRecommendations} 
                     onSelectItem={(item) => {setUniversity(item.value)}} 
                     label='Universidade' 
-                    inputValue={university} 
+                    inputValue={university}
+                    onInputValueChange={setUniversity}
                 />
                 <SimpleInput 
                     label='Curso' 

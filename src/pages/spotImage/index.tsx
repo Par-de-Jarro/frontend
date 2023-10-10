@@ -36,11 +36,13 @@ export default function AddSpotImage() {
                 <TitleContainer>
                     <Title>Adicione as imagens do local</Title>
                 </TitleContainer>
-                <Input
+                {/* <Input
                     type="file"
                     inputValue="spot-image"
                     multiple={true}
-                />
+                    onInputValueChange={() => {console.log('oi');
+                    }}
+                /> */}
                 <Button>Enviar local</Button>
             </Form>
         </PageContainer>

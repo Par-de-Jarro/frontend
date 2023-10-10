@@ -1,31 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Dropdown, DropdownItemContainer, IconContainer, Input, InputContainer, Label } from './styles';
-import { Recommendation } from '../../types/input';
+import { DropdownItem } from '../../types/input';
 
 interface InputFieldProps {
-  recommendations?: Array<Recommendation>
-  onSelectItem?: (item: Recommendation) => void;
-  onSearch?: (item: string) => void;
+  recommendations: Array<DropdownItem>
   inputValue: string
-  onInputValueChange?: (value: string) => void
+  onInputValueChange: (value: string) => void
+  onSelectItem: (item: DropdownItem) => void;
   label?: string
-  type?: string
 }
 
-const InputField: React.FC<InputFieldProps> = ({ onSearch, onSelectItem, onInputValueChange, inputValue, recommendations, label, type }: InputFieldProps ) => {
+const InputField: React.FC<InputFieldProps> = ({ onSelectItem, onInputValueChange, inputValue, recommendations, label }: InputFieldProps ) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [showDropdown, setShowDropdown] = useState(false)
-  const [value, setValue] = useState('')
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value)
-    if (onInputValueChange) {
-      onInputValueChange(event.target.value)
-    }
-
-    if (onSearch) {
-        onSearch(event.target.value)
-    }
+    onInputValueChange(event.target.value)
   };
 
   const handleOutsideClick = (event: MouseEvent) => {
@@ -34,17 +24,10 @@ const InputField: React.FC<InputFieldProps> = ({ onSearch, onSelectItem, onInput
     }
   };
 
-  const handleOptionClick = (option: Recommendation) => {    
-    if (onInputValueChange) {
-      onInputValueChange(option.value)
-    }
-    
-    setValue(option.label)
+  const handleOptionClick = (option: DropdownItem) => {    
+    onInputValueChange(option.value)
     setShowDropdown(false);
-
-    if (onSelectItem) {
-      onSelectItem(option)
-    }
+    onSelectItem(option)
   };
 
   useEffect(() => {
@@ -63,10 +46,9 @@ const InputField: React.FC<InputFieldProps> = ({ onSearch, onSelectItem, onInput
         ) 
       }
       <Input 
-        value={value} 
+        value={inputValue} 
         onClick={() => { setShowDropdown(true) }} 
         onChange={handleInputChange}
-        type={type || 'text'}
       />
       {showDropdown && recommendations && recommendations.length > 0  && (
         <Dropdown>

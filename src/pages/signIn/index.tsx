@@ -4,6 +4,7 @@ import Input from '../../components/input'
 import { useNavigate } from 'react-router-dom';
 import { Button, CloseIcon, Form, Title, TitleContainer } from './styles';
 import { useAuth } from '../../hooks/auth';
+import SimpleInput from '../../components/simple-input';
 
 export default function SignIn() {
   const [email, setEmail] = useState('')
@@ -32,15 +33,15 @@ export default function SignIn() {
             <CloseIcon onClick={goBack} size={30} color='black'/>
             <Title>Entre no Par de Jarro</Title>
           </TitleContainer>
-          <Input 
+          <SimpleInput
             label='Email' 
-            inputValue={email}
-            onInputValueChange={setEmail}
+            value={email}
+            onChange={(e) => { setEmail(e.target.value)}}
           />
-          <Input 
+          <SimpleInput 
             label='Senha' 
-            inputValue={password}
-            onInputValueChange={setPassword}
+            value={password}
+            onChange={(e) => { setPassword(e.target.value)}}
             type='password'
           />
           <Button onClick={logIn}>Entrar</Button>

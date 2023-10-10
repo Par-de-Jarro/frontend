@@ -1,33 +1,28 @@
 import React, { InputHTMLAttributes } from "react";
 import { Container } from "./styles";
-import { Recommendation } from "../../types/input";
+import { DropdownItem } from "../../types/input";
 import InputField from "../input-field";
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  recommendations?: Array<Recommendation>
-  onSelectItem?: (item: Recommendation) => void;
-  onSearch?: (item: string) => void;
+interface DropDownInputProps extends InputHTMLAttributes<HTMLInputElement> {
+  recommendations: Array<DropdownItem>
   inputValue: string
-  onInputValueChange?: (value: any) => void
+  onInputValueChange: (value: string) => void
+  onSelectItem: (item: DropdownItem) => void;
   label?: string
-  type?: string
 }
 
-const Input: React.FC<InputProps> = ({ recommendations, onSelectItem, onSearch, inputValue, onInputValueChange, label, type, ...rest }: InputProps) => {  
+const DropDownInput: React.FC<DropDownInputProps> = ({ recommendations, onSelectItem, inputValue, onInputValueChange, label }: DropDownInputProps) => {  
   return (
       <Container>
         <InputField 
           recommendations={recommendations} 
           onSelectItem={onSelectItem}
-          onSearch={onSearch} 
           inputValue={inputValue} 
           onInputValueChange={onInputValueChange} 
           label={label}
-          type={type}
-          {...rest}
         />
       </Container>
   )
 }
 
-export default Input
+export default DropDownInput

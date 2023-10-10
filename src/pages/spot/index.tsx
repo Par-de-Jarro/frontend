@@ -6,7 +6,8 @@ import { useNavigate } from 'react-router-dom'
 
 import api from '../../services/api'
 import { Button, CloseIcon, Div, Title, TitleContainer, LocationIcon } from './styles'
-import { Recommendation } from '../../types/input';
+import { DropdownItem } from '../../types/input';
+import SimpleInput from '../../components/simple-input'
 
 export default function AddSpot() {
     const [name, setName] = useState('')
@@ -24,7 +25,7 @@ export default function AddSpot() {
     const [hasElevator, setHasElevator] = useState(false)
     const [allowPet, setAllowPet] = useState(false)
     const [allowSmoker, setAllowSmoker] = useState(false)
-    const [typeRecommendations, setTypesRecommendations] = useState<Array<Recommendation>>([])
+    const [typeRecommendations, setTypesRecommendations] = useState<Array<DropdownItem>>([])
     
     const navigate = useNavigate()
     
@@ -97,25 +98,24 @@ export default function AddSpot() {
                     <Title>Cadastre um local</Title>
                 </TitleContainer>
 
-                <Input
+                <SimpleInput
                     label='Nome do local'
-                    inputValue={name}
-                    onInputValueChange={setName}
+                    value={name}
+                    onChange={(e) => { setName(e.target.value) } }
                 />
-                <Input
+                <SimpleInput
                     label='Descrição do local'
-                    placeholder='Opcional'
-                    inputValue={description}
-                    onInputValueChange={setDescription}
+                    value={description}
+                    onChange={(e) => { setDescription(e.target.value) } }
                 />
                 <Input
                     recommendations={typeRecommendations}
                     onSelectItem={(item) => { setType(item.value) }}
                     label='Tipo de Local'
                     inputValue={type}
-
+                    onInputValueChange={setType}
                 />
-                <Input
+                {/* <Input
                     label='Aluguel'
                     inputValue={personalQuota.toString()}
                     onInputValueChange={(value) => setPersonalQuota(parseInt(value))}
@@ -144,22 +144,22 @@ export default function AddSpot() {
                     label='Número do local'
                     inputValue={number}
                     onInputValueChange={setNumber}
-                />
-                <Input
+                /> */}
+                {/* <Input
                     label='Estado'
                     inputValue={state}
                     onInputValueChange={setState}
-                />
+                /> */}
                 <TitleContainer>
                     <Title>Detalhes de um local</Title>
                 </TitleContainer>
-                <Input
+                {/* <Input
                     label='Quantidade de Quartos'
                     inputValue={roomsQuantity.toString()}
                     onInputValueChange={(value) => setRoomsQuantity(parseInt(value))}
                     type='number'
-                />
-                <Input
+                /> */}
+                {/* <Input
                     label='Quantidade de Banheiros'
                     inputValue={bathroomsQuantity.toString()}
                     onInputValueChange={(value) => setBathroomsQuantity(parseInt(value))}
@@ -170,8 +170,8 @@ export default function AddSpot() {
                     inputValue={hasElevator.toString()}
                     onInputValueChange={(value) => setHasElevator(value === "")}
                     type='checkbox'
-                />
-                <Input
+                /> */}
+                {/* <Input
                     label='Permite Pets'
                     inputValue={allowPet.toString()}
                     onInputValueChange={(value) => setAllowPet(value === "")}
@@ -182,7 +182,7 @@ export default function AddSpot() {
                     inputValue={allowSmoker.toString()}
                     onInputValueChange={(value) => setAllowSmoker(value === "")}
                     type='checkbox'
-                />
+                /> */}
                 <Button onClick={createSpot}>Continuar</Button>
             </Div>
 
