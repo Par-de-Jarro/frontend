@@ -12,7 +12,7 @@ import {
   ImageInput, 
   ImageInputWrapper } from './styles'
 import { DropdownItem } from '../../types/input';
-import Input from '../../components/dropdown-input'
+import DropDownInput from '../../components/dropdown-input'
 import SimpleInput from '../../components/simple-input'
 import api from '../../services/api';
 import UserPic from '../../styles/assets/User.jpg'
@@ -234,14 +234,14 @@ const UserProfile: React.FC = () => {
                     }}
                     type='date'
                 />
-                <Input 
+                <DropDownInput 
                     recommendations={genderRecommendations} 
                     onSelectItem={(item) => {setGender(item.value)}} 
                     label='Gênero' 
                     inputValue={gender} 
                     onInputValueChange={setGender}
                 />
-                <Input 
+                <DropDownInput 
                     recommendations={universityRecommendations} 
                     onSelectItem={(item) => {setUniversity(item.value)}} 
                     label='Universidade' 
