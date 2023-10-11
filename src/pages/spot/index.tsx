@@ -90,7 +90,7 @@ export default function AddSpot() {
         if (imageFiles.length > 0 && spotId !== "") {
             imageFiles.forEach((imageFile) => {
                 uploadImage(imageFile, spotId);
-            });
+        });
         }
     }
 
