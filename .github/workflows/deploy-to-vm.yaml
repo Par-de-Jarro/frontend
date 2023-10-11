@@ -34,5 +34,5 @@ jobs:
         run: |
           TEMP=$(mktemp)
           echo "${{ secrets.SERVER_SSH_PRIVATE_KEY }}" > $TEMP
-          ssh -o 'StrictHostKeyChecking no' -i $TEMP ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} 'cd /var/www/html/frontend && npm install --force && npm start'
+          ssh -o 'StrictHostKeyChecking no' -i $TEMP ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} 'bash -s' < scripts/start-app.sh
  

@@ -1,4 +1,6 @@
 #!/bin/bash
+sudo systemctl disable node-project
+sudo systemctl stop node-project
 sudo killall node
 sudo mv /var/www/html/frontend /var/www/html/$(date +%s%N)
 sudo mkdir /var/www/html/frontend
