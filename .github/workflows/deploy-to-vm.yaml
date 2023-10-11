@@ -28,7 +28,8 @@ jobs:
       - name: Create .env file
         run: |
           TEMP_ENV=$(mktemp)
-          echo "REACT_APP_API_KEY=${{ secrets.REACT_APP_API_KEY }}" > $TEMP_ENV
+          echo "REACT_APP_API_KEY=${{ secrets.REACT_APP_API_KEY }}
+                PORT=${{ secrets.PORT }}" > $TEMP_ENV
           TEMP=$(mktemp)
           echo "${{ secrets.SERVER_SSH_PRIVATE_KEY }}" > $TEMP
           scp -o 'StrictHostKeyChecking no' -i $TEMP $TEMP_ENV ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:/var/www/html/frontend/.env
