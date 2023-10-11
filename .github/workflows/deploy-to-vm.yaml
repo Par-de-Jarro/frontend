@@ -20,7 +20,7 @@ jobs:
         run: |
           TEMP=$(mktemp)
           echo "${{ secrets.SERVER_SSH_PRIVATE_KEY }}" > $TEMP
-          scp -R -o 'StrictHostKeyChecking no' -i $TEMP ./* ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:/var/www/html/frontend/
+          scp -r -o 'StrictHostKeyChecking no' -i $TEMP ./* ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:/var/www/html/frontend/
 
       - name: Create .env file
         run: |
