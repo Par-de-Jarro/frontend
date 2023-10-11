@@ -35,7 +35,7 @@ interface CheckBoxProps {
 const CheckBox: React.FC<CheckBoxProps> = ({ label, onChange, value }) => {
   return (
       <Container>
-          <Input value={value.toString()} onChange={onChange} type='checkbox'></Input>
+          <Input checked={value} value={value.toString()} onChange={onChange} type='checkbox'></Input>
           { label &&  <Label>{label}</Label>}
       </Container>
   );

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Counter from '../counter';
 import { useSpots } from '../../hooks/spots';
 import CheckBox from '../checkbox';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
 
 
 const ModalWrapper = styled.div`
@@ -20,12 +21,15 @@ const ModalWrapper = styled.div`
 `;
 
 const ModalContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   background-color: #fff; 
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); 
-  height: 100%;
-  width: 450px;
+  height: 600px;
+  width: 500px;
 `;
 
 
@@ -33,12 +37,13 @@ const FilterItemContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid #ebebeb;
+
 `
 
 const Title = styled.p`
   font-size: 16px;
   color: #2b2b2b;
-  padding-bottom: 5px;
   font-weight: 400;
   width: 100%;
 `
@@ -83,6 +88,22 @@ export const Button = styled.button`
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 `
 
+const TitleContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 100px;
+  border-bottom: 1px solid #ebebeb;
+`
+export const CloseIcon = styled(AiOutlineCloseCircle)`
+  height: 20px;
+  width: 20px;
+  color: #2b2b2b;
+  cursor: pointer;
+  margin-right: 20px;
+`
 interface FilterPModalProps {
   onClose: () => void
   onSearch: () => void
@@ -117,6 +138,10 @@ const FiltersModal: React.FC<FilterPModalProps> = ({ onClose, onSearch }) => {
   return (
     <ModalWrapper>
         <ModalContainer>
+          <TitleContainer>
+            <CloseIcon onClick={onClose}/>
+            <Title>Filtros</Title>
+          </TitleContainer>
           <FilterItemContainer>
             <FilterItemInfoContainer>
               <Title>Quartos</Title>
