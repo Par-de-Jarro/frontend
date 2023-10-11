@@ -7,6 +7,7 @@ import Header from '../../components/header'
 import NavBar from '../../components/nav-bar'
 import { NavLink } from 'react-router-dom';
 import { useSpots } from '../../hooks/spots'
+import HouseImage from '../../styles/assets/house.jpg'
 
 export default function SearchPage () {
   const spots = useSpots()
@@ -24,7 +25,7 @@ export default function SearchPage () {
         {
           spots.spots.map((spot, index) => (
             <NavLink to={`/spots/${spot.id_spot}`} style={{ textDecoration: 'none' }}>
-                <Card image_url={spot.images[0].image_url} key={index} title={spot.name} distance={spot.distance} empty_quota={spot.personal_quota} value={spot.value}/>
+                <Card image_url={spot.images !== null? spot.images[0].image_url : HouseImage} key={index} title={spot.name} distance={spot.distance} empty_quota={spot.personal_quota} value={spot.value}/>
             </NavLink>
           ))
         }

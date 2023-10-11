@@ -1,11 +1,9 @@
 import PageContainer from '../../components/page-container'
 import Input from '../../components/dropdown-input'
-
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-
 import api from '../../services/api'
-import { Button, CloseIcon, Div, Title, TitleContainer, LocationIcon } from './styles'
+import { Button, CloseIcon, Div, Title, TitleContainer, LocationIcon, ImageInputWrapper, ImageInput, SpotImage, ImagesDiv } from './styles'
 import { DropdownItem } from '../../types/input';
 import SimpleInput from '../../components/simple-input'
 
@@ -26,12 +24,33 @@ export default function AddSpot() {
     const [allowPet, setAllowPet] = useState(false)
     const [allowSmoker, setAllowSmoker] = useState(false)
     const [typeRecommendations, setTypesRecommendations] = useState<Array<DropdownItem>>([])
+    const [imageFiles, setImageFiles] = useState<File[]>([]);
+    const [imagePreviews, setImagePreviews] = useState<string[]>([]);
     
     const navigate = useNavigate()
     
     const goBack = () => {
         navigate(-1);
     }
+
+    const uploadImage = (file: File, spotId: string) => {
+        let formData = new FormData();
+  
+        formData.append("file", file);
+  
+        api.post(`/spot/${spotId}/upload`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          },
+        })
+        .then((response) => {
+          console.log('Image uploaded successfully:', response.data);
+        })
+        .catch((error) => {
+          console.error('Image upload failed:', error);
+        });
+       
+      }
 
     const createSpot = async () => {
         const key = {
@@ -45,30 +64,34 @@ export default function AddSpot() {
                 "allow_smoker": allowSmoker
             }
         }
-        try {
-            const response = await api.post('/spot/', {
-                name,
-                description,
-                personal_quota: personalQuota,
-                type,
-                value,
-                street,
-                zip_code: zipcode,
-                number,
-                city,
-                state,
-                key
-            })
 
-            if (response.status === 200) {
-                const data = response.data
-                navigate(`/spot_image/${data.id_spot}`)
-            }
-        } 
-        catch (err) {
-            console.log(err);
-        }
+        let spotId: string = ""; 
+
+        api.post('/spot/', {
+            name,
+            description,
+            personal_quota: personalQuota,
+            type,
+            value,
+            street,
+            zip_code: zipcode,
+            number,
+            city,
+            state,
+            key
+        }).then((response) => {
+            alert("Spot created with success")
+            spotId = response.data.id_spot
+        }).catch(() => {
+        alert("Something went wrong while creating spot")
+        console.log('error');
+        })
         
+        if (imageFiles.length > 0 && spotId !== "") {
+            imageFiles.forEach((imageFile) => {
+                uploadImage(imageFile, spotId);
+            });
+        }
     }
 
     const getTypes = () => {
@@ -87,6 +110,19 @@ export default function AddSpot() {
         setTypesRecommendations(spot_types)
     }
 
+    const selectImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const selectedFiles = event.target.files as FileList;
+      
+        if (selectedFiles.length > 0) {
+          const newFiles = [...imageFiles, ...Array.from(selectedFiles)];
+          const newPreviews = Array.from(selectedFiles).map((file) => URL.createObjectURL(file));
+      
+          setImageFiles(newFiles);
+          setImagePreviews([...imagePreviews, ...newPreviews]);
+        }
+        console.log(imagePreviews)
+    };
+
     useEffect(() => {
         getTypes()
     }, [])
@@ -97,7 +133,16 @@ export default function AddSpot() {
                     <CloseIcon onClick={goBack} size={30} color='black' />
                     <Title>Cadastre um local</Title>
                 </TitleContainer>
-
+                <ImagesDiv>
+                    {
+                        imagePreviews.map((imageUrl: string) => (
+                            <SpotImage src={imageUrl}/>
+                        ))
+                    }
+                    <ImageInputWrapper>
+                        <ImageInput type="file" accept="image/*" onChange={selectImage}></ImageInput>
+                    </ImageInputWrapper>
+                </ImagesDiv>
                 <SimpleInput
                     label='Nome do local'
                     value={name}
@@ -183,7 +228,7 @@ export default function AddSpot() {
                     onChange={(e) => { setAllowSmoker(e.target.value === '') }}
                     type='checkbox'
                 />
-                <Button onClick={createSpot}>Continuar</Button>
+                <Button onClick={createSpot}>Cadastrar</Button>
             </Div>
 
         </PageContainer>
