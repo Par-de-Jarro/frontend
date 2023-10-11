@@ -33,10 +33,12 @@ export default function AddSpot() {
         navigate(-1);
     }
 
-    const uploadImage = (file: File, spotId: string) => {
+    const uploadImage = (files: File[], spotId: string) => {
         let formData = new FormData();
   
-        formData.append("file", file);
+        files.forEach((file, index) => {
+            formData.append(`files[${index}]`, file);
+          });
   
         api.post(`/spot/${spotId}/upload`, formData, {
           headers: {
@@ -65,9 +67,7 @@ export default function AddSpot() {
             }
         }
 
-        let spotId: string = ""; 
-
-        api.post('/spot/', {
+        const response = await api.post('/spot/', {
             name,
             description,
             personal_quota: personalQuota,
@@ -79,18 +79,13 @@ export default function AddSpot() {
             city,
             state,
             key
-        }).then((response) => {
-            alert("Spot created with success")
-            spotId = response.data.id_spot
-        }).catch(() => {
-        alert("Something went wrong while creating spot")
-        console.log('error');
         })
-        
-        if (imageFiles.length > 0 && spotId !== "") {
-            imageFiles.forEach((imageFile) => {
-                uploadImage(imageFile, spotId);
-        });
+
+        if (response.status === 200) {
+            const data = response.data
+            if (imageFiles.length > 0) {
+                uploadImage(imageFiles, data.id_spot);
+            }
         }
     }
 
@@ -120,12 +115,12 @@ export default function AddSpot() {
           setImageFiles(newFiles);
           setImagePreviews([...imagePreviews, ...newPreviews]);
         }
-        console.log(imagePreviews)
     };
 
     useEffect(() => {
         getTypes()
-    }, [])
+    }, [imageFiles])
+
     return (
         <PageContainer>
             <Div>
