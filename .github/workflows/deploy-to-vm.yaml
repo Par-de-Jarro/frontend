@@ -30,5 +30,9 @@ jobs:
           TEMP=$(mktemp)
           echo "${{ secrets.SERVER_SSH_PRIVATE_KEY }}" > $TEMP
           scp -o 'StrictHostKeyChecking no' -i $TEMP $TEMP_ENV ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:/var/www/html/frontend/.env
-
+      - name: Start App
+        run: |
+          TEMP=$(mktemp)
+          echo "${{ secrets.SERVER_SSH_PRIVATE_KEY }}" > $TEMP
+          ssh -o 'StrictHostKeyChecking no' -i $TEMP ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} 'cd /var/www/html/frontend && npm install'
  
