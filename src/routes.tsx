@@ -6,7 +6,7 @@ import SignIn from './pages/signIn'
 import UserProfile from './pages/userProfile'
 import UserPage from './pages/user'
 import SpotDetails from './pages/spotDetails'
-import Spots from './pages/spots'
+import Spots from './pages/userSpots'
 import AddSpot from './pages/spot'
 
 import MySpot from './pages/mySpot'
