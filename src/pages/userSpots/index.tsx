@@ -1,7 +1,7 @@
 import { CardsContainer } from "./styles"
 import Card from '../../components/card'
 import { Spot } from '../../types/spot'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
 import PageContainer from "../../components/page-container";
 import { useAuth } from "../../hooks/auth";
@@ -9,6 +9,7 @@ import NavBar from "../../components/nav-bar";
 import { NavLink } from "react-router-dom";
 import { useSpots } from "../../hooks/spots";
 import Header from "../../components/header";
+import { Button } from "../userConfig/styles";
 
 
 const Spots: React.FC = () => {
@@ -24,7 +25,9 @@ const Spots: React.FC = () => {
 	const goBack = () => {
 		navigate(-1);
 	}
-
+	useEffect(() => {
+		spots.loadSpots()
+	}, [])
 	return (
 		<>
 			<Header />
@@ -38,6 +41,7 @@ const Spots: React.FC = () => {
 						))
 					}
 				</CardsContainer>
+				<Button to='/spots'>Cadastrar local</Button>
 			</PageContainer>
 			<NavBar />
 		</>

@@ -21,7 +21,7 @@ export default function AppRoutes() {
         <Route path="/signUp" element={<SignUp />} />
         <Route path="/signIn" element={<SignIn />} />
         <Route path="/user/profile" element={<UserProfile />} />
-        <Route path="/mySpot" element={<Spots />} />
+        <Route path="/userSpots" element={<Spots />} />
         <Route path="/spot" element={<AddSpot />} />
         <Route path="/mySpot" element={<MySpot />} />
         <Route path="/spots/:id" element={<SpotDetails />} />
