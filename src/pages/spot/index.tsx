@@ -3,9 +3,10 @@ import Input from '../../components/dropdown-input'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import api from '../../services/api'
-import { Button, CloseIcon, Div, Title, TitleContainer, LocationIcon, ImageInputWrapper, ImageInput, SpotImage, ImagesDiv } from './styles'
+import { Button, CloseIcon, Div, Title, TitleContainer, LocationIcon, ImageInputWrapper, CheckBoxDiv, ImageInput, SpotImage, ImagesDiv } from './styles'
 import { DropdownItem } from '../../types/input';
 import SimpleInput from '../../components/simple-input'
+import CheckBox from '../../components/checkbox';
 
 export default function AddSpot() {
     const [name, setName] = useState('')
@@ -33,16 +34,31 @@ export default function AddSpot() {
         navigate(-1);
     }
 
+    const updateAllowPet = () => {
+        const actual = allowPet || false
+        setAllowPet(!actual)
+    }
+
+    const updateHasElevator = () => {
+        const actual = hasElevator || false
+        setHasElevator(!actual)
+    }
+
+    const updateAllowSmoker = () => {
+        const actual = allowSmoker || false
+        setAllowSmoker(!actual)
+    }
+
     const uploadImage = (files: File[], spotId: string) => {
         let formData = new FormData();
   
-        files.forEach((file, index) => {
-            formData.append(`files[${index}]`, file);
-          });
+        imageFiles.forEach((file) => {
+            formData.append("files", file);
+        });
   
         api.post(`/spot/${spotId}/upload`, formData, {
           headers: {
-            'Content-Type': 'multipart/form-data'
+            'Content-Type': 'multipart/form-data; boundary=XXXX; charset=utf-8'
           },
         })
         .then((response) => {
@@ -128,6 +144,9 @@ export default function AddSpot() {
                     <CloseIcon onClick={goBack} size={30} color='black' />
                     <Title>Cadastre um local</Title>
                 </TitleContainer>
+                <TitleContainer>
+                    <p>Imagens</p>
+                </TitleContainer>
                 <ImagesDiv>
                     {
                         imagePreviews.map((imageUrl: string) => (
@@ -138,6 +157,9 @@ export default function AddSpot() {
                         <ImageInput type="file" accept="image/*" onChange={selectImage}></ImageInput>
                     </ImageInputWrapper>
                 </ImagesDiv>
+                <TitleContainer>
+                    <p>Informações gerais</p>
+                </TitleContainer>
                 <SimpleInput
                     label='Nome do local'
                     value={name}
@@ -166,34 +188,6 @@ export default function AddSpot() {
                     onChange={(e) => setValue(parseInt(e.target.value))}
                 />
                 <SimpleInput
-                    label='Rua'
-                    value={street}
-                    onChange={(e) => { setStreet(e.target.value) }}
-                />
-                <SimpleInput
-                    label='Cidade'
-                    value={city}
-                    onChange={(e) => { setCity(e.target.value) }}
-                />
-                <SimpleInput
-                    label='CEP'
-                    value={zipcode}
-                    onChange={(e) => { setZipcode(e.target.value) }}
-                />
-                <SimpleInput
-                    label='Número do local'
-                    value={number}
-                    onChange={(e) => { setNumber(e.target.value) }}
-                />
-                <SimpleInput
-                    label='Estado'
-                    value={state}
-                    onChange={(e) => { setState(e.target.value) }}
-                />
-                <TitleContainer>
-                    <Title>Detalhes de um local</Title>
-                </TitleContainer>
-                <SimpleInput
                     label='Quantidade de Quartos'
                     value={roomsQuantity.toString()}
                     onChange={(e) => { setRoomsQuantity(parseInt(e.target.value)) }}
@@ -205,23 +199,38 @@ export default function AddSpot() {
                     onChange={(e) => { setBathroomsQuantity(parseInt(e.target.value)) }}
                     type='number'
                 />
+                <CheckBoxDiv>
+                    <CheckBox value={hasElevator || false } onChange={updateHasElevator} label='Tem elevador'/>
+                    <CheckBox value={allowPet || false } onChange={updateAllowPet} label='Permite pets'/>
+                    <CheckBox value={allowSmoker || false } onChange={updateAllowSmoker} label='Permite fumantes'/>
+                </CheckBoxDiv>
+                <TitleContainer>
+                    <p>Localização</p>
+                </TitleContainer>
                 <SimpleInput
-                    label='Tem elevador'
-                    value={hasElevator.toString()}
-                    onChange={(e) => { setHasElevator(e.target.value === '') }}
-                    type='checkbox'
+                    label='Estado'
+                    value={state}
+                    onChange={(e) => { setState(e.target.value) }}
                 />
                 <SimpleInput
-                    label='Permite Pets'
-                    value={allowPet.toString()}
-                    onChange={(e) => { setAllowPet(e.target.value === '') }}
-                    type='checkbox'
+                    label='Cidade'
+                    value={city}
+                    onChange={(e) => { setCity(e.target.value) }}
                 />
                 <SimpleInput
-                    label='Permite Fumantes'
-                    value={allowSmoker.toString()}
-                    onChange={(e) => { setAllowSmoker(e.target.value === '') }}
-                    type='checkbox'
+                    label='Rua'
+                    value={street}
+                    onChange={(e) => { setStreet(e.target.value) }}
+                />
+                <SimpleInput
+                    label='Número do local'
+                    value={number}
+                    onChange={(e) => { setNumber(e.target.value) }}
+                />
+                <SimpleInput
+                    label='CEP'
+                    value={zipcode}
+                    onChange={(e) => { setZipcode(e.target.value) }}
                 />
                 <Button onClick={createSpot}>Cadastrar</Button>
             </Div>

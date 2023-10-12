@@ -27,31 +27,27 @@ export const Div = styled.div`
 export const CloseIcon = styled(IoClose)`
   height: 25px;
   width: 25px;
-  color: #513422;
+  color: #6e9778;
   cursor: pointer;
 `
 
-export const Title = styled.p`
-    height: 100%;
-    width: 100%;
+export const Title = styled.div`
+    font-size: 25px;
+    font-weight: 400;
     display: flex;
-    justify-content: left;
+    justify-content: center;
     align-items: center;
-    font-size: 22px;
-    color: #2b2b2b;
-    font-weight: 500;
     margin-top: 20px;
     margin-bottom: 20px;
+    color: #c9834a;
 `
 
 export const TitleContainer = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  gap: 5px;
+  font-size: 22px;
+  flex-direction: column;
   width: 100%;
-  height: 100%;
+  color: #c9834a;
 `
 
 export const Button = styled.button`
@@ -69,6 +65,8 @@ export const Button = styled.button`
     background-color: #f8f4e8;
     color: #513422;
     border-radius: 12px;
+
+    margin-top: 20px;
 
 
     &:hover {
@@ -96,8 +94,10 @@ export const ImagesDiv = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr); 
   gap: 10px; 
+  justify-items: center; 
+  align-items: center; 
+  margin-bottom: 20px;
 `
-
 
 export const ImageInputWrapper = styled.div`
   height: 105px;
@@ -119,3 +119,13 @@ export const SpotImage = styled.img`
     padding: 5px;
     border: 2px solid #ccc;
 `
+
+export const CheckBoxDiv = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; 
+  gap: 5px; 
+  max-height: 150px;
+  margin-bottom: 20px;
+`;
