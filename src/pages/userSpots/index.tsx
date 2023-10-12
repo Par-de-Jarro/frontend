@@ -41,7 +41,7 @@ const Spots: React.FC = () => {
 						))
 					}
 				</CardsContainer>
-				<Button to='/spots'>Cadastrar local</Button>
+				<Button to='/spot'>Cadastrar local</Button>
 			</PageContainer>
 			<NavBar />
 		</>

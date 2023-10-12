@@ -31,7 +31,7 @@ export default function SearchPage() {
           ))
         }
         </CardsContainer>
-        <Button to='/spots'>Cadastrar local</Button>
+        <Button to='/spot'>Cadastrar local</Button>
       </PageContainer>
       <NavBar />
     </>
