@@ -1,0 +1,38 @@
+name: DeployToVM
+
+on: workflow_dispatch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Send files to host & Run Docker
+
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Rename diretory
+        run: |
+         TEMP=$(mktemp)
+         echo "${{ secrets.SERVER_SSH_PRIVATE_KEY }}" > $TEMP
+         ssh -o 'StrictHostKeyChecking no' -i $TEMP ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} 'bash -s' < scripts/deploy.sh
+
+      - name: Copy files to host
+        run: |
+          TEMP=$(mktemp)
+          echo "${{ secrets.SERVER_SSH_PRIVATE_KEY }}" > $TEMP
+          scp -r -o 'StrictHostKeyChecking no' -i $TEMP ./* ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:/var/www/html/frontend/
+
+      - name: Create .env file
+        run: |
+          TEMP_ENV=$(mktemp)
+          echo "REACT_APP_API_KEY=${{ secrets.REACT_APP_API_KEY }}
+                PORT=${{ secrets.PORT }}" > $TEMP_ENV
+          TEMP=$(mktemp)
+          echo "${{ secrets.SERVER_SSH_PRIVATE_KEY }}" > $TEMP
+          scp -o 'StrictHostKeyChecking no' -i $TEMP $TEMP_ENV ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:/var/www/html/frontend/.env
+      - name: Start App
+        run: |
+          TEMP=$(mktemp)
+          echo "${{ secrets.SERVER_SSH_PRIVATE_KEY }}" > $TEMP
+          ssh -o 'StrictHostKeyChecking no' -i $TEMP ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} 'bash -s' < scripts/start-app.sh
+ 
