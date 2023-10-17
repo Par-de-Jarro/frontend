@@ -20,6 +20,20 @@ export const Input = styled.input`
   border: 0;
 `;
 
+export const InputContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+  align-items: left;
+`
+
+export const InputPrefix = styled.p`
+  color: black;
+  text-align: left;
+  padding-right: 10px;
+`
+
 export const Label = styled.p`
   width: 100%;
   font-size: 12px;

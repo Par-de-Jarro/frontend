@@ -4,6 +4,7 @@ import Counter from '../counter';
 import { useSpots } from '../../hooks/spots';
 import CheckBox from '../checkbox';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
+import RangeSlider from '../slider';
 
 
 const ModalWrapper = styled.div`
@@ -135,6 +136,10 @@ const FiltersModal: React.FC<FilterPModalProps> = ({ onClose, onSearch }) => {
     setFilters({...filters, has_elevator: !actual})
   }
 
+  const updateValue = (value: number[]) => {
+    setFilters({...filters, value_min: value[0], value_max: value[1]})
+  }
+
   return (
     <ModalWrapper>
         <ModalContainer>
@@ -142,6 +147,7 @@ const FiltersModal: React.FC<FilterPModalProps> = ({ onClose, onSearch }) => {
             <CloseIcon onClick={onClose}/>
             <Title>Filtros</Title>
           </TitleContainer>
+          <RangeSlider value={[filters.value_min || 0, filters.value_max || 2000]} onChange={updateValue}/>
           <FilterItemContainer>
             <FilterItemInfoContainer>
               <Title>Quartos</Title>
