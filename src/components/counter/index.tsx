@@ -30,7 +30,6 @@ const Container = styled.div`
   height: 91px;
   justify-content: center;
   align-items: center;
-  border-bottom: 1px solid #ebebeb;
 `
 
 
