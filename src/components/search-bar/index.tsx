@@ -57,7 +57,7 @@ const SearchBar: React.FC = () => {
       <FilterButton onClick={() => {setShowFilters(true)}}><TbAdjustmentsHorizontal color='#513422'/></FilterButton>
         {showFilters && <FiltersModal  onSearch={() => { setShowFilters(false); handleSearch() }} onClose={() => { setShowFilters(false) }} />}
         <InputField inputValue={filters.local_name} onInputValueChange={handleSearchInput} recommendations={recommendations} onSelectItem={handleSelectItem}></InputField>
-      <SearchButton onClick={handleSearch}><FaSearch color='#513422'/></SearchButton>
+      <SearchButton onClick={() => { setShowFilters(true) }}><FaSearch color='#513422'/></SearchButton>
     </Container>
   )
 

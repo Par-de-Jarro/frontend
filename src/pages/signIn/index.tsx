@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import PageContainer from '../../components/page-container'
-import Input from '../../components/dropdown-input'
 import { useNavigate } from 'react-router-dom';
 import { Button, CloseIcon, Form, Title, TitleContainer } from './styles';
 import { useAuth } from '../../hooks/auth';
