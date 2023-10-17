@@ -36,10 +36,15 @@ const ModalContainer = styled.div`
 
 const FilterItemContainer = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #ebebeb;
+  padding: 10px 0px 10px 0px;
+`
 
+const FilterCounterItemContainer = styled(FilterItemContainer)`
+  flex-direction: row;
 `
 
 const Title = styled.p`
@@ -56,7 +61,7 @@ const Label = styled.p`
   width: 100%;
 `
 
-const FilterItemInfoContainer = styled.div`
+const FilterInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -147,24 +152,59 @@ const FiltersModal: React.FC<FilterPModalProps> = ({ onClose, onSearch }) => {
             <CloseIcon onClick={onClose}/>
             <Title>Filtros</Title>
           </TitleContainer>
-          <RangeSlider value={[filters.value_min || 0, filters.value_max || 2000]} onChange={updateValue}/>
+
+          
           <FilterItemContainer>
-            <FilterItemInfoContainer>
+            <FilterInfoContainer>
+              <Title>Preço</Title>
+            </FilterInfoContainer>
+            <RangeSlider prefix='R$' value={[filters.value_min || 0, filters.value_max || 2000]} onChange={updateValue}/>
+          </FilterItemContainer>
+
+
+          <FilterCounterItemContainer>
+            <FilterInfoContainer>
               <Title>Quartos</Title>
               <Label>Quantiade de Quartos</Label>
-            </FilterItemInfoContainer>
+            </FilterInfoContainer>
             <Counter value={filters.rooms_quantity || 0} onChange={updateRooms} min={0} max={20}/>
-          </FilterItemContainer>
-          <FilterItemContainer>
-            <FilterItemInfoContainer>
+          </FilterCounterItemContainer>
+
+
+          <FilterCounterItemContainer>
+            <FilterInfoContainer>
               <Title>Banheiros</Title>
               <Label>Quantiade de Banheiros</Label>
-            </FilterItemInfoContainer>
+            </FilterInfoContainer>
             <Counter value={filters.bathrooms_quantity || 0} onChange={updateBathrooms} min={0} max={20}/>
-          </FilterItemContainer>
-          <CheckBox value={filters.allow_pet|| false } onChange={updateAllowPet} label='Permite Pets'/>
-          <CheckBox value={filters.allow_smoker || false } onChange={updateAllowSmoker} label='Permite Fumante'/>
-          <CheckBox value={filters.has_elevator || false } onChange={updateHasElevator} label='Possui Elevador'/>
+          </FilterCounterItemContainer>
+
+
+        
+          <FilterCounterItemContainer>
+            <FilterInfoContainer>
+              <Title>Permite Pets</Title>
+              <Label>Se o local permite pets</Label>
+            </FilterInfoContainer>
+            <CheckBox value={filters.allow_pet|| false } onChange={updateAllowPet}/>
+          </FilterCounterItemContainer>
+          
+          <FilterCounterItemContainer>
+            <FilterInfoContainer>
+              <Title>Permite Fumantes</Title>
+              <Label>Se o local permite fumantes</Label>
+            </FilterInfoContainer>
+            <CheckBox value={filters.allow_smoker || false } onChange={updateAllowSmoker}/>
+          </FilterCounterItemContainer>
+          
+          <FilterCounterItemContainer>
+            <FilterInfoContainer>
+              <Title>Possui Elevador</Title>
+              <Label>Se o local possui elevador</Label>
+            </FilterInfoContainer>
+            <CheckBox value={filters.has_elevator || false } onChange={updateHasElevator}/>
+          </FilterCounterItemContainer>
+
           <Button onClick={onSearch}>Pesquisar</Button>
         </ModalContainer>
     </ModalWrapper>
