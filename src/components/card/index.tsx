@@ -4,7 +4,7 @@ import { Container, CardImage, InfoContainer, PrimaryText, SecondaryText, Defaul
 interface CardProps {
   title: string
   empty_quota: number
-  distance: number
+  distance?: number
   value: number
   image_url?: string
 }
@@ -20,7 +20,7 @@ const Card: React.FC<CardProps> = ({ title, empty_quota, distance, value, image_
     <InfoContainer>
       <PrimaryText>{title}</PrimaryText>
       <SecondaryText>{empty_quota} vagas disponíveis</SecondaryText>
-      <SecondaryText>{distance} km de distância</SecondaryText>
+      { distance && <SecondaryText>{distance} km de distância</SecondaryText> }
       <PrimaryText>R${value} Mês</PrimaryText>
     </InfoContainer>
   </Container>

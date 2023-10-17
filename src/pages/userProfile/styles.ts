@@ -4,6 +4,7 @@ import { PiGenderNonbinaryBold } from 'react-icons/pi'
 import { AiOutlineMinusSquare } from 'react-icons/ai'
 import { SlLocationPin } from "react-icons/sl"
 import cameraIcon from '../../styles/assets/cameraIcon.png'
+import { IoClose } from 'react-icons/io5'
 
 export const LocationIcon = styled(SlLocationPin)`
   height: 23px;
@@ -119,4 +120,34 @@ export const MainButton = styled.button`
     @media (min-width: 768px) { 
         max-width: 700px;
     }
+`
+
+export const TitleContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px;
+  width: 100%;
+  height: 100%;
+`
+
+export const CloseIcon = styled(IoClose)`
+  height: 25px;
+  width: 25px;
+  color: #513422;
+  cursor: pointer;
+`
+
+export const Title = styled.p`
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    font-size: 22px;
+    color: #2b2b2b;
+    font-weight: 500;
+    margin-top: 20px;
+    margin-bottom: 20px;
 `

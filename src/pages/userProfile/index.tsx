@@ -10,7 +10,10 @@ import {
   UninformedGenderIcon, 
   LocationIcon, 
   ImageInput, 
-  ImageInputWrapper } from './styles'
+  ImageInputWrapper, 
+  TitleContainer,
+  CloseIcon,
+  Title} from './styles'
 import { DropdownItem } from '../../types/input';
 import DropDownInput from '../../components/dropdown-input'
 import SimpleInput from '../../components/simple-input'
@@ -19,8 +22,11 @@ import UserPic from '../../styles/assets/User.jpg'
 
 import { useAuth } from '../../hooks/auth'
 import * as yup from 'yup';
+import { useNavigate } from 'react-router-dom';
 
 const UserProfile: React.FC = () => {
+  const navigate = useNavigate();
+
   const yupUserValidator = yup.object().shape({
     name: yup.string(),
     email: yup.string().email('Invalid email format'),
@@ -168,6 +174,11 @@ const UserProfile: React.FC = () => {
       setProfileImage(URL.createObjectURL(selectedFiles?.[0]));
     };
 
+    const goBack = () => {
+      navigate(-1);
+    }
+  
+
     useEffect(() => {
         getGenders()
         getUniversities()
@@ -193,6 +204,10 @@ const UserProfile: React.FC = () => {
   return (
       <>
         <PageContainer>
+            <TitleContainer>
+                <CloseIcon onClick={goBack} size={30} color='black'/>
+                <Title>Meu Perfil</Title>
+            </TitleContainer>
             <ProfileDiv>
                 <UserImage src={profileImage || UserPic}/>
                 <ImageInputWrapper>

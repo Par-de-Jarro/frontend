@@ -1,47 +1,57 @@
-import { CardsContainer } from "./styles"
+/* eslint-disable react-hooks/exhaustive-deps */
+import { CardsContainer, CloseIcon, Title, TitleContainer } from "./styles"
 import Card from '../../components/card'
 import { Spot } from '../../types/spot'
 import { useState, useEffect } from "react";
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import PageContainer from "../../components/page-container";
 import { useAuth } from "../../hooks/auth";
 import NavBar from "../../components/nav-bar";
 import { NavLink } from "react-router-dom";
-import { useSpots } from "../../hooks/spots";
-import Header from "../../components/header";
-import { Button } from "../userConfig/styles";
+import api from "../../services/api";
+import HouseImage from '../../styles/assets/house.jpg'
 
 
 const Spots: React.FC = () => {
-	const [spot, setSpot] = useState<Spot>();
-
-
-	const { id } = useParams();
+	const [spots, setSpots] = useState<Spot[]>([]);
 	const { user } = useAuth()
-
-	const spots = useSpots()
 	const navigate = useNavigate();
 
 	const goBack = () => {
 		navigate(-1);
 	}
+
+
+  const loadSpots = async () => {        
+		const response = await api.get('/spot/', {
+			params: {
+				id_user: user.id_user
+			},
+		});
+		const spots: Spot[] = response?.data;
+		setSpots(spots);
+  };
+
 	useEffect(() => {
-		spots.loadSpots()
+		loadSpots()
 	}, [])
+
 	return (
 		<>
-			<Header />
 			<PageContainer>
+				<TitleContainer>
+						<CloseIcon onClick={goBack} size={30} color='black'/>
+						<Title>Meus Locais</Title>
+				</TitleContainer>
 				<CardsContainer>
-					{
-						spots.spots.map((spot) => (
-							<NavLink to={`/spots/${spot.id_spot}`} style={{ textDecoration: 'none' }}>
-								<Card image_url={spot.images[0].image_url} key={spot.id_spot} title={spot.name} distance={spot.distance} empty_quota={spot.personal_quota} value={spot.value} />
-							</NavLink>
-						))
-					}
+        {
+          spots.map((spot, index) => (
+            <NavLink to={`/spots/${spot.id_spot}`} key={index} style={{ textDecoration: 'none' }}>
+                <Card image_url={spot.images !== null? spot.images[0].image_url : HouseImage} title={spot.name} distance={spot.distance} empty_quota={spot.personal_quota} value={spot.value}/>
+            </NavLink>
+          ))
+        }
 				</CardsContainer>
-				<Button to='/spot'>Cadastrar local</Button>
 			</PageContainer>
 			<NavBar />
 		</>

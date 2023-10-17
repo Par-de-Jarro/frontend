@@ -48,7 +48,7 @@ const UserConfigPage: React.FC = () => {
             <NavCard label='Minhas Contas' redicted_to='/'>
               <FaMoneyBillWave/>
             </NavCard>
-            <NavCard label='Meus Locais' redicted_to='/'>
+            <NavCard label='Meus Locais' redicted_to='/mySpots/'>
               <BsHouses/>
             </NavCard>
             {

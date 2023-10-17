@@ -8,7 +8,6 @@ import NavBar from '../../components/nav-bar'
 import { NavLink } from 'react-router-dom';
 import { useSpots } from '../../hooks/spots'
 import HouseImage from '../../styles/assets/house.jpg'
-import { Button } from '../userConfig/styles'
 
 export default function SearchPage() {
   const spots = useSpots()
@@ -31,7 +30,6 @@ export default function SearchPage() {
           ))
         }
         </CardsContainer>
-        <Button to='/spot'>Cadastrar local</Button>
       </PageContainer>
       <NavBar />
     </>

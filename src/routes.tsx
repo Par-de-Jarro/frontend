@@ -9,8 +9,6 @@ import SpotDetails from './pages/spotDetails'
 import Spots from './pages/userSpots'
 import AddSpot from './pages/spot'
 
-import MySpot from './pages/mySpot'
-
 export default function AppRoutes() {
   return (
     <BrowserRouter>
@@ -23,7 +21,7 @@ export default function AppRoutes() {
         <Route path="/user/profile" element={<UserProfile />} />
         <Route path="/userSpots" element={<Spots />} />
         <Route path="/spot" element={<AddSpot />} />
-        <Route path="/mySpot" element={<MySpot />} />
+        <Route path="/mySpots" element={<Spots />} />
         <Route path="/spots/:id" element={<SpotDetails />} />
 
       </Routes>
