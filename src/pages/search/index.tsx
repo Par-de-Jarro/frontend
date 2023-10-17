@@ -9,17 +9,17 @@ import { NavLink } from 'react-router-dom';
 import { useSpots } from '../../hooks/spots'
 import HouseImage from '../../styles/assets/house.jpg'
 
-export default function SearchPage () {
+export default function SearchPage() {
   const spots = useSpots()
 
 
   useEffect(() => {
     spots.loadSpots()
-  },[])
-  
+  }, [])
+
   return (
     <>
-      <Header/>
+      <Header />
       <PageContainer>
         <CardsContainer>
         {
@@ -31,7 +31,7 @@ export default function SearchPage () {
         }
         </CardsContainer>
       </PageContainer>
-      <NavBar/>
+      <NavBar />
     </>
   )
 }
