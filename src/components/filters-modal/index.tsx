@@ -159,7 +159,7 @@ const FiltersModal: React.FC<FilterPModalProps> = ({ onClose, onSearch }) => {
           <CheckBox value={filters.allow_pet|| false } onChange={updateAllowPet} label='Permite Pets'/>
           <CheckBox value={filters.allow_smoker || false } onChange={updateAllowSmoker} label='Permite Fumante'/>
           <CheckBox value={filters.has_elevator || false } onChange={updateHasElevator} label='Possui Elevador'/>
-          <Button onClick={onSearch} >Pesquisar</Button>
+          <Button onClick={onSearch}>Pesquisar</Button>
         </ModalContainer>
     </ModalWrapper>
 
