@@ -14,8 +14,8 @@ interface RangeSliderModal {
 }
 
 const RangeSlider: React.FC<RangeSliderModal> = ({ value, onChange, prefix, min, max }) => {
-  const [minInput, setMinInput] = useState<number>(min)
-  const [maxInput, setMaxInput] = useState<number>(max)
+  const [minInput, setMinInput] = useState<number>(Array.isArray(value) ? value[0] : value || min)
+  const [maxInput, setMaxInput] = useState<number>(Array.isArray(value) ? value[1] : value || max)
 
   const handleSliderChange = (_: any, newValue: number | number[]) => {
     value = newValue as number[]
