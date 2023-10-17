@@ -13,8 +13,6 @@ export const ModalWrapper = styled.div`
   align-items: center;
   backdrop-filter: blur(5px); 
   z-index: 999;
-  padding-left: 20px;
-  padding-right: 20px;
 `;
 
 export const ModalContainer = styled.div`
@@ -25,7 +23,15 @@ export const ModalContainer = styled.div`
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); 
-  width: 100%;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 100%;
+  }
+
+  @media (min-width: 769px) {
+    width: 900px;
+  }
 `;
 
 export const CloseIcon = styled(AiOutlineCloseCircle)`

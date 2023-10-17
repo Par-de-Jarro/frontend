@@ -3,7 +3,7 @@ import Counter from '../counter';
 import { useSpots } from '../../hooks/spots';
 import CheckBox from '../checkbox';
 import RangeSlider from '../slider';
-import { Button, FilterCounterItemContainer, FilterInfoContainer, FilterItemContainer, Label, Title } from './styles';
+import { Button, FilterCounterItemContainer, FilterInfoContainer, FilterItemContainer, FilterSection, InfoLabel, InfoTitle, SectionTitle } from './styles';
 import Modal from '../modal';
 
 interface FilterModalProps {
@@ -37,63 +37,84 @@ const FiltersModal: React.FC<FilterModalProps> = ({ onClose, onSearch }) => {
     setFilters({...filters, has_elevator: !actual})
   }
 
-  const updateValue = (value: number[]) => {
-    setFilters({...filters, value_min: value[0], value_max: value[1]})
+  const updateValue = (value: number[] | number) => {
+    if (Array.isArray(value)) {
+      setFilters({...filters, value_min: value[0], value_max: value[1]})
+    }
+  }
+
+  const updateDistanceRange = (value: number[] | number) => {
+      if (typeof value == 'number') {
+        setFilters({...filters, distance_range: value})
+      }
   }
 
   return (
     <Modal onClose={onClose} title='Filtros'>
-        
         <FilterItemContainer>
           <FilterInfoContainer>
-            <Title>Preço</Title>
+            <InfoTitle>Faixa de preço</InfoTitle>
+            <InfoLabel>Faixa de preço dos locais</InfoLabel>
           </FilterInfoContainer>
-          <RangeSlider prefix='R$' value={[filters.value_min || 0, filters.value_max || 2000]} onChange={updateValue}/>
+          <RangeSlider min={0} max={2000} prefix='R$' value={[filters.value_min || 0, filters.value_max || 2000]} onChange={updateValue}/>
+        </FilterItemContainer>
+
+        <FilterItemContainer>
+          <FilterInfoContainer>
+            <InfoTitle>Distância</InfoTitle>
+            <InfoLabel>Distância em KM para o ponto escolhido</InfoLabel>
+          </FilterInfoContainer>
+          <RangeSlider min={0} max={100} prefix='Km' value={filters.distance_range || 100} onChange={updateDistanceRange}/>
         </FilterItemContainer>
 
 
-        <FilterCounterItemContainer>
-          <FilterInfoContainer>
-            <Title>Quartos</Title>
-            <Label>Quantiade de Quartos</Label>
-          </FilterInfoContainer>
-          <Counter value={filters.rooms_quantity || 0} onChange={updateRooms} min={0} max={20}/>
-        </FilterCounterItemContainer>
+        <SectionTitle>Quartos e Banheiros</SectionTitle> 
+        <FilterSection>
+          <FilterCounterItemContainer>
+            <FilterInfoContainer>
+              <InfoTitle>Quartos</InfoTitle>
+              <InfoLabel>Quantiade de Quartos</InfoLabel>
+            </FilterInfoContainer>
+            <Counter value={filters.rooms_quantity || 0} onChange={updateRooms} min={0} max={20}/>
+          </FilterCounterItemContainer>
 
 
-        <FilterCounterItemContainer>
-          <FilterInfoContainer>
-            <Title>Banheiros</Title>
-            <Label>Quantiade de Banheiros</Label>
-          </FilterInfoContainer>
-          <Counter value={filters.bathrooms_quantity || 0} onChange={updateBathrooms} min={0} max={20}/>
-        </FilterCounterItemContainer>
+          <FilterCounterItemContainer>
+            <FilterInfoContainer>
+              <InfoTitle>Banheiros</InfoTitle>
+              <InfoLabel>Quantiade de Banheiros</InfoLabel>
+            </FilterInfoContainer>
+            <Counter value={filters.bathrooms_quantity || 0} onChange={updateBathrooms} min={0} max={20}/>
+          </FilterCounterItemContainer>
+        </FilterSection>
 
+        <SectionTitle>Comodidades</SectionTitle> 
+        <FilterSection>
+          <FilterCounterItemContainer>
+            <FilterInfoContainer>
+              <InfoTitle>Permite Pets</InfoTitle>
+              <InfoLabel>Se o local permite pets</InfoLabel>
+            </FilterInfoContainer>
+            <CheckBox value={filters.allow_pet|| false } onChange={updateAllowPet}/>
+          </FilterCounterItemContainer>
+          
+          <FilterCounterItemContainer>
+            <FilterInfoContainer>
+              <InfoTitle>Permite Fumantes</InfoTitle>
+              <InfoLabel>Se o local permite fumantes</InfoLabel>
+            </FilterInfoContainer>
+            <CheckBox value={filters.allow_smoker || false } onChange={updateAllowSmoker}/>
+          </FilterCounterItemContainer>
+          
+          <FilterCounterItemContainer>
+            <FilterInfoContainer>
+              <InfoTitle>Possui Elevador</InfoTitle>
+              <InfoLabel>Se o local possui elevador</InfoLabel>
+            </FilterInfoContainer>
+            <CheckBox value={filters.has_elevator || false } onChange={updateHasElevator}/>
+          </FilterCounterItemContainer>
 
-      
-        <FilterCounterItemContainer>
-          <FilterInfoContainer>
-            <Title>Permite Pets</Title>
-            <Label>Se o local permite pets</Label>
-          </FilterInfoContainer>
-          <CheckBox value={filters.allow_pet|| false } onChange={updateAllowPet}/>
-        </FilterCounterItemContainer>
-        
-        <FilterCounterItemContainer>
-          <FilterInfoContainer>
-            <Title>Permite Fumantes</Title>
-            <Label>Se o local permite fumantes</Label>
-          </FilterInfoContainer>
-          <CheckBox value={filters.allow_smoker || false } onChange={updateAllowSmoker}/>
-        </FilterCounterItemContainer>
-        
-        <FilterCounterItemContainer>
-          <FilterInfoContainer>
-            <Title>Possui Elevador</Title>
-            <Label>Se o local possui elevador</Label>
-          </FilterInfoContainer>
-          <CheckBox value={filters.has_elevator || false } onChange={updateHasElevator}/>
-        </FilterCounterItemContainer>
+        </FilterSection>
         <Button onClick={onSearch}>Pesquisar</Button>
     </Modal>
   );

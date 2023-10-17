@@ -6,48 +6,71 @@ import { Container, CustomSlider, InputContainer, Split } from './styles';
 
 
 interface RangeSliderModal {
-  value: number[]
-  onChange: (newValue:  number[]) => void
+  value?: number[] | number
+  onChange: (newValue:  number[] | number) => void
   prefix?: string
+  min: number
+  max: number
 }
 
-const RangeSlider: React.FC<RangeSliderModal> = ({ value, onChange, prefix }) => {
-  const [min, setMin] = useState(value[0])
-  const [max, setMax] = useState(value[1])
+const RangeSlider: React.FC<RangeSliderModal> = ({ value, onChange, prefix, min, max }) => {
+  const [minInput, setMinInput] = useState<number>(min)
+  const [maxInput, setMaxInput] = useState<number>(max)
 
-  const handleSliderChange = (event: Event, newValue: number | number[]) => {
+  const handleSliderChange = (_: any, newValue: number | number[]) => {
     value = newValue as number[]
-    setMin(value[0])
-    setMax(value[1])
-    onChange([min, max]);
+
+    if (typeof value == 'number') {
+      setMaxInput(value)
+      onChange(value)
+    } else if (Array.isArray(value)) {
+      setMinInput(value[0])
+      setMaxInput(value[1])
+      onChange([minInput || min, maxInput || max]);
+    }
   };
 
   const handleMinChange = (changeValue: string) => {
-    const minValue = changeValue ? parseInt(changeValue) : 0
-    setMin(minValue)
-    onChange([minValue, max])
-
+    const minValue = changeValue ? parseInt(changeValue) : min
+    setMinInput(minValue)   
+    onChange([minValue, maxInput])    
   }
 
   const handleMaxChange = (changeValue: string) => {
-    const maxValue = changeValue ? parseInt(changeValue) : 2000
-    setMax(maxValue)   
-    onChange([min, maxValue])    
+    const maxValue = changeValue ? parseInt(changeValue) : max
+
+    if (typeof value == 'number') {
+      setMaxInput(maxValue)
+      onChange(maxValue)
+    }
+
+    if (Array.isArray(value)) {
+      setMaxInput(maxValue)
+      onChange([minInput, maxValue])
+    }
+
+    setMaxInput(maxValue)   
+    onChange([minInput, maxValue])    
   }
 
   return (
     <Container>
       <CustomSlider
-        min={0}
-        max={2000}
+        min={min}
+        max={max}
         value={value}
         onChange={handleSliderChange}
         valueLabelDisplay="off"
       />
       <InputContainer>
-          <SimpleInput prefix={prefix} label='Valor Mínimo' value={min.toString()} onChange={(e) => { handleMinChange(e.target.value) }}/>
-          <Split> - </Split>
-          <SimpleInput prefix={prefix} label='Valor Máximo' value={max.toString()} onChange={(e) => { handleMaxChange(e.target.value) }}/>
+          { 
+            Array.isArray(value) &&           
+            <>
+              <SimpleInput prefix={prefix} label='Valor Mínimo' value={minInput.toString()} onChange={(e) => { handleMinChange(e.target.value) }}/>
+              <Split> - </Split>
+            </>
+          }
+          <SimpleInput prefix={prefix} label='Valor Máximo' value={maxInput.toString()} onChange={(e) => { handleMaxChange(e.target.value) }}/>
       </InputContainer>
     </Container>
   );
