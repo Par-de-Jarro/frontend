@@ -48,6 +48,9 @@ const SearchBar: React.FC = () => {
 
           setRecommendations(recommendations)
       })
+      .catch((error) => {
+        console.error("Error on google autocomplete: ", error)
+      })
     )
   }, [debouncedSearchterm])
 

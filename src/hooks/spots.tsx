@@ -56,7 +56,12 @@ export function SpotsProvider({ children }: { children: ReactNode }) {
       });
       const spots: Spot[] = response?.data;
       setSpots(spots);
-    } finally {
+    } 
+    catch {
+      alert("Algo de errado ocorreu na sua solicitação")
+      console.log('error');
+    }
+    finally {
       setLoadingSpots(false);
     }
   };

@@ -57,6 +57,8 @@ export default function SignUp () {
         })
 
         setUniversityRecommendations(universities)
+      }).catch((error) => {
+        console.error('Get universities failed: ', error);
       })
     )
   }

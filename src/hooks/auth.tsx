@@ -40,17 +40,26 @@ const AuthProvider: React.FC<AuthProps> = ({ children }) => {
   })
 
   const signIn = useCallback(async ({ email, password }: SignInCredentials) => {
-    const response = await api.post('/session/', {
+    await api.post('/session/', {
       email,
       password
     })
+    .then((response) => {
+      const { access_token, user } = response.data
 
-    const { access_token, user } = response.data
+      localStorage.setItem('@ParDeJarro:token', access_token)
+      localStorage.setItem('@ParDeJarro:user', JSON.stringify(user))
 
-    localStorage.setItem('@ParDeJarro:token', access_token)
-    localStorage.setItem('@ParDeJarro:user', JSON.stringify(user))
+      setData({ user, access_token })
+    })
+    .catch((error) => {
+      alert('Unable to login')
+      console.error("Login failed: ", error)
+    })
 
-    setData({ user, access_token })
+    
+
+    
   }, [])
 
   const signOut = useCallback(() => {

@@ -154,7 +154,8 @@ const UserProfile: React.FC = () => {
 
     const getUniversities = () => {
         (
-          api.get('/university').then((response) => {
+          api.get('/university')
+          .then((response) => {
             const universities = response.data.map((elem : { name: string, id_university: string } ) => {
                 return {
                   value: elem.id_university,
@@ -164,6 +165,10 @@ const UserProfile: React.FC = () => {
             })
     
             setUniversityRecommendations(universities)
+          })
+          .catch((error) => {
+            alert("Something went wrong while retrieving university data")
+            console.error('Retrieve university data failed: ', error);
           })
         )
       }
