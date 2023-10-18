@@ -34,6 +34,17 @@ const SpotDetails: React.FC = () => {
 		navigate(-1);
 	}
 
+    const handleClick = () => {
+        if(spot?.owner.id_user !== user.id_user) {
+            api.post(`/spot/${id}/request`).then((response) => {
+                alert("Sua solicitação foi feita com sucesso")
+            }).catch(() => {
+                alert("Algo de errado ocorreu na sua solicitação")
+                console.log('error');
+            })
+        }
+    }
+
     const getSpot = () => {
         api.get(`/spot/${id}`).then((response) => {
             const spot: Spot = response?.data
@@ -100,7 +111,7 @@ const SpotDetails: React.FC = () => {
                     <p>{spot?.key.allowance.allow_smoker ? "Permite fumantes" : "Não permite fumantes"}</p>
                 </SubInfo>
               </SpotContainer>
-              <MainButton>{user && user.id_user === spot?.owner.id_user ? 'Editar local' : 'Solicitar entrada'}</MainButton>
+              <MainButton onClick={handleClick}>{user && user.id_user === spot?.owner.id_user ? 'Editar local' : 'Solicitar entrada'}</MainButton>
             </PageContainer>
         </>
       )

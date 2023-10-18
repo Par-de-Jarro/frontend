@@ -63,6 +63,8 @@ export default function AddSpot() {
         })
         .then((response) => {
           console.log('Image uploaded successfully:', response.data);
+          navigate('/mySpots');
+
         })
         .catch((error) => {
           console.error('Image upload failed:', error);
@@ -178,14 +180,17 @@ export default function AddSpot() {
                     onInputValueChange={setType}
                 />
                 <SimpleInput
-                    label='Aluguel'
+                    label='Quantidade de vagas'
                     value={personalQuota.toString()}
                     onChange={(e) => setPersonalQuota(parseInt(e.target.value))}
+                    type='number'
                 />
                 <SimpleInput
-                    label='Valor'
+                    label='Aluguel'
                     value={value.toString()}
                     onChange={(e) => setValue(parseInt(e.target.value))}
+                    type='number'
+                    prefix='R$'
                 />
                 <SimpleInput
                     label='Quantidade de Quartos'

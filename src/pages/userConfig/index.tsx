@@ -5,7 +5,7 @@ import PageContainer from '../../components/page-container'
 import NavCard from '../../components/nav-card'
 import { BsHouses } from 'react-icons/bs'
 import { PiUserCircleFill } from 'react-icons/pi'
-import { FaMoneyBillWave } from 'react-icons/fa'
+import { MdOutlineMailOutline } from 'react-icons/md'
 import { useAuth } from '../../hooks/auth'
 import { useNavigate } from 'react-router-dom'
 import UserPic from '../../styles/assets/User.jpg'
@@ -45,8 +45,8 @@ const UserConfigPage: React.FC = () => {
             <NavCard label='Meu Perfil' redicted_to='/user/profile'>
               <PiUserCircleFill />
             </NavCard>
-            <NavCard label='Minhas Contas' redicted_to='/'>
-              <FaMoneyBillWave/>
+            <NavCard label='Solicitações' redicted_to='/'>
+              <MdOutlineMailOutline/>
             </NavCard>
             <NavCard label='Meus Locais' redicted_to='/mySpots/'>
               <BsHouses/>

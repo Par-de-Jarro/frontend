@@ -12,7 +12,7 @@ export default function SignIn() {
   const { signIn } = useAuth()
   
 	const goBack = () => {
-		navigate(-1);
+		navigate('/');
 	}
 
   const logIn = () => {
