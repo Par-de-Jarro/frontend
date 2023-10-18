@@ -21,6 +21,9 @@ export default function SignIn() {
       .then(() => {
         navigate('/')
       })
+      .catch((error) => {
+        console.error('Login failed: ', error);
+      })
     )
   }
 

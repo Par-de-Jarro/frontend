@@ -49,6 +49,9 @@ const SpotDetails: React.FC = () => {
         api.get(`/spot/${id}`).then((response) => {
             const spot: Spot = response?.data
             setSpot(spot)
+        }).catch((error) => {
+            alert("Algo de errado ocorreu na sua solicitação")
+            console.log('Erro na solicitação de lugar: ', error);
         })
     }
 
