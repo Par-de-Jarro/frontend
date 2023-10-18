@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { CardsContainer, CloseIcon, Title, TitleContainer } from "./styles"
+import { CardsContainer, CloseIcon, Title, TitleContainer, PlusButton, PlusIcon, ButtonDiv  } from "./styles"
 import Card from '../../components/card'
 import { Spot } from '../../types/spot'
 import { useState, useEffect } from "react";
@@ -15,7 +15,12 @@ import HouseImage from '../../styles/assets/house.jpg'
 const Spots: React.FC = () => {
 	const [spots, setSpots] = useState<Spot[]>([]);
 	const { user } = useAuth()
-	const navigate = useNavigate();
+
+	const navigate = useNavigate()
+
+  	const goToCreateSpot = () => {
+    	navigate('/spot');
+	}
 
 	const goBack = () => {
 		navigate(-1);
@@ -44,14 +49,19 @@ const Spots: React.FC = () => {
 						<Title>Meus Locais</Title>
 				</TitleContainer>
 				<CardsContainer>
-        {
-          spots.map((spot, index) => (
-            <NavLink to={`/spots/${spot.id_spot}`} key={index} style={{ textDecoration: 'none' }}>
-                <Card image_url={spot.images !== null? spot.images[0].image_url : HouseImage} title={spot.name} distance={spot.distance} empty_quota={spot.personal_quota} value={spot.value}/>
-            </NavLink>
-          ))
-        }
+					{
+					spots.map((spot, index) => (
+						<NavLink to={`/spots/${spot.id_spot}`} key={index} style={{ textDecoration: 'none' }}>
+							<Card image_url={spot.images !== null? spot.images[0].image_url : HouseImage} title={spot.name} distance={spot.distance} empty_quota={spot.personal_quota} value={spot.value}/>
+						</NavLink>
+					))
+					}
 				</CardsContainer>
+				<ButtonDiv>
+          			<PlusButton onClick={goToCreateSpot}>
+              			<PlusIcon/>
+          			</PlusButton>
+        		</ButtonDiv>
 			</PageContainer>
 			<NavBar />
 		</>
