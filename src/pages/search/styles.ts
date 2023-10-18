@@ -26,8 +26,6 @@ export const CardsContainer = styled.div`
     padding: 30px 0px 30px 0px;
     gap: 25px;
     align-items: center;
-
-    height: 80%;
 `
 
 export const PlusButton = styled.button`
