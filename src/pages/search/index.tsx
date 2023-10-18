@@ -2,16 +2,22 @@
 import React, { useEffect } from 'react'
 import Card from '../../components/card'
 import PageContainer from '../../components/page-container'
-import { CardsContainer } from './styles'
+import { CardsContainer, PlusButton, PlusIcon, ButtonDiv } from './styles'
 import Header from '../../components/header'
 import NavBar from '../../components/nav-bar'
 import { NavLink } from 'react-router-dom';
 import { useSpots } from '../../hooks/spots'
 import HouseImage from '../../styles/assets/house.jpg'
+import { useNavigate } from 'react-router-dom'
 
 export default function SearchPage() {
   const spots = useSpots()
 
+  const navigate = useNavigate()
+
+  const goToCreateSpot = () => {
+    navigate('/spot');
+}
 
   useEffect(() => {
     spots.loadSpots()
@@ -30,6 +36,11 @@ export default function SearchPage() {
           ))
         }
         </CardsContainer>
+        <ButtonDiv>
+          <PlusButton onClick={goToCreateSpot}>
+              <PlusIcon/>
+          </PlusButton>
+        </ButtonDiv>
       </PageContainer>
       <NavBar />
     </>

@@ -1,4 +1,5 @@
 import { IoClose } from 'react-icons/io5'
+import { BsPlusLg } from 'react-icons/bs'
 import styled from 'styled-components'
 
 
@@ -55,4 +56,43 @@ export const Title = styled.p`
     font-weight: 500;
     margin-top: 20px;
     margin-bottom: 20px;
+`
+
+export const PlusButton = styled.button`
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70px;
+    height: 70px;
+    color: #513422;
+    border-radius: 50%;
+    border: 0;
+    background-color: #f8f4e8;
+    
+    &:hover {
+        background-color: #513422;
+        color: #f8f4e8;
+    }
+    
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+`
+
+export const PlusIcon = styled(BsPlusLg)`
+    width: 30px;
+    height: 30px;
+`
+
+export const ButtonDiv = styled.div`
+    width: 100%;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+
+    @media (min-width: 768px) {
+        position: fixed;
+        bottom: 0;
+    }
 `
