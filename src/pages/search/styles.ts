@@ -15,7 +15,6 @@ export const CardsContainer = styled.div`
     @media (max-width: 768px) {
         display: flex;
         flex-direction: column;
-
     }
 
     @media (min-width: 769px) {
