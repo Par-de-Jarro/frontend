@@ -10,11 +10,10 @@ import { DropdownItem } from '../../types/input'
 import FiltersModal from '../filters-modal'
 
 const SearchBar: React.FC = () => {
-  const { loadSpots, filters, setFilters } = useSpots()
+  const { loadSpots, filters, setFilters, isFilterOpen, setIsFilterOpen } = useSpots()
   const [recommendations, setRecommendations] = useState<Array<DropdownItem>>([])
   const [searchBarValue, setSearchBarValue] = useState(filters.local_name)
   const [debouncedSearchterm] = useDebounce(searchBarValue, 500)
-  const [showFilters, setShowFilters] = useState<boolean>(false)
 
   const handleSearch = () => {
     loadSpots()
@@ -48,16 +47,24 @@ const SearchBar: React.FC = () => {
 
           setRecommendations(recommendations)
       })
+      .catch((error) => {
+        console.error("Error on google autocomplete: ", error)
+      })
     )
   }, [debouncedSearchterm])
+
+  function handleFilterSearch() {
+    setIsFilterOpen(false); 
+    handleSearch()
+  }
 
   
   return (
     <Container>
-      <FilterButton onClick={() => {setShowFilters(true)}}><TbAdjustmentsHorizontal color='#513422'/></FilterButton>
-        {showFilters && <FiltersModal  onSearch={() => { setShowFilters(false); handleSearch() }} onClose={() => { setShowFilters(false) }} />}
+      <FilterButton onClick={() => {setIsFilterOpen(true)}}><TbAdjustmentsHorizontal color='#513422'/></FilterButton>
+        {isFilterOpen && <FiltersModal  onSearch={handleFilterSearch} onClose={() => { setIsFilterOpen(false) }} />}
         <InputField inputValue={filters.local_name} onInputValueChange={handleSearchInput} recommendations={recommendations} onSelectItem={handleSelectItem}></InputField>
-      <SearchButton onClick={() => { setShowFilters(true) }}><FaSearch color='#513422'/></SearchButton>
+      <SearchButton onClick={() => { setIsFilterOpen(true) }}><FaSearch color='#513422'/></SearchButton>
     </Container>
   )
 

@@ -38,7 +38,7 @@ export const Container = styled.nav`
   position: fixed;
   bottom: 0;
 
-  @media (min-width: 769px) {
+  @media (min-width: 768px) {
     /* Estilos para dispositivos móveis (largura máxima de 768px) */
     display: none;
   }

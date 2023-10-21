@@ -23,6 +23,8 @@ interface SpotContextData {
   filters: Filters,
   setFilters: (a: any) => void;
   loadingSpots: boolean;
+  isFilterOpen: boolean;
+  setIsFilterOpen:(a: boolean) => void;
 }
 
 const SpotContext = createContext<SpotContextData | undefined>(undefined);
@@ -31,6 +33,7 @@ export function SpotsProvider({ children }: { children: ReactNode }) {
   const { user } = useAuth()
   const [loadingSpots, setLoadingSpots] = useState<boolean>(false);
   const [spots, setSpots] = useState<Spot[]>([]);
+  const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
   const [filters, setFilters] = useState<Filters>(() => {
     let lat =  -7.2171368
     let long =  -35.9097543
@@ -56,7 +59,12 @@ export function SpotsProvider({ children }: { children: ReactNode }) {
       });
       const spots: Spot[] = response?.data;
       setSpots(spots);
-    } finally {
+    } 
+    catch {
+      alert("Algo de errado ocorreu na sua solicitação")
+      console.log('error');
+    }
+    finally {
       setLoadingSpots(false);
     }
   };
@@ -67,7 +75,9 @@ export function SpotsProvider({ children }: { children: ReactNode }) {
     spots,
     loadSpots,
     filters,
-    setFilters
+    setFilters,
+    isFilterOpen,
+    setIsFilterOpen
   };
 
   return <SpotContext.Provider value={value}>{children}</SpotContext.Provider>;

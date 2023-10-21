@@ -1,11 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+
 import NavBar from '../../components/nav-bar'
 import PageContainer from '../../components/page-container'
 import { UserImage, Title, MainDiv, AboutSection, SubInfo, BackIcon, FirstElement, UniIcon, CourseIcon, GenderIcon, AgeIcon, ContactDiv, EmailIcon, PhoneIcon } from './styles'
 import UserPic from '../../styles/assets/User.jpg'
-import { useNavigate, useParams } from 'react-router-dom'
+
 import api from '../../services/api';
+
 import { User } from '../../types/user'
 
 
@@ -24,7 +27,13 @@ const UserPage: React.FC = () => {
   const getSpot = () => {
     api.get(`/user/${id}`).then((response) => {
         const user: User = response?.data
-        SetUser(user)
+        try {
+          SetUser(user)
+        }
+        catch {
+          alert("Something went wrong while updating user")
+          console.log('error');
+        }
     })
 }
 

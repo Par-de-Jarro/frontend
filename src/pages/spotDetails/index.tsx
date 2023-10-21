@@ -35,13 +35,22 @@ const SpotDetails: React.FC = () => {
 	}
 
     const handleClick = () => {
-        if(spot?.owner.id_user !== user.id_user) {
-            api.post(`/spot/${id}/request`).then((response) => {
-                alert("Sua solicitação foi feita com sucesso")
-            }).catch(() => {
-                alert("Algo de errado ocorreu na sua solicitação")
-                console.log('error');
-            })
+        try {
+            if(user === undefined) {
+                navigate('/userConfig')
+            }
+            if(spot?.owner.id_user !== user.id_user) {
+                api.post(`/spot/${id}/request`).then((response) => {
+                    alert("Sua solicitação foi feita com sucesso")
+                }).catch(() => {
+                    alert("Algo de errado ocorreu na sua solicitação")
+                    console.log('error');
+                })
+            }
+        }
+        catch{
+            alert("Algo de errado ocorreu na sua solicitação")
+            console.log('error');
         }
     }
 
@@ -49,6 +58,9 @@ const SpotDetails: React.FC = () => {
         api.get(`/spot/${id}`).then((response) => {
             const spot: Spot = response?.data
             setSpot(spot)
+        }).catch((error) => {
+            alert("Algo de errado ocorreu na sua solicitação")
+            console.log('Erro na solicitação de lugar: ', error);
         })
     }
 

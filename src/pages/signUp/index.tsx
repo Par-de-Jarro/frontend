@@ -40,8 +40,8 @@ export default function SignUp () {
           id_university: university
       }).then(() => {
         navigate('/')
-      }).catch(() => {
-        console.log('error');
+      }).catch((error) => {
+        console.error('Create spot failed: ', error);
       })
     )
   }
@@ -57,6 +57,8 @@ export default function SignUp () {
         })
 
         setUniversityRecommendations(universities)
+      }).catch((error) => {
+        console.error('Get universities failed: ', error);
       })
     )
   }

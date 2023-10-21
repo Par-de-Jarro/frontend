@@ -27,14 +27,21 @@ const Spots: React.FC = () => {
 	}
 
 
-  const loadSpots = async () => {        
-		const response = await api.get('/spot/', {
-			params: {
-				id_user: user.id_user
-			},
-		});
-		const spots: Spot[] = response?.data;
-		setSpots(spots);
+  const loadSpots = async () => {   
+		if(user !== undefined) {
+			await api.get('/spot/', {
+				params: {
+					id_user: user.id_user
+				},
+			})
+			.then((response) => {
+				const spots: Spot[] = response?.data;
+				setSpots(spots);
+			})
+			.catch((error) => {
+			console.error("Error on getting user spot: ", error)
+			})
+		}
   };
 
 	useEffect(() => {

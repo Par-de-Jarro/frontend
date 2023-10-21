@@ -85,7 +85,7 @@ export default function AddSpot() {
             }
         }
 
-        const response = await api.post('/spot/', {
+        await api.post('/spot/', {
             name,
             description,
             personal_quota: personalQuota,
@@ -97,14 +97,17 @@ export default function AddSpot() {
             city,
             state,
             key
-        })
-
-        if (response.status === 200) {
-            const data = response.data
-            if (imageFiles.length > 0) {
-                uploadImage(imageFiles, data.id_spot);
+        }).then((response) => {
+            if (response.status === 200) {
+                const data = response.data
+                if (imageFiles.length > 0) {
+                    uploadImage(imageFiles, data.id_spot);
+                }
             }
-        }
+        }).catch((error) => {
+            console.error('Create spot failed: ', error);
+        })
+            
     }
 
     const getTypes = () => {
