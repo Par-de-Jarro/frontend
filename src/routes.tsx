@@ -15,10 +15,10 @@ import ProtectedRoute from './protectedRoutes'
 
 export default function AppRoutes() {
 
-  const { user } = useAuth()
+  const { user, isTokenExpired } = useAuth()
 
   const defaultProtectedRouteProps: Omit<ProtectedRouteProps, 'outlet'> = {
-    isAuthenticated: user != null,
+    isAuthenticated: user != null && !isTokenExpired(),
     authenticationPath: '/signIn',
   };
 

@@ -11,13 +11,16 @@ import { useNavigate } from 'react-router-dom'
 import UserPic from '../../styles/assets/User.jpg'
 
 const UserConfigPage: React.FC = () => {
-  const { user, signOut } = useAuth()
+  const { user, signOut, isTokenExpired } = useAuth()
+  console.log('here')
+  console.log(isTokenExpired())
   const navigate = useNavigate();
 
   const logOut = () => {
     signOut()
     navigate('/')
   }
+ 
 
   return (
       <>

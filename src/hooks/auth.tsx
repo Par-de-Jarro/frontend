@@ -3,6 +3,7 @@ import React, {
 } from 'react'
 import api from '../services/api'
 import { User } from '../types/user'
+import jwtDecode, { JwtPayload } from 'jwt-decode';
 
 interface AuthState {
   access_token: string
@@ -18,6 +19,7 @@ interface AuthContextData {
   user: User
   signIn: (credentials: SignInCredentials) => Promise<void>
   signOut: () => void
+  isTokenExpired: () => boolean;
 }
 
 const AuthContext = createContext<AuthContextData>({ } as AuthContextData)
@@ -69,8 +71,28 @@ const AuthProvider: React.FC<AuthProps> = ({ children }) => {
     setData({} as AuthState)
   }, [])
 
+  
+
+  const isTokenExpired = (): boolean => {
+    const access_token = localStorage.getItem('@ParDeJarro:token');
+  
+    if (access_token) {
+      const decodedToken = jwtDecode<JwtPayload>(access_token);
+      const currentTime = Math.floor(Date.now() / 1000);
+  
+      if (decodedToken.exp && currentTime > decodedToken.exp) {
+        localStorage.clear();
+        return true; 
+      } else {
+        return false;
+      }
+    }
+  
+    return true; 
+  };
+
   return (
-    <AuthContext.Provider value={{ user: data.user, signIn, signOut }}>
+    <AuthContext.Provider value={{ user: data.user, signIn, signOut, isTokenExpired }}>
       { children }
     </AuthContext.Provider>
   )
