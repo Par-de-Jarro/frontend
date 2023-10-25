@@ -182,7 +182,24 @@ const UserProfile: React.FC = () => {
     const goBack = () => {
       navigate(-1);
     }
-  
+
+    function maskPhone(value: string) {
+      return value
+        .replace(/\D/g, "")
+        .replace(/^(\d{2})(\d)/g, "($1)$2")
+        .replace(/(\d)(\d{4})$/, "$1-$2")
+    }
+
+    function maskCpf(value: string) {
+      return value
+        .replace(/\D/g, '')
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d{1,2})/, '$1-$2')
+        .replace(/(-\d{2})\d+?$/, '$1')
+    }
+
+    
 
     useEffect(() => {
         getGenders()
@@ -236,14 +253,15 @@ const UserProfile: React.FC = () => {
                     label='Telefone' 
                     value={cellphone}
                     onChange={(e) => {
-                      setCellphone(e.target.value)
+                      setCellphone(maskPhone(e.target.value))
                   }}
                 />
                 <SimpleInput 
+                    maxLength={14}
                     label='CPF' 
                     value={cpf}
                     onChange={(e) => {
-                      setCpf(e.target.value)
+                      setCpf(maskCpf(e.target.value))
                   }}
                 />
                 <SimpleInput 

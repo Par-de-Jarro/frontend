@@ -13,7 +13,7 @@ const SimpleInput: React.FC<InputProps> = ({label, type, prefix, ...rest}) => {
           <Label>{label}</Label>
           <InputContainer>
             {prefix && <InputPrefix>{prefix}</InputPrefix>}
-            <Input type={type} id={label} {...rest}></Input>
+            <Input type={type} id={label} {...rest} />
           </InputContainer>
       </Container>
   );
