@@ -58,9 +58,6 @@ const AuthProvider: React.FC<AuthProps> = ({ children }) => {
       alert('Unable to login')
       console.error("Login failed: ", error)
     })
-
-    
-
     
   }, [])
 

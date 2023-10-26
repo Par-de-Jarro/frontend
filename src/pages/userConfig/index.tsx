@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { CardsContainer, Title, LoggedInUserContainer, LoggedOffUserContainer, UserImage, UserInfoContainer, UserName, Button, RedirectLink, LogOutButton } from './styles'
 import NavBar from '../../components/nav-bar'
 import PageContainer from '../../components/page-container'
@@ -9,34 +9,47 @@ import { MdOutlineMailOutline } from 'react-icons/md'
 import { useAuth } from '../../hooks/auth'
 import { useNavigate } from 'react-router-dom'
 import UserPic from '../../styles/assets/User.jpg'
+import { User } from '../../types/user'
 
 const UserConfigPage: React.FC = () => {
   const { user, signOut, isTokenExpired } = useAuth()
-  console.log('here')
-  console.log(isTokenExpired())
+
+  const [loggedUser, setLoggedUser] = useState<User | undefined>(user)
+
   const navigate = useNavigate();
 
   const logOut = () => {
     signOut()
     navigate('/')
   }
+
+  const signOutIfTokenIsExpired = () => {
+    if(isTokenExpired()) {
+      signOut()
+      setLoggedUser(undefined)
+    }
+  }
+
+  useEffect(() => {
+    signOutIfTokenIsExpired()
+  }, [])
  
 
   return (
       <>
         <PageContainer>
           <Title>Perfil</Title>
-          { user && (
+          { loggedUser && (
               <LoggedInUserContainer to='/user/profile'>
-                <UserImage src={user.profile_img || UserPic}/>
+                <UserImage src={loggedUser.profile_img || UserPic}/>
                   <UserInfoContainer>
-                      <UserName>{user.name}</UserName>
+                      <UserName>{loggedUser.name}</UserName>
                       Mostrar Perfil
                   </UserInfoContainer>
               </LoggedInUserContainer>
             )
           }
-          { !user && (
+          { !loggedUser && (
               <LoggedOffUserContainer>
                 <Button to='/signIn'>Entrar</Button>
                 Você ainda não tem conta? <RedirectLink to='/signUp'>Cadastrar-se</RedirectLink>
@@ -55,7 +68,7 @@ const UserConfigPage: React.FC = () => {
               <BsHouses/>
             </NavCard>
             {
-              user && (
+              loggedUser && (
                 <LogOutButton onClick={logOut}>
                   Deslogar
                 </LogOutButton>

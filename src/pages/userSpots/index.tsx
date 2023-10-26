@@ -14,7 +14,7 @@ import HouseImage from '../../styles/assets/house.jpg'
 
 const Spots: React.FC = () => {
 	const [spots, setSpots] = useState<Spot[]>([]);
-	const { user } = useAuth()
+	const { user, isTokenExpired, signOut } = useAuth()
 
 	const navigate = useNavigate()
 
@@ -25,6 +25,13 @@ const Spots: React.FC = () => {
 	const goBack = () => {
 		navigate(-1);
 	}
+
+	const signOutIfTokenIsExpired = () => {
+		if(isTokenExpired()) {
+		  signOut()
+		  navigate('/signIn')
+		}
+	  }
 
 
   const loadSpots = async () => {   
@@ -45,6 +52,7 @@ const Spots: React.FC = () => {
   };
 
 	useEffect(() => {
+		signOutIfTokenIsExpired()
 		loadSpots()
 	}, [])
 
