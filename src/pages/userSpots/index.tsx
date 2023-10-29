@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { CardsContainer, CloseIcon, Title, TitleContainer, PlusButton, PlusIcon, ButtonDiv } from "./styles"
-import Card from '../../components/card'
+import CardTag from '../../components/card-tag'
 import { Spot } from '../../types/spot'
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
@@ -56,10 +56,10 @@ const Spots: React.FC = () => {
 					<Title>Meus Locais</Title>
 				</TitleContainer>
 				<CardsContainer>
-					{
+				{
 						spots.map((spot, index) => (
 							<NavLink to={`/spots/${spot.id_spot}`} key={index} style={{ textDecoration: 'none' }}>
-								<Card image_url={spot.images !== null ? spot.images[0].image_url : HouseImage} title={spot.name} distance={spot.distance} empty_quota={spot.personal_quota} value={spot.value} text_tag={spot.owner.id_user === user.id_user ? "Proprietario" : "Participante"} />
+								<CardTag image_url={spot.images !== null ? spot.images[0].image_url : HouseImage} title={spot.name} distance={spot.distance} empty_quota={spot.personal_quota} value={spot.value} text_tag={spot.owner.id_user === user.id_user ? "Proprietario" : "Participante"} />
 							</NavLink>
 						))
 					}
