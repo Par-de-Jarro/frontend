@@ -7,6 +7,7 @@ import { Button, CloseIcon, Div, Title, TitleContainer, LocationIcon, ImageInput
 import { DropdownItem } from '../../types/input';
 import SimpleInput from '../../components/simple-input'
 import CheckBox from '../../components/checkbox';
+import { useAuth } from '../../hooks/auth'
 
 export default function AddSpot() {
     const [name, setName] = useState('')
@@ -28,6 +29,8 @@ export default function AddSpot() {
     const [imageFiles, setImageFiles] = useState<File[]>([]);
     const [imagePreviews, setImagePreviews] = useState<string[]>([]);
     
+    const { isTokenExpired, signOut } = useAuth()
+
     const navigate = useNavigate()
     
     const goBack = () => {
@@ -110,6 +113,13 @@ export default function AddSpot() {
             
     }
 
+    const signOutIfTokenIsExpired = () => {
+        if(isTokenExpired()) {
+          signOut()
+          navigate('/signIn')
+        }
+      }
+
     const getTypes = () => {
         const spot_types = [
             {
@@ -139,6 +149,7 @@ export default function AddSpot() {
     };
 
     useEffect(() => {
+        signOutIfTokenIsExpired()
         getTypes()
     }, [imageFiles])
 

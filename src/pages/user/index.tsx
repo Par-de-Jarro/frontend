@@ -10,9 +10,12 @@ import UserPic from '../../styles/assets/User.jpg'
 import api from '../../services/api';
 
 import { User } from '../../types/user'
+import { useAuth } from '../../hooks/auth'
 
 
 const UserPage: React.FC = () => {
+  const { isTokenExpired, signOut } = useAuth()
+
   const [user, SetUser] = useState<User>()
   const navigate = useNavigate();
   const { id } = useParams();
@@ -37,7 +40,16 @@ const UserPage: React.FC = () => {
     })
 }
 
-useEffect(() => { getSpot() }, [])
+const signOutIfTokenIsExpired = () => {
+  if(isTokenExpired()) {
+    signOut()
+    navigate('/signIn')
+  }
+}
+
+useEffect(() => { 
+  signOutIfTokenIsExpired()
+  getSpot() }, [])
 
   const goBack = () => {
 		navigate(-1);
