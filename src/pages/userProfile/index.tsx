@@ -53,7 +53,7 @@ const UserProfile: React.FC = () => {
     id_university: yup.string(),
   });
 
-    const { user } = useAuth()
+    const { user, isTokenExpired, signOut } = useAuth()
 
     const [name, setName] = useState(user.name)
     const [profileImage, setProfileImage] = useState(user.profile_img)
@@ -199,9 +199,16 @@ const UserProfile: React.FC = () => {
         .replace(/(-\d{2})\d+?$/, '$1')
     }
 
-    
+  
+    const signOutIfTokenIsExpired = () => {
+      if(isTokenExpired()) {
+        signOut()
+        navigate('/signIn')
+      }
+    }
 
     useEffect(() => {
+        signOutIfTokenIsExpired()
         getGenders()
         getUniversities()
         setName(user.name)
