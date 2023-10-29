@@ -59,3 +59,10 @@ export const SecondaryText = styled.p`
     color: #717171;
     font-weight: 100;
 `
+export const TagsDiv = styled.div`
+width: 20%;
+height: 15%;
+border-radius: 5%;
+background-color: #D1FAE5;
+text-color: #10B981;
+`

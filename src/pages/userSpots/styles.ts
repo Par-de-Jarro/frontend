@@ -96,3 +96,9 @@ export const ButtonDiv = styled.div`
         bottom: 0;
     }
 `
+export const TagsDiv = styled.div`
+width: 10%;
+height: 10px;
+border-radius: 20%;
+background-color: #2b2b2b;
+`
