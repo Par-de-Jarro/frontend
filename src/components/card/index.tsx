@@ -7,10 +7,10 @@ interface CardProps {
   distance?: number
   value: number
   image_url?: string
-  text_tag?: string
+  is_owner?: boolean
 }
 
-const Card: React.FC<CardProps> = ({ title, empty_quota, distance, value, image_url, text_tag }) => (
+const Card: React.FC<CardProps> = ({ title, empty_quota, distance, value, image_url, is_owner }) => (
   <Container>
     {image_url && <CardImage src={image_url} />}
     {!image_url &&
@@ -23,7 +23,9 @@ const Card: React.FC<CardProps> = ({ title, empty_quota, distance, value, image_
       <SecondaryText>{empty_quota} vagas disponíveis</SecondaryText>
       {distance && <SecondaryText>{distance} km de distância</SecondaryText>}
       <PrimaryText>R${value} Mês</PrimaryText>
-      <TagsDiv>{text_tag}</TagsDiv>
+      {is_owner &&
+        <TagsDiv>proprietário</TagsDiv>
+      }
     </InfoContainer>
   </Container>
 )

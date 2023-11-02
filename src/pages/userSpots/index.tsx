@@ -59,7 +59,7 @@ const Spots: React.FC = () => {
 					{
 						spots.map((spot, index) => (
 							<NavLink to={`/spots/${spot.id_spot}`} key={index} style={{ textDecoration: 'none' }}>
-								<Card image_url={spot.images !== null ? spot.images[0].image_url : HouseImage} title={spot.name} distance={spot.distance} empty_quota={spot.personal_quota} value={spot.value} text_tag={spot.owner.id_user === user.id_user ? "Proprietario" : "Participante"} />
+								<Card image_url={spot.images !== null ? spot.images[0].image_url : HouseImage} title={spot.name} distance={spot.distance} empty_quota={spot.personal_quota} value={spot.value} is_owner={spot.owner.id_user === user.id_user} />
 							</NavLink>
 						))
 					}

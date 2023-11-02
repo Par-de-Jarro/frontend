@@ -26,26 +26,26 @@ export default function SearchPage() {
   return (
     <>
       <Header />
-      {!spots.isFilterOpen && 
-      (<>
-        <PageContainer>
-          <CardsContainer>
-            {
-              spots.spots.map((spot, index) => (
-                <NavLink to={`/spots/${spot.id_spot}`} key={index} style={{ textDecoration: 'none' }}>
-                  <Card image_url={spot.images !== null ? spot.images[0].image_url : HouseImage} title={spot.name} distance={spot.distance} empty_quota={spot.personal_quota} value={spot.value} />
-                </NavLink>
-              ))
-            }
-          </CardsContainer>
-          <ButtonDiv>
-            <PlusButton onClick={goToCreateSpot}>
-              <PlusIcon />
-            </PlusButton>
-          </ButtonDiv>
-        </PageContainer>
-        <NavBar />
-      </>)
+      {!spots.isFilterOpen &&
+        (<>
+          <PageContainer>
+            <CardsContainer>
+              {
+                spots.spots.map((spot, index) => (
+                  <NavLink to={`/spots/${spot.id_spot}`} key={index} style={{ textDecoration: 'none' }}>
+                    <Card image_url={spot.images !== null ? spot.images[0].image_url : HouseImage} title={spot.name} distance={spot.distance} empty_quota={spot.personal_quota} value={spot.value} />
+                  </NavLink>
+                ))
+              }
+            </CardsContainer>
+            <ButtonDiv>
+              <PlusButton onClick={goToCreateSpot}>
+                <PlusIcon />
+              </PlusButton>
+            </ButtonDiv>
+          </PageContainer>
+          <NavBar />
+        </>)
       }
     </>
   )

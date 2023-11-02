@@ -60,9 +60,11 @@ export const SecondaryText = styled.p`
     font-weight: 100;
 `
 export const TagsDiv = styled.div`
-width: 20%;
+width: fit-content;
 height: 15%;
 border-radius: 5%;
 background-color: #D1FAE5;
-text-color: #10B981;
+color: #10B981;
+font-size: 12px;
+text-align: center;
 `
