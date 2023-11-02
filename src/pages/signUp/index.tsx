@@ -41,7 +41,7 @@ export default function SignUp () {
       }).then(() => {
         navigate('/')
       }).catch((error) => {
-        console.error('Create spot failed: ', error);
+        console.error('Create user failed: ', error);
       })
     )
   }
