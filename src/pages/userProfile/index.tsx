@@ -23,6 +23,7 @@ import UserPic from '../../styles/assets/User.jpg'
 import { useAuth } from '../../hooks/auth'
 import * as yup from 'yup';
 import { useNavigate } from 'react-router-dom';
+import MaskInput from '../../components/input-mask';
 
 const UserProfile: React.FC = () => {
   const navigate = useNavigate();
@@ -183,23 +184,6 @@ const UserProfile: React.FC = () => {
       navigate(-1);
     }
 
-    function maskPhone(value: string) {
-      return value
-        .replace(/\D/g, "")
-        .replace(/^(\d{2})(\d)/g, "($1)$2")
-        .replace(/(\d)(\d{4})$/, "$1-$2")
-    }
-
-    function maskCpf(value: string) {
-      return value
-        .replace(/\D/g, '')
-        .replace(/(\d{3})(\d)/, '$1.$2')
-        .replace(/(\d{3})(\d)/, '$1.$2')
-        .replace(/(\d{3})(\d{1,2})/, '$1-$2')
-        .replace(/(-\d{2})\d+?$/, '$1')
-    }
-
-  
     const signOutIfTokenIsExpired = () => {
       if(isTokenExpired()) {
         signOut()
@@ -256,19 +240,21 @@ const UserProfile: React.FC = () => {
                       setEmail(e.target.value)
                   }}
                 />
-                <SimpleInput 
+                <MaskInput 
                     label='Telefone' 
                     value={cellphone}
+                    mask="90000-0000" 
                     onChange={(e) => {
-                      setCellphone(maskPhone(e.target.value))
+                      setCellphone(e.target.value)
                   }}
                 />
-                <SimpleInput 
+                <MaskInput 
                     maxLength={14}
                     label='CPF' 
                     value={cpf}
+                    mask="000.000.000-00"
                     onChange={(e) => {
-                      setCpf(maskCpf(e.target.value))
+                      setCpf(e.target.value)
                   }}
                 />
                 <SimpleInput 
