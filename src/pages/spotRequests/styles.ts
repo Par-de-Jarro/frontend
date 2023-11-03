@@ -1,11 +1,19 @@
 import styled from "styled-components"
 import { AiOutlineCheckCircle, AiOutlineCloseCircle } from 'react-icons/ai'
+import { IoClose } from "react-icons/io5"
 
 export const Title = styled.p`
     font-size: 25px;
     font-weight: 400;
     color: #c9834a;
-    margin-bottom: 20px;
+`
+
+export const SecondaryTitle = styled.p`
+    font-size: 18px;
+    font-weight: 300;
+    color: #c9834a;
+    margin-bottom: 15px;
+    margin-top: 30px;
 `
 
 export const RequestDiv = styled.div`
@@ -20,6 +28,7 @@ export const RequestDiv = styled.div`
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2); 
   border-radius: 16px;
   padding: 7px;
+  margin-bottom: 8px;
 `
 
 export const RequesterInfo = styled.div`
@@ -27,7 +36,6 @@ export const RequesterInfo = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    
 `
 
 export const RequesterImage = styled.img`
@@ -64,3 +72,37 @@ export const RejectIcon = styled(AiOutlineCloseCircle)`
   color: #c0c1c5;
   cursor: pointer;
 `
+
+export const PendingTitle = styled.p`
+    font-size: 14px;
+    color: #c0c1c5;
+`
+
+export const NoRequestsDiv = styled.div`
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    margin-top: 50px;
+`
+
+export const NoRequestsTitle = styled.p`
+    font-size: 20px;
+    font-weight: 500;
+    color: #c0c1c5;
+`
+
+export const CloseIcon = styled(IoClose)`
+  height: 30px;
+  width: 30px;
+  color: #513422;
+  cursor: pointer;
+  margin-right: 10px;
+`
+
+export const TitleDiv = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`
+
