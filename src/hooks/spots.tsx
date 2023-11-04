@@ -60,10 +60,9 @@ export function SpotsProvider({ children }: { children: ReactNode }) {
   
       const spotsData: { Spot: Spot; distance: number }[] = response?.data;
   
-      // Combina os dois objetos em um único objeto
       const combinedSpots = spotsData.map(item => ({
         ...item.Spot,
-        distance: item.distance
+        ...item
       }));
   
       setSpots(combinedSpots);

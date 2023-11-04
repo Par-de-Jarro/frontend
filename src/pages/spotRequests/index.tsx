@@ -5,12 +5,27 @@ import { useNavigate, NavLink } from 'react-router-dom';
 import api from "../../services/api";
 import { SpotRequest } from '../../types/spotRequest'
 import HouseImage from '../../styles/assets/house.jpg'
-
 import { useAuth } from '../../hooks/auth'
-
 import UserPic from '../../styles/assets/User.jpg'
 
-import { RequestDiv, Title, NoRequestsDiv, RequesterImage, RequesterInfo, NoRequestsTitle, CloseIcon, TitleDiv, RequesterName, ButtonsDiv, RejectIcon, CheckIcon, PendingTitle, SecondaryTitle} from './styles';
+import { 
+  RequestDiv, 
+  Title, 
+  NoRequestsDiv, 
+  SpotName, 
+  GeneralRequestInfo, 
+  RequesterImage, 
+  RequesterInfo, 
+  NoRequestsTitle, 
+  CloseIcon, 
+  TitleDiv, 
+  RequesterName, 
+  ButtonsDiv, 
+  RejectIcon, 
+  CheckIcon, 
+  PendingTitle, 
+  SecondaryTitle
+} from './styles';
 
 const SpotRequests: React.FC = () => {
     const [requestsMade, setRequestsMade] = useState<SpotRequest[]>([]);
@@ -35,6 +50,8 @@ const SpotRequests: React.FC = () => {
       await api.post(`/spot_entry_request/${requestId}/accept`)
         .then((response) => {
           alert('Request accepted')
+          loadRequestsReceived()
+          loadRequestsMade()
         })
         .catch((error) => {
           console.error("Error on accepting request: ", error)
@@ -45,6 +62,8 @@ const SpotRequests: React.FC = () => {
       await api.post(`/spot_entry_request/${requestId}/reject`)
         .then((response) => {
           alert('Request rejected')
+          loadRequestsReceived()
+          loadRequestsMade()
         })
         .catch((error) => {
         console.error("Error on rejecting request: ", error)
@@ -125,7 +144,12 @@ const SpotRequests: React.FC = () => {
                                 <NavLink to={`/user/${request.user.id_user}`} style={{ textDecoration: 'none' }}>
                                     <RequesterImage src={request.user.profile_img || UserPic} />
                                 </NavLink>
-                                <RequesterName>{truncateName(request.user.name)}</RequesterName>
+                                <GeneralRequestInfo>
+                                  <NavLink to={`/spots/${request.spot.id_spot}`} style={{ textDecoration: 'none' }}>
+                                    <SpotName>{truncateName(request.spot.name)}</SpotName>
+                                  </NavLink>
+                                  <RequesterName>{truncateName(request.user.name)}</RequesterName>
+                                </GeneralRequestInfo>
                             </RequesterInfo>
                             <ButtonsDiv>
                                 <CheckIcon onClick={() => accept(request.id_spot_entry_request)}/>
@@ -138,7 +162,7 @@ const SpotRequests: React.FC = () => {
             {requestsMade.length > 0 ? (
                 <>
                     <SecondaryTitle>Solicitações Feitas</SecondaryTitle>
-                    {requestsReceived.map((request, index) => (
+                    {requestsMade.map((request, index) => (
                         <RequestDiv key={index}>
                             <RequesterInfo>
                                 <NavLink to={`/spots/${request.spot.id_spot}`} style={{ textDecoration: 'none' }}>

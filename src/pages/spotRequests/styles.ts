@@ -50,6 +50,10 @@ export const RequesterName = styled.p`
     font-size: 16px;
     color: #5e5e5d;
 `
+export const GeneralRequestInfo = styled.div`
+    display: flex;
+    flex-direction: column;
+`
 
 export const ButtonsDiv = styled.div`
     width: 30%;
@@ -104,5 +108,10 @@ export const TitleDiv = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+`
+
+export const SpotName = styled.p`
+  font-size: 14px;
+  color: #a8a9ad;
 `
 
