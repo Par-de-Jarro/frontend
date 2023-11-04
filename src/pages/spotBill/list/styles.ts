@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import { AiOutlineCloseCircle} from 'react-icons/ai'
 import { BsPlusLg } from 'react-icons/bs'
+import { IoMdFemale } from "react-icons/io"
 
 export const Title = styled.p`
     font-size: 25px;
@@ -174,3 +175,7 @@ export const PlusButton = styled.button`
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 `
 
+export const FemaleIcon = styled(IoMdFemale)`
+  height: 23px;
+  width: 23px;
+`

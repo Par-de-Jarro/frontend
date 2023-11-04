@@ -1,12 +1,9 @@
 import PageContainer from '../../../components/page-container'
-import Input from '../../../components/dropdown-input'
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import api from '../../../services/api'
-import { Button, CloseIcon, Div, Title, TitleContainer, LocationIcon, ImageInputWrapper, CheckBoxDiv, ImageInput, SpotImage, ImagesDiv } from './styles'
-import { DropdownItem } from '../../../types/input';
+import { Button, CloseIcon, Div, Title, TitleContainer, ImageInputWrapper, ImageInput, SpotImage, ImagesDiv } from './styles'
 import SimpleInput from '../../../components/simple-input'
-import CheckBox from '../../../components/checkbox';
 import { useAuth } from '../../../hooks/auth'
 
 const CreateSpotBill: React.FC = () => {
@@ -15,8 +12,10 @@ const CreateSpotBill: React.FC = () => {
     const [value, setValue] = useState(0)
     const [imageFiles, setImageFiles] = useState<File[]>([]);
     const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+    const [referenceDate, setReferenceDate] = useState('')
     
     const { isTokenExpired, signOut } = useAuth()
+    const { id } = useParams();
 
     const navigate = useNavigate()
     
@@ -24,21 +23,21 @@ const CreateSpotBill: React.FC = () => {
         navigate(-1);
     }
 
-    const uploadImage = (files: File[], spotId: string) => {
+    const uploadImage = (files: File[], spotBillId: string) => {
         let formData = new FormData();
   
         imageFiles.forEach((file) => {
             formData.append("files", file);
         });
   
-        api.post(`/spot/${spotId}/upload`, formData, {
+        api.post(`/spot_bill/${spotBillId}/upload`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data; boundary=XXXX; charset=utf-8'
           },
         })
         .then((response) => {
           console.log('Image uploaded successfully:', response.data);
-          navigate('/mySpots');
+          navigate('/spotBill/list');
 
         })
         .catch((error) => {
@@ -47,19 +46,22 @@ const CreateSpotBill: React.FC = () => {
        
       }
 
-    const createSpot = async () => {
-        await api.post('/spot/', {
+    const createSpotBill = async () => {
+        await api.post('/spot_bill', {
+            id_spot: id,
             name,
             description,
+            reference_date: referenceDate,
+            value
         }).then((response) => {
             if (response.status === 200) {
                 const data = response.data
                 if (imageFiles.length > 0) {
-                    uploadImage(imageFiles, data.id_spot);
+                    uploadImage(imageFiles, data.id_spot_bill);
                 }
             }
         }).catch((error) => {
-            console.error('Create spot failed: ', error);
+            console.error('Create spot bill failed: ', error);
         })
             
     }
@@ -120,6 +122,14 @@ const CreateSpotBill: React.FC = () => {
                     value={description}
                     onChange={(e) => { setDescription(e.target.value) } }
                 />
+                <SimpleInput 
+                    label='Data de vencimento' 
+                    value={referenceDate}
+                    onChange={(e) => {
+                      setReferenceDate(e.target.value)
+                    }}
+                    type='date'
+                />
                 <SimpleInput
                     label='Valor'
                     value={value.toString()}
@@ -127,7 +137,7 @@ const CreateSpotBill: React.FC = () => {
                     type='number'
                     prefix='R$'
                 />
-                <Button onClick={createSpot}>Cadastrar</Button>
+                <Button onClick={createSpotBill}>Cadastrar</Button>
             </Div>
 
         </PageContainer>

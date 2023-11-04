@@ -6,18 +6,19 @@ import { useParams } from 'react-router-dom';
 import { MainInfoDiv, CloseIcon, CloseDiv, Title, Value, RequesterName, Container, SpotDiv, Status, CircularImage, PaymentsDiv, RequesterInfo, RequesterImage } from './styles';
 import { Carousel } from 'react-responsive-carousel';
 import { useAuth } from '../../../hooks/auth'
-import {Spot, Image} from '../../../types/spot'
+import {SpotBill, Image} from '../../../types/spotBill'
 import { useNavigate, NavLink } from 'react-router-dom';
 import HouseImage from '../../../styles/assets/house.jpg'
 import UserPic from '../../../styles/assets/User.jpg'
+import SpotBillPic from '../../../styles/assets/bill.png'
 
 
 const LoadSpotBill: React.FC = () => {
-    const [spot, setSpot] = useState<Spot>()
+    const [spotBill, setSpotBill] = useState<SpotBill>()
 
-    // const { id } = useParams();
     const { user } = useAuth()
-    const id = "4bc6d78f-598b-4230-866d-0cd45d1f762b"
+    
+    const { id } = useParams();
 
     const navigate = useNavigate();
   
@@ -35,39 +36,17 @@ const LoadSpotBill: React.FC = () => {
         }
     }
 
-    const handleClick = () => {
-        try {
-            if(user === undefined) {
-                navigate('/userConfig')
-            }
-            if(spot?.owner.id_user !== user.id_user) {
-                api.post(`/spot/${id}/request`).then((response) => {
-                    alert("Sua solicitação foi feita com sucesso")
-                }).catch(() => {
-                    alert("Algo de errado ocorreu na sua solicitação")
-                    console.log('error');
-                })
-            }
-        }
-        catch{
-            alert("Algo de errado ocorreu na sua solicitação")
-            console.log('error');
-        }
-    }
-
-    const getSpot = () => {
-        api.get(`/spot/${id}`).then((response) => {
-            const spot: Spot = response?.data
-            setSpot(spot)
+    const getSpotBill = () => {
+        api.get(`/spot_bill/${id}`).then((response) => {
+            const spot: SpotBill = response?.data
+            setSpotBill(spot)
         }).catch((error) => {
             alert("Algo de errado ocorreu na sua solicitação")
             console.log('Erro na solicitação de lugar: ', error);
         })
     }
 
-    useEffect(() => { getSpot() }, [])
-
-    const name = "name name name name"
+    useEffect(() => { getSpotBill() }, [])
 
     return (
         <>
@@ -75,32 +54,32 @@ const LoadSpotBill: React.FC = () => {
                 <CloseDiv>
                     <CloseIcon onClick={goBack} size={30}/>
                 </CloseDiv>
-                <Title>Conta nome</Title>
-                <Value>R$ 200,00</Value>
+                <Title>{spotBill?.name}</Title>
+                <Value>R$ {spotBill?.value}</Value>
             </MainInfoDiv>
             <PageContainer>
                 <Container>
                     <Carousel showThumbs={false}>
                         {
-                            spot?.images.map((image: Image) => (
+                            spotBill?.images.map((image: Image) => (
                                 <div>
-                                    <img src={image.image_url} alt={`spot ${id}`}/>
+                                    <img src={image.image_url || SpotBillPic} alt={`spot ${id}`}/>
                                 </div>
                             ))
                         }
                     </Carousel>
                     <SpotDiv>
-                        <NavLink to={ user ? `/user/${spot?.owner.id_user}` : '/signIn'} style={{ textDecoration: 'none' }}>
-                            <CircularImage src={spot?.owner.profile_img || HouseImage}/>
+                        <NavLink to={ user ? `/spots/${spotBill?.spot.id_spot}` : '/signIn'} style={{ textDecoration: 'none' }}>
+                            <CircularImage src={spotBill?.spot.images[0].image_url || HouseImage}/>
                         </NavLink>
-                        <p>{spot?.owner.name}</p>
+                        <p>{spotBill?.spot.name}</p>
                     </SpotDiv>
                     <PaymentsDiv>
                         <RequesterInfo>
                             <NavLink to={`/user/`} style={{ textDecoration: 'none' }}>
                                 <RequesterImage src={UserPic} />
                             </NavLink>
-                            <RequesterName>{truncateName(name)}</RequesterName>
+                            <RequesterName>{truncateName(spotBill?.spot.name || '')}</RequesterName>
                         </RequesterInfo>
                         <Status>Pendente</Status>
                     </PaymentsDiv>

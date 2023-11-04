@@ -40,8 +40,8 @@ export default function AppRoutes() {
         <Route path="/spotRequests" element={<ProtectedRoute {...defaultProtectedRouteProps} outlet={<SpotRequests />} />} />
         <Route path="/mySpots" element={<ProtectedRoute {...defaultProtectedRouteProps} outlet={<Spots />} />} />
         <Route path="/spots/:id" element={<SpotDetails />} />
-        <Route path="/spotBill/create" element={<ProtectedRoute {...defaultProtectedRouteProps} outlet={<CreateSpotBill />} />} />
-        <Route path="/spotBill/load" element={<ProtectedRoute {...defaultProtectedRouteProps} outlet={<LoadSpotBill />} />} />
+        <Route path=":id/spotBill/create" element={<ProtectedRoute {...defaultProtectedRouteProps} outlet={<CreateSpotBill />} />} />
+        <Route path="/spotBill/:id" element={<ProtectedRoute {...defaultProtectedRouteProps} outlet={<LoadSpotBill />} />} />
         <Route path="/spotBill/list" element={<ProtectedRoute {...defaultProtectedRouteProps} outlet={<ListSpotBill />} />} />
       </Routes>
     </BrowserRouter>

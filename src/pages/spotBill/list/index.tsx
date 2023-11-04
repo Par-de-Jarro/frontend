@@ -2,25 +2,23 @@ import PageContainer from '../../../components/page-container'
 import { useEffect, useState } from 'react'
 import api from '../../../services/api'
 import { } from './styles'
-import { useParams } from 'react-router-dom';
-import { MainInfoDiv, CloseIcon, CloseDiv, Title, Value, RequesterName, Container, ButtonDiv, PlusIcon, Price, PlusButton, PaymentsDiv, RequesterInfo, RequesterImage } from './styles';
-import { Carousel } from 'react-responsive-carousel';
+import { MainInfoDiv, CloseIcon, FemaleIcon, CloseDiv, Title, Value, RequesterName, Container, ButtonDiv, PlusIcon, Price, PlusButton, PaymentsDiv, RequesterInfo, RequesterImage } from './styles';
 import DropDownInput from '../../../components/dropdown-input'
 import { useAuth } from '../../../hooks/auth'
-import {Spot, Image} from '../../../types/spot'
+import {Spot} from '../../../types/spot'
+import {SpotBill} from '../../../types/spotBill'
 import { useNavigate, NavLink } from 'react-router-dom';
-import HouseImage from '../../../styles/assets/house.jpg'
 import BillPic from '../../../styles/assets/bill.png'
 import { DropdownItem } from '../../../types/input';
 
 
 const ListSpotBill: React.FC = () => {
     const [spot, setSpot] = useState<Spot>()
-    
-  
-
-    // const { id } = useParams();
+    const [spotBills, setSpotBills] = useState<SpotBill[]>([])
+    const spotId = '4bc6d78f-598b-4230-866d-0cd45d1f762b'
     const { user } = useAuth()
+    const [gender, setGender] = useState(user.gender)
+    const [genderRecommendations, setGenderRecommendations] = useState<Array<DropdownItem>>([])
     const id = "4bc6d78f-598b-4230-866d-0cd45d1f762b"
 
     const navigate = useNavigate();
@@ -28,6 +26,33 @@ const ListSpotBill: React.FC = () => {
 	const goBack = () => {
 		navigate(-1);
 	}
+
+    const getGenders = () => {
+        const genders = [
+          {
+            value: "female",
+            label: "Feminino",
+            icon: (<FemaleIcon/>)
+          },
+          {
+            value: "male",
+            label: "Masculino",
+            icon: (<FemaleIcon/>)
+          },
+          {
+            value: "non-binary",
+            label: "Não binário",
+            icon: (<FemaleIcon/>)
+          },
+          {
+            value: "uninformed",
+            label: "Não informado",
+            icon: (<FemaleIcon/>)
+          }
+        ]
+    
+        setGenderRecommendations(genders)
+      }
 
     const truncateName = (name: string) => {
         const maxSize = 12
@@ -59,17 +84,23 @@ const ListSpotBill: React.FC = () => {
         }
     }
 
-    const getSpot = () => {
-        api.get(`/spot/${id}`).then((response) => {
-            const spot: Spot = response?.data
-            setSpot(spot)
+    const getSpotBills = () => {
+        api.get(`/spot_bill`, {
+            params: {
+                id_owner: user.id_user
+            },
+        }).then((response) => {
+            const spotBills: SpotBill[] = response?.data;
+			setSpotBills(spotBills);
         }).catch((error) => {
             alert("Algo de errado ocorreu na sua solicitação")
-            console.log('Erro na solicitação de lugar: ', error);
+            console.log('Erro na solicitação: ', error);
         })
     }
 
-    useEffect(() => { getSpot() }, [])
+    useEffect(() => { 
+        getGenders()
+        getSpotBills() }, [])
 
     const name = "name name name name"
 
@@ -80,21 +111,32 @@ const ListSpotBill: React.FC = () => {
                     <CloseIcon onClick={goBack} size={30}/>
                 </CloseDiv>
                 <Title>2023</Title>
-                <Value>Dezembro</Value>
+                <Value>Novembro</Value>
             </MainInfoDiv>
             <PageContainer>
                 <Container>
-                    <NavLink to={`/user/`} style={{ textDecoration: 'none' }}>
-                        <PaymentsDiv>
-                            <RequesterInfo>
-                                <RequesterImage src={BillPic} />
-                            <RequesterName>{truncateName(name)}</RequesterName>
-                            </RequesterInfo>
-                            <Price>Pendente</Price>
-                        </PaymentsDiv>
-                    </NavLink>
+                    <DropDownInput 
+                        recommendations={genderRecommendations} 
+                        onSelectItem={(item) => {setGender(item.value)}} 
+                        label='Local' 
+                        inputValue={gender} 
+                        onInputValueChange={setGender}
+                    />
+                    {
+                        spotBills.map((spotBill, index) => (
+                            <NavLink to={`/spotBill/${spotBill.id_spot_bill}`} style={{ textDecoration: 'none', width: '100%'}}>
+                                <PaymentsDiv>
+                                    <RequesterInfo>
+                                        <RequesterImage src={spotBill.images[0].image_url || BillPic} />
+                                    <RequesterName>{truncateName(spotBill.name)}</RequesterName>
+                                    </RequesterInfo>
+                                    <Price>R$ {spotBill.value}</Price>
+                                </PaymentsDiv>
+                            </NavLink>
+					))
+					}
                     <ButtonDiv>
-                        <PlusButton>
+                        <PlusButton onClick={() => navigate(`/${spotId}/spotBill/create`)}>
                             <PlusIcon/>
                         </PlusButton>
         		    </ButtonDiv>
