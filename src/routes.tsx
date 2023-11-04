@@ -12,6 +12,8 @@ import SpotRequests from './pages/spotRequests'
 import { useAuth } from './hooks/auth'
 import { ProtectedRouteProps } from './protectedRoutes'
 import ProtectedRoute from './protectedRoutes'
+import CreateSpotBill from './pages/spotBill/create'
+import LoadSpotBill from './pages/spotBill/load'
 
 
 export default function AppRoutes() {
@@ -37,6 +39,8 @@ export default function AppRoutes() {
         <Route path="/spotRequests" element={<ProtectedRoute {...defaultProtectedRouteProps} outlet={<SpotRequests />} />} />
         <Route path="/mySpots" element={<ProtectedRoute {...defaultProtectedRouteProps} outlet={<Spots />} />} />
         <Route path="/spots/:id" element={<SpotDetails />} />
+        <Route path="/spotBill/create" element={<ProtectedRoute {...defaultProtectedRouteProps} outlet={<CreateSpotBill />} />} />
+        <Route path="/spotBill/load" element={<ProtectedRoute {...defaultProtectedRouteProps} outlet={<LoadSpotBill />} />} />
       </Routes>
     </BrowserRouter>
   )
