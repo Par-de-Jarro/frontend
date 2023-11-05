@@ -15,6 +15,7 @@ import ProtectedRoute from './protectedRoutes'
 import CreateSpotBill from './pages/spotBill/create'
 import LoadSpotBill from './pages/spotBill/load'
 import ListSpotBill from './pages/spotBill/list'
+import QuotaList from './pages/quota/list'
 
 
 export default function AppRoutes() {
@@ -43,6 +44,7 @@ export default function AppRoutes() {
         <Route path=":id/spotBill/create" element={<ProtectedRoute {...defaultProtectedRouteProps} outlet={<CreateSpotBill />} />} />
         <Route path="/spotBill/:id" element={<ProtectedRoute {...defaultProtectedRouteProps} outlet={<LoadSpotBill />} />} />
         <Route path="/spotBill/list" element={<ProtectedRoute {...defaultProtectedRouteProps} outlet={<ListSpotBill />} />} />
+        <Route path="/spotBill/quota" element={<ProtectedRoute {...defaultProtectedRouteProps} outlet={<QuotaList />} />} />
       </Routes>
     </BrowserRouter>
   )

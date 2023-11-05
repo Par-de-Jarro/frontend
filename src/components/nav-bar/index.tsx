@@ -5,7 +5,7 @@ const NavBar: React.FC = () => (
   <>
     <Container>
       <NavButton to='/'><SearchIcon /></NavButton>
-      <NavButton to='/spotBill/list'><BillsIcon /></NavButton>
+      <NavButton to='/spotBill/quota'><BillsIcon /></NavButton>
       <NavButton to='/userSpots'><HouseIcon /></NavButton>
       <NavButton to='/userConfig'><UserIcon /></NavButton>
     </Container>
