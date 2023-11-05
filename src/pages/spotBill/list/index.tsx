@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import api from '../../../services/api'
 import { } from './styles'
 import { MainInfoDiv, CloseIcon, BackIcon, CloseDiv, Title, LocationIcon, 
-    ForwardIcon, Value, DateSelectorDiv, BillName, Container, ButtonDiv, PlusIcon, 
+    ForwardIcon, Value, DateSelectorDiv, BillName, Container, ButtonDiv, Button, PlusIcon, 
     Price, PlusButton, PaymentsDiv, BillInfo, CircularImage, WarningTitle } from './styles';
 import DropDownInput from '../../../components/dropdown-input'
 import { useAuth } from '../../../hooks/auth'
@@ -154,7 +154,8 @@ const ListSpotBill: React.FC = () => {
 					))
 					}
                     <ButtonDiv>
-                        <PlusButton onClick={() => navigate(`/${spotId}/spotBill/create`)}>
+                        <Button>Gerar cotas do mês</Button>
+                        <PlusButton disabled={!!spotBills} onClick={() => navigate(`/${spotId}/spotBill/create`)}>
                             <PlusIcon/>
                         </PlusButton>
         		    </ButtonDiv>

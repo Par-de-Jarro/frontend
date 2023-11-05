@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import { AiOutlineCloseCircle} from 'react-icons/ai'
 import { BsPlusLg } from 'react-icons/bs'
 import { SlLocationPin } from 'react-icons/sl'
@@ -113,10 +113,13 @@ export const PlusIcon = styled(BsPlusLg)`
 `
 
 export const ButtonDiv = styled.div`
+    margin-top: 20px;
     width: 100%;
     height: 150px;
     display: flex;
+    flex-direction: row;
     justify-content: center;
+    gap: 50px;
     align-items: center;
     margin-bottom: 20px;
     position: fixed;
@@ -124,7 +127,6 @@ export const ButtonDiv = styled.div`
 `
 
 export const PlusButton = styled.button`
-    margin-top: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -139,10 +141,44 @@ export const PlusButton = styled.button`
         background-color: #513422;
         color: #f8f4e8;
     }
+
+    ${(props) => props.disabled && css`
+      background-color: #ececec;
+      color: #404040;
+      border-color: #ececec;
+
+      &:hover {
+        background-color: #ececec;
+        border-color: #ececec;
+      }
+    `}
     
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 `
+export const Button = styled.button`
+    border: 0;
+    height: 70px;
+    width: 150px;
 
+    display: flex;
+    justify-content: center;
+    align-items:  center;
+
+    text-decoration: none;
+    font-size: 16px;
+
+    background-color: #f8f4e8;
+    color: #513422;
+    border-radius: 12px;
+
+
+    &:hover {
+        background-color: #513422;
+        color: #f8f4e8;
+    }
+    
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+`
 export const LocationIcon = styled(SlLocationPin)`
   height: 23px;
   width: 23px;
