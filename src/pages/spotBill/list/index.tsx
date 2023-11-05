@@ -63,6 +63,7 @@ const ListSpotBill: React.FC = () => {
                     icon: <LocationIcon/>
                   }));
 				setSpotRecommendations(spotsAsDropDownValues);
+                setSpotId(spotsAsDropDownValues[0].value)
 			})
 			.catch((error) => {
 			console.error("Error on getting user spot: ", error)
@@ -125,7 +126,7 @@ const ListSpotBill: React.FC = () => {
             <PageContainer>
                 <Container>
                     {
-                        !!!spotBills && (                     
+                        spotRecommendations && (                     
                             <DropDownInput 
                                 recommendations={spotRecommendations} 
                                 onSelectItem={(item) => {setSpotId(item.value)}} 
@@ -136,8 +137,8 @@ const ListSpotBill: React.FC = () => {
                         )
                     }
                     {
-                        !!spotBills && (
-                            <WarningTitle>Você não tem contas cadastradas</WarningTitle>
+                        !spotRecommendations && (
+                            <WarningTitle>Você não é administrador de nenhum lugar :( </WarningTitle>
                         )
                     }
                     {
@@ -155,7 +156,7 @@ const ListSpotBill: React.FC = () => {
 					}
                     <ButtonDiv>
                         <Button>Gerar cotas do mês</Button>
-                        <PlusButton disabled={!!spotBills} onClick={() => navigate(`/${spotId}/spotBill/create`)}>
+                        <PlusButton disabled={!!spotRecommendations} onClick={() => navigate(`/${spotId}/spotBill/create`)}>
                             <PlusIcon/>
                         </PlusButton>
         		    </ButtonDiv>
