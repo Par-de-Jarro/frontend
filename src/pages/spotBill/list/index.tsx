@@ -2,7 +2,7 @@ import PageContainer from '../../../components/page-container'
 import { useEffect, useState } from 'react'
 import api from '../../../services/api'
 import { } from './styles'
-import { MainInfoDiv, CloseIcon, FemaleIcon, CloseDiv, Title, Value, RequesterName, Container, ButtonDiv, PlusIcon, Price, PlusButton, PaymentsDiv, RequesterInfo, RequesterImage } from './styles';
+import { MainInfoDiv, CloseIcon, BackIcon, CloseDiv, Title, ForwardIcon, Value, MonthDiv, RequesterName, Container, ButtonDiv, PlusIcon, Price, PlusButton, PaymentsDiv, RequesterInfo, RequesterImage } from './styles';
 import DropDownInput from '../../../components/dropdown-input'
 import { useAuth } from '../../../hooks/auth'
 import {Spot} from '../../../types/spot'
@@ -13,13 +13,20 @@ import { DropdownItem } from '../../../types/input';
 
 
 const ListSpotBill: React.FC = () => {
-    const [spot, setSpot] = useState<Spot>()
+    const months = [
+        {label: "Janeiro", value: "01", endDay: "31"}, {label: "Fevereiro", value: "02", endDay: "28"},{label: "Março", value: "03", endDay: "31"},
+        {label: "Abril", value: "04", endDay: "30"},{label: "Maio", value: "05", endDay: "31"},{label: "Junho", value: "06", endDay: "30"},
+        {label: "Julho", value: "07", endDay: "31"},{label: "Agosto", value: "08", endDay: "31"},{label: "Setembro", value: "09", endDay: "30"},
+        {label: "Outubro", value: "10", endDay: "31"},{label: "Novembro", value: "11", endDay: "30"},{label: "Dezembro", value: "12", endDay: "31"}
+    ];
+
+    const [currentMonthIndex, setCurrentMonthIndex] = useState(10);
+    const [year, setYear] = useState(2023);
+    
     const [spotBills, setSpotBills] = useState<SpotBill[]>([])
-    const spotId = '4bc6d78f-598b-4230-866d-0cd45d1f762b'
     const { user } = useAuth()
-    const [gender, setGender] = useState(user.gender)
-    const [genderRecommendations, setGenderRecommendations] = useState<Array<DropdownItem>>([])
-    const id = "4bc6d78f-598b-4230-866d-0cd45d1f762b"
+    const [spotId, setSpotId] = useState('')
+    const [spotRecommendations, setSpotRecommendations] = useState<Array<DropdownItem>>([])
 
     const navigate = useNavigate();
   
@@ -27,32 +34,39 @@ const ListSpotBill: React.FC = () => {
 		navigate(-1);
 	}
 
-    const getGenders = () => {
-        const genders = [
-          {
-            value: "female",
-            label: "Feminino",
-            icon: (<FemaleIcon/>)
-          },
-          {
-            value: "male",
-            label: "Masculino",
-            icon: (<FemaleIcon/>)
-          },
-          {
-            value: "non-binary",
-            label: "Não binário",
-            icon: (<FemaleIcon/>)
-          },
-          {
-            value: "uninformed",
-            label: "Não informado",
-            icon: (<FemaleIcon/>)
-          }
-        ]
+    const goBackCalendar = () => {
+        setCurrentMonthIndex((prevIndex) => (prevIndex - 1 + months.length) % months.length);
+      };
     
-        setGenderRecommendations(genders)
-      }
+    const goForwardCalendar = () => {
+        setCurrentMonthIndex((prevIndex) => (prevIndex + 1) % months.length);
+    };
+
+    const changeYear = (value: number) => {
+        setYear(year + value)
+    }
+
+    const loadSpots = async () => {   
+		if(user !== undefined) {
+			await api.get('/spot/', {
+				params: {
+					id_user: user.id_user
+				},
+			})
+			.then((response) => {
+				const spots: Spot[] = response?.data;
+                const spotsAsDropDownValues: DropdownItem[] = spots.map(spot => ({
+                    value: spot.id_spot,
+                    label: spot.name
+                  }));
+				setSpotRecommendations(spotsAsDropDownValues);
+			})
+			.catch((error) => {
+			console.error("Error on getting user spot: ", error)
+			})
+		}
+  };
+
 
     const truncateName = (name: string) => {
         const maxSize = 12
@@ -64,30 +78,13 @@ const ListSpotBill: React.FC = () => {
         }
     }
 
-    const handleClick = () => {
-        try {
-            if(user === undefined) {
-                navigate('/userConfig')
-            }
-            if(spot?.owner.id_user !== user.id_user) {
-                api.post(`/spot/${id}/request`).then((response) => {
-                    alert("Sua solicitação foi feita com sucesso")
-                }).catch(() => {
-                    alert("Algo de errado ocorreu na sua solicitação")
-                    console.log('error');
-                })
-            }
-        }
-        catch{
-            alert("Algo de errado ocorreu na sua solicitação")
-            console.log('error');
-        }
-    }
-
     const getSpotBills = () => {
         api.get(`/spot_bill`, {
             params: {
-                id_owner: user.id_user
+                id_owner: user.id_user,
+                id_spot: spotId,
+                reference_date_start: year + "-" + months[currentMonthIndex].value + "-01",
+                reference_date_end: year + "-" + months[currentMonthIndex].value + "-" + months[currentMonthIndex].endDay
             },
         }).then((response) => {
             const spotBills: SpotBill[] = response?.data;
@@ -99,10 +96,11 @@ const ListSpotBill: React.FC = () => {
     }
 
     useEffect(() => { 
-        getGenders()
-        getSpotBills() }, [])
-
-    const name = "name name name name"
+        loadSpots()
+        if (spotId !== '' && spotId != null) {
+            getSpotBills() 
+        }
+        }, [currentMonthIndex, spotId, year])
 
     return (
         <>
@@ -110,17 +108,25 @@ const ListSpotBill: React.FC = () => {
                 <CloseDiv>
                     <CloseIcon onClick={goBack} size={30}/>
                 </CloseDiv>
-                <Title>2023</Title>
-                <Value>Novembro</Value>
+                <MonthDiv>
+                    <BackIcon onClick={() => changeYear(-1)} />
+                    <Title>{year}</Title>
+                    <ForwardIcon onClick={() => changeYear(1)} />
+                </MonthDiv>
+                <MonthDiv>
+                    <BackIcon onClick={goBackCalendar} />
+                    <Value>{months[currentMonthIndex].label}</Value>
+                    <ForwardIcon onClick={goForwardCalendar} />
+                </MonthDiv>
             </MainInfoDiv>
             <PageContainer>
                 <Container>
                     <DropDownInput 
-                        recommendations={genderRecommendations} 
-                        onSelectItem={(item) => {setGender(item.value)}} 
+                        recommendations={spotRecommendations} 
+                        onSelectItem={(item) => {setSpotId(item.value)}} 
                         label='Local' 
-                        inputValue={gender} 
-                        onInputValueChange={setGender}
+                        inputValue={spotId} 
+                        onInputValueChange={setSpotId}
                     />
                     {
                         spotBills.map((spotBill, index) => (

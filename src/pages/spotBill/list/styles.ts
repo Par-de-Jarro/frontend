@@ -2,6 +2,7 @@ import styled from "styled-components"
 import { AiOutlineCloseCircle} from 'react-icons/ai'
 import { BsPlusLg } from 'react-icons/bs'
 import { IoMdFemale } from "react-icons/io"
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 
 export const Title = styled.p`
     font-size: 25px;
@@ -148,11 +149,8 @@ export const ButtonDiv = styled.div`
     justify-content: center;
     align-items: center;
     margin-bottom: 20px;
-
-    @media (min-width: 768px) {
-        position: fixed;
-        bottom: 0;
-    }
+    position: fixed;
+    bottom: 0;
 `
 
 export const PlusButton = styled.button`
@@ -178,4 +176,30 @@ export const PlusButton = styled.button`
 export const FemaleIcon = styled(IoMdFemale)`
   height: 23px;
   width: 23px;
+`
+
+export const MonthDiv = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`
+
+export const BackIcon = styled(IoIosArrowBack)`
+  height: 25px;
+  width: 25px;
+  color: #d2bc95;
+  cursor: pointer;
+  margin: 5px;
+  
+`
+
+export const ForwardIcon = styled(IoIosArrowForward)`
+  height: 25px;
+  width: 25px;
+  color: #d2bc95;
+  cursor: pointer;
+  margin: 5px;
+  
 `
