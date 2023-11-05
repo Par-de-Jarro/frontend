@@ -61,7 +61,7 @@ const UserConfigPage: React.FC = () => {
             <NavCard label='Meu Perfil' redicted_to='/user/profile'>
               <PiUserCircleFill />
             </NavCard>
-            <NavCard label='Solicitações' redicted_to='/'>
+            <NavCard label='Solicitações' redicted_to='/spotRequests'>
               <MdOutlineMailOutline/>
             </NavCard>
             <NavCard label='Meus Locais' redicted_to='/mySpots/'>
