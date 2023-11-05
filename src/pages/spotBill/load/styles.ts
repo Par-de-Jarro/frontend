@@ -105,7 +105,7 @@ export const RequesterInfo = styled.div`
     align-items: center;
 `
 
-export const RequesterImage = styled.img`
+export const UserImage = styled.img`
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -124,7 +124,6 @@ export const GeneralRequestInfo = styled.div`
 `
 
 export const Status = styled.p`
-    width: 30%;
     font-size: 14px;
     color: #c0c1c5;
 `
@@ -132,4 +131,16 @@ export const CloseDiv = styled.div`
     width: 100%;
     padding-left: 20px;
     padding-top: 10px;
+`
+
+export const Price = styled.p`
+    font-size: 14px;
+    color: black;
+`
+
+export const PaymentInfoDiv = styled.div`
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `

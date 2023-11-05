@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import api from '../../../services/api'
 import { } from './styles'
 import { useParams } from 'react-router-dom';
-import { MainInfoDiv, CloseIcon, CloseDiv, Title, Value, RequesterName, Container, SpotDiv, Status, CircularImage, PaymentsDiv, RequesterInfo, RequesterImage } from './styles';
+import { MainInfoDiv, CloseIcon, CloseDiv, Title, Value, PaymentInfoDiv, Price, RequesterName, Container, SpotDiv, Status, CircularImage, PaymentsDiv, RequesterInfo, UserImage } from './styles';
 import { Carousel } from 'react-responsive-carousel';
 import { useAuth } from '../../../hooks/auth'
 import {SpotBill, Image} from '../../../types/spotBill'
@@ -11,10 +11,12 @@ import { useNavigate, NavLink } from 'react-router-dom';
 import HouseImage from '../../../styles/assets/house.jpg'
 import UserPic from '../../../styles/assets/User.jpg'
 import SpotBillPic from '../../../styles/assets/bill.png'
+import { Quota } from '../../../types/quota'
 
 
 const LoadSpotBill: React.FC = () => {
     const [spotBill, setSpotBill] = useState<SpotBill>()
+    const [quotas, setQuotas] = useState<Quota[]>([])
 
     const { user } = useAuth()
     
@@ -46,7 +48,23 @@ const LoadSpotBill: React.FC = () => {
         })
     }
 
-    useEffect(() => { getSpotBill() }, [])
+    const getQuotas = () => {
+        api.get(`/personal_quota_payment/`, {
+            params: {
+                id_spot_bill: id
+            },
+        }).then((response) => {
+            const quotas: Quota[] = response?.data;
+			setQuotas(quotas);
+        }).catch((error) => {
+            alert("Algo de errado ocorreu na sua solicitação")
+            console.log('Erro na solicitação de lugar: ', error);
+        })
+    }
+
+    useEffect(() => { 
+        getSpotBill()
+        getQuotas() }, [])
 
     return (
         <>
@@ -74,15 +92,20 @@ const LoadSpotBill: React.FC = () => {
                         </NavLink>
                         <p>{spotBill?.spot.name}</p>
                     </SpotDiv>
-                    <PaymentsDiv>
-                        <RequesterInfo>
-                            <NavLink to={`/user/`} style={{ textDecoration: 'none' }}>
-                                <RequesterImage src={UserPic} />
-                            </NavLink>
-                            <RequesterName>{truncateName('Ocupante 1')}</RequesterName>
-                        </RequesterInfo>
-                        <Status>Pendente</Status>
-                    </PaymentsDiv>
+                    {
+                        quotas.map((quota, index) => (
+                            <PaymentsDiv>
+                                <RequesterInfo>
+                                    <UserImage src={ quota.user.profile_img ||UserPic} />
+                                    <RequesterName>{truncateName(quota.user.name)}</RequesterName>
+                                </RequesterInfo>
+                                <PaymentInfoDiv>
+                                    <Status>{quota.status === 'PAYED' ? 'Pago' : 'Pendente'}</Status>
+                                    <Price>R$ {quota.value.toFixed(2)}</Price>
+                                </PaymentInfoDiv>
+                            </PaymentsDiv>
+					))
+					}        
                 </Container>
             </PageContainer>
         </>
