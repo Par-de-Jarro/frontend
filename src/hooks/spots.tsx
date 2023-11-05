@@ -57,8 +57,15 @@ export function SpotsProvider({ children }: { children: ReactNode }) {
           ...filters
         },
       });
-      const spots: Spot[] = response?.data;
-      setSpots(spots);
+  
+      const spotsData: { Spot: Spot; distance: number }[] = response?.data;
+  
+      const combinedSpots = spotsData.map(item => ({
+        ...item.Spot,
+        ...item
+      }));
+  
+      setSpots(combinedSpots);
     } 
     catch {
       alert("Algo de errado ocorreu na sua solicitação")
@@ -68,7 +75,7 @@ export function SpotsProvider({ children }: { children: ReactNode }) {
       setLoadingSpots(false);
     }
   };
-
+  
 
   const value: SpotContextData = {
     loadingSpots,

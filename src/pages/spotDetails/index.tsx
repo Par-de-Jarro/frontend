@@ -40,7 +40,7 @@ const SpotDetails: React.FC = () => {
                 navigate('/userConfig')
             }
             if (spot?.owner.id_user !== user.id_user) {
-                api.post(`/spot/${id}/request`).then((response) => {
+                api.post(`/spot/${id}/request_entry`).then((response) => {
                     alert("Sua solicitação foi feita com sucesso")
                 }).catch(() => {
                     alert("Algo de errado ocorreu na sua solicitação")

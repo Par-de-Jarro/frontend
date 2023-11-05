@@ -8,6 +8,7 @@ import UserPage from './pages/user'
 import SpotDetails from './pages/spotDetails'
 import Spots from './pages/userSpots'
 import AddSpot from './pages/spot'
+import SpotRequests from './pages/spotRequests'
 import { useAuth } from './hooks/auth'
 import { ProtectedRouteProps } from './protectedRoutes'
 import ProtectedRoute from './protectedRoutes'
@@ -15,10 +16,10 @@ import ProtectedRoute from './protectedRoutes'
 
 export default function AppRoutes() {
 
-  const { user } = useAuth()
+  const { user, isTokenExpired } = useAuth()
 
   const defaultProtectedRouteProps: Omit<ProtectedRouteProps, 'outlet'> = {
-    isAuthenticated: user != null,
+    isAuthenticated: user != null && !isTokenExpired(),
     authenticationPath: '/signIn',
   };
 
@@ -33,9 +34,9 @@ export default function AppRoutes() {
         <Route path="/user/profile" element={<ProtectedRoute {...defaultProtectedRouteProps} outlet={<UserProfile />} />} />
         <Route path="/userSpots" element={<Spots />} />
         <Route path="/spot" element={<ProtectedRoute {...defaultProtectedRouteProps} outlet={<AddSpot />} />} />
+        <Route path="/spotRequests" element={<ProtectedRoute {...defaultProtectedRouteProps} outlet={<SpotRequests />} />} />
         <Route path="/mySpots" element={<ProtectedRoute {...defaultProtectedRouteProps} outlet={<Spots />} />} />
         <Route path="/spots/:id" element={<SpotDetails />} />
-
       </Routes>
     </BrowserRouter>
   )
