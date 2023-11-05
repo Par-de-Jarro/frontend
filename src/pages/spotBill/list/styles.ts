@@ -1,14 +1,13 @@
 import styled from "styled-components"
 import { AiOutlineCloseCircle} from 'react-icons/ai'
 import { BsPlusLg } from 'react-icons/bs'
-import { IoMdFemale } from "react-icons/io"
+import { SlLocationPin } from 'react-icons/sl'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 
 export const Title = styled.p`
-    font-size: 25px;
+    font-size: 20px;
     font-weight: 400;
     color: #2b2b2b;
-    margin-bottom: 5px;
 `
 
 export const Value = styled.p`
@@ -42,31 +41,6 @@ export const CloseIcon = styled(AiOutlineCloseCircle)`
   margin-left: 5px;
 `
 
-export const MainButton = styled.button`
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-
-    color: #513422;
-    border-radius: 12px;
-    border: 0;
-    height: 50px;
-
-    background-color: #f8f4e8;
-    &:hover {
-        background-color: #513422;
-        color: #f8f4e8;
-    }
-    
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-
-    @media (min-width: 768px) { 
-        max-width: 700px;
-    }
-`
 export const SpotDiv = styled.div`
     width: 100%;
     height: 40px;
@@ -80,9 +54,11 @@ export const SpotDiv = styled.div`
 `
 
 export const CircularImage = styled.img`
-    width: 30px;
-    height: 30px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
+    background-color: #ffffff;
+    margin-right: 10px;
 `
 
 export const PaymentsDiv = styled.div`
@@ -101,29 +77,16 @@ export const PaymentsDiv = styled.div`
 `
 
 
-export const RequesterInfo = styled.div`
+export const BillInfo = styled.div`
     width: 70%;
     display: flex;
     flex-direction: row;
     align-items: center;
 `
 
-export const RequesterImage = styled.img`
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: #ffffff;
-    margin-right: 10px;
-`
-
-export const RequesterName = styled.p`
+export const BillName = styled.p`
     font-size: 16px;
     color: #5e5e5d;
-`
-
-export const GeneralRequestInfo = styled.div`
-    display: flex;
-    flex-direction: column;
 `
 
 export const Price = styled.p`
@@ -173,12 +136,12 @@ export const PlusButton = styled.button`
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 `
 
-export const FemaleIcon = styled(IoMdFemale)`
+export const LocationIcon = styled(SlLocationPin)`
   height: 23px;
   width: 23px;
 `
 
-export const MonthDiv = styled.div`
+export const DateSelectorDiv = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;

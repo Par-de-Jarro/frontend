@@ -79,7 +79,7 @@ const LoadSpotBill: React.FC = () => {
                             <NavLink to={`/user/`} style={{ textDecoration: 'none' }}>
                                 <RequesterImage src={UserPic} />
                             </NavLink>
-                            <RequesterName>{truncateName(spotBill?.spot.name || '')}</RequesterName>
+                            <RequesterName>{truncateName('Ocupante 1')}</RequesterName>
                         </RequesterInfo>
                         <Status>Pendente</Status>
                     </PaymentsDiv>

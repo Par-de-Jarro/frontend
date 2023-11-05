@@ -133,4 +133,3 @@ export const CloseDiv = styled.div`
     padding-left: 20px;
     padding-top: 10px;
 `
-

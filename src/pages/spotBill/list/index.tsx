@@ -2,7 +2,9 @@ import PageContainer from '../../../components/page-container'
 import { useEffect, useState } from 'react'
 import api from '../../../services/api'
 import { } from './styles'
-import { MainInfoDiv, CloseIcon, BackIcon, CloseDiv, Title, ForwardIcon, Value, MonthDiv, RequesterName, Container, ButtonDiv, PlusIcon, Price, PlusButton, PaymentsDiv, RequesterInfo, RequesterImage } from './styles';
+import { MainInfoDiv, CloseIcon, BackIcon, CloseDiv, Title, LocationIcon, 
+    ForwardIcon, Value, DateSelectorDiv, BillName, Container, ButtonDiv, PlusIcon, 
+    Price, PlusButton, PaymentsDiv, BillInfo, CircularImage } from './styles';
 import DropDownInput from '../../../components/dropdown-input'
 import { useAuth } from '../../../hooks/auth'
 import {Spot} from '../../../types/spot'
@@ -57,7 +59,8 @@ const ListSpotBill: React.FC = () => {
 				const spots: Spot[] = response?.data;
                 const spotsAsDropDownValues: DropdownItem[] = spots.map(spot => ({
                     value: spot.id_spot,
-                    label: spot.name
+                    label: spot.name,
+                    icon: <LocationIcon/>
                   }));
 				setSpotRecommendations(spotsAsDropDownValues);
 			})
@@ -108,16 +111,16 @@ const ListSpotBill: React.FC = () => {
                 <CloseDiv>
                     <CloseIcon onClick={goBack} size={30}/>
                 </CloseDiv>
-                <MonthDiv>
+                <DateSelectorDiv>
                     <BackIcon onClick={() => changeYear(-1)} />
                     <Title>{year}</Title>
                     <ForwardIcon onClick={() => changeYear(1)} />
-                </MonthDiv>
-                <MonthDiv>
+                </DateSelectorDiv>
+                <DateSelectorDiv>
                     <BackIcon onClick={goBackCalendar} />
                     <Value>{months[currentMonthIndex].label}</Value>
                     <ForwardIcon onClick={goForwardCalendar} />
-                </MonthDiv>
+                </DateSelectorDiv>
             </MainInfoDiv>
             <PageContainer>
                 <Container>
@@ -132,10 +135,10 @@ const ListSpotBill: React.FC = () => {
                         spotBills.map((spotBill, index) => (
                             <NavLink to={`/spotBill/${spotBill.id_spot_bill}`} style={{ textDecoration: 'none', width: '100%'}}>
                                 <PaymentsDiv>
-                                    <RequesterInfo>
-                                        <RequesterImage src={spotBill.images[0].image_url || BillPic} />
-                                    <RequesterName>{truncateName(spotBill.name)}</RequesterName>
-                                    </RequesterInfo>
+                                    <BillInfo>
+                                        <CircularImage src={spotBill.images[0].image_url || BillPic} />
+                                        <BillName>{truncateName(spotBill.name)}</BillName>
+                                    </BillInfo>
                                     <Price>R$ {spotBill.value}</Price>
                                 </PaymentsDiv>
                             </NavLink>
