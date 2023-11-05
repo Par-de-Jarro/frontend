@@ -63,7 +63,6 @@ const ListSpotBill: React.FC = () => {
                     icon: <LocationIcon/>
                   }));
 				setSpotRecommendations(spotsAsDropDownValues);
-                setSpotId(spotsAsDropDownValues[0].value)
 			})
 			.catch((error) => {
 			console.error("Error on getting user spot: ", error)
@@ -73,7 +72,7 @@ const ListSpotBill: React.FC = () => {
 
 
     const truncateName = (name: string) => {
-        const maxSize = 12
+        const maxSize = 20
         if (name.length <= maxSize) {
           return name
         } else {
@@ -105,6 +104,7 @@ const ListSpotBill: React.FC = () => {
             getSpotBills() 
         }
         }, [currentMonthIndex, spotId, year])
+    
 
     return (
         <>
@@ -156,7 +156,7 @@ const ListSpotBill: React.FC = () => {
 					}
                     <ButtonDiv>
                         <Button>Gerar cotas do mês</Button>
-                        <PlusButton disabled={!!spotRecommendations} onClick={() => navigate(`/${spotId}/spotBill/create`)}>
+                        <PlusButton disabled={!spotRecommendations} onClick={() => navigate(`/${spotId}/spotBill/create`)}>
                             <PlusIcon/>
                         </PlusButton>
         		    </ButtonDiv>
