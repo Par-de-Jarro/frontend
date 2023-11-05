@@ -4,7 +4,7 @@ import api from '../../../services/api'
 import { } from './styles'
 import { MainInfoDiv, CloseIcon, BackIcon, CloseDiv, Title, LocationIcon, 
     ForwardIcon, Value, DateSelectorDiv, BillName, Container, ButtonDiv, PlusIcon, 
-    Price, PlusButton, PaymentsDiv, BillInfo, CircularImage } from './styles';
+    Price, PlusButton, PaymentsDiv, BillInfo, CircularImage, WarningTitle } from './styles';
 import DropDownInput from '../../../components/dropdown-input'
 import { useAuth } from '../../../hooks/auth'
 import {Spot} from '../../../types/spot'
@@ -124,13 +124,22 @@ const ListSpotBill: React.FC = () => {
             </MainInfoDiv>
             <PageContainer>
                 <Container>
-                    <DropDownInput 
-                        recommendations={spotRecommendations} 
-                        onSelectItem={(item) => {setSpotId(item.value)}} 
-                        label='Local' 
-                        inputValue={spotId} 
-                        onInputValueChange={setSpotId}
-                    />
+                    {
+                        !!!spotBills && (                     
+                            <DropDownInput 
+                                recommendations={spotRecommendations} 
+                                onSelectItem={(item) => {setSpotId(item.value)}} 
+                                label='Local' 
+                                inputValue={spotId} 
+                                onInputValueChange={setSpotId}
+                            />
+                        )
+                    }
+                    {
+                        !!spotBills && (
+                            <WarningTitle>Você não tem contas cadastradas</WarningTitle>
+                        )
+                    }
                     {
                         spotBills.map((spotBill, index) => (
                             <NavLink to={`/spotBill/${spotBill.id_spot_bill}`} style={{ textDecoration: 'none', width: '100%'}}>

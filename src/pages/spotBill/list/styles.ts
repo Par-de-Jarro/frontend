@@ -10,6 +10,13 @@ export const Title = styled.p`
     color: #2b2b2b;
 `
 
+export const WarningTitle = styled.p`
+    font-size: 20px;
+    font-weight: 400;
+    color: #2b2b2b;
+    text-align: center;
+`
+
 export const Value = styled.p`
     font-size: 20px;
     font-weight: 400;
@@ -29,8 +36,8 @@ export const MainInfoDiv = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 35px;
 `
+
 
 export const CloseIcon = styled(AiOutlineCloseCircle)`
   height: 27px;

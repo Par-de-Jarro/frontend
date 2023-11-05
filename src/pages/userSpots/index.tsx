@@ -64,6 +64,9 @@ const Spots: React.FC = () => {
 						<Title>Meus Locais</Title>
 				</TitleContainer>
 				<CardsContainer>
+				{
+					!!spots && (<Title>Você não tem nenhum spot cadastrado :(</Title>)
+				}
 					{
 					spots.map((spot, index) => (
 						<NavLink to={`/spots/${spot.id_spot}`} key={index} style={{ textDecoration: 'none' }}>
