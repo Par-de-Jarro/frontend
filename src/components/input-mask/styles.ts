@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import InputMask from "react-input-mask";
 
 export const Container = styled.div`
     display: flex;
@@ -21,6 +22,17 @@ export const InputContainer = styled.div`
   width: 100%;
   justify-content: center;
   align-items: left;
+`
+
+export const Input = styled(InputMask)`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+  align-items: left;
+  
+  width: 100%;
+  border: none;
 `
 
 export const Label = styled.p`

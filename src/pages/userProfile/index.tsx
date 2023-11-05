@@ -13,7 +13,8 @@ import {
   ImageInputWrapper, 
   TitleContainer,
   CloseIcon,
-  Title} from './styles'
+  Title
+} from './styles'
 import { DropdownItem } from '../../types/input';
 import DropDownInput from '../../components/dropdown-input'
 import SimpleInput from '../../components/simple-input'
@@ -243,18 +244,17 @@ const UserProfile: React.FC = () => {
                 <MaskInput 
                     label='Telefone' 
                     value={cellphone}
-                    mask="90000-0000" 
-                    onChange={(e) => {
+                    mask="99999-9999" 
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       setCellphone(e.target.value)
                   }}
                 />
                 <MaskInput 
-                    maxLength={14}
                     label='CPF' 
                     value={cpf}
-                    mask="000.000.000-00"
-                    onChange={(e) => {
-                      setCpf(e.target.value)
+                    mask="999.999.999-99"
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      return setCpf(e.target.value);
                   }}
                 />
                 <SimpleInput 

@@ -1,20 +1,22 @@
-import React, {InputHTMLAttributes} from 'react';
-import {Container, InputContainer, Label} from './styles';
+import React from 'react';
+import {Container, InputContainer, Input, Label} from './styles';
 
-const { InputMask } = require("react-input-mask");
-
-interface InputProps extends InputHTMLAttributes<HTMLInputElement>{
-    label: string;
-    prefix?: string;
+interface InputProps {
+    label?: string;
     mask: string;
+    value: string;
+    onChange: React.ChangeEventHandler<HTMLInputElement>
   }
   
-  const MaskInput: React.FC<InputProps> = ({label, mask, ...rest}) => {
+  const MaskInput: React.FC<InputProps> = ({label, mask, value, onChange}) => {
     return (
         <Container>
             <Label>{label}</Label>
             <InputContainer>
-              <InputMask mask={mask} {...rest} />
+              <Input 
+                mask={mask}
+                value={value}
+                onChange={onChange}/>
             </InputContainer>
         </Container>
     );

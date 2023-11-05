@@ -6,6 +6,7 @@ import { DropdownItem } from '../../types/input';
 import api from '../../services/api';
 import { Button, CloseIcon, FemaleIcon, Form, LocationIcon, MaleIcon, NonBinaryIcon, Title, TitleContainer, UninformedGenderIcon } from './styles';
 import SimpleInput from '../../components/simple-input';
+import MaskInput from '../../components/input-mask';
 
 export default function SignUp () {
   const [name, setName] = useState('')
@@ -131,15 +132,17 @@ export default function SignUp () {
             value={bio}
             onChange={(e) => setBio(e.target.value)}
           />
-          <SimpleInput 
+          <MaskInput 
             label='Telefone' 
             value={cellphone}
-            onChange={(e) => setCellphone(e.target.value)}
+            mask="99999-9999"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCellphone(e.target.value)}
           />
-          <SimpleInput 
+          <MaskInput 
             label='CPF' 
             value={cpf}
-            onChange={(e) => setCpf(e.target.value)}
+            mask="999.999.999-99"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCpf(e.target.value)}
           />
           <SimpleInput 
             label='Curso' 
