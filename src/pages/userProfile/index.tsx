@@ -13,7 +13,8 @@ import {
   ImageInputWrapper, 
   TitleContainer,
   CloseIcon,
-  Title} from './styles'
+  Title
+} from './styles'
 import { DropdownItem } from '../../types/input';
 import DropDownInput from '../../components/dropdown-input'
 import SimpleInput from '../../components/simple-input'
@@ -23,6 +24,7 @@ import UserPic from '../../styles/assets/User.jpg'
 import { useAuth } from '../../hooks/auth'
 import * as yup from 'yup';
 import { useNavigate } from 'react-router-dom';
+import MaskInput from '../../components/input-mask';
 
 const UserProfile: React.FC = () => {
   const navigate = useNavigate();
@@ -182,7 +184,7 @@ const UserProfile: React.FC = () => {
     const goBack = () => {
       navigate(-1);
     }
-  
+
     const signOutIfTokenIsExpired = () => {
       if(isTokenExpired()) {
         signOut()
@@ -239,18 +241,20 @@ const UserProfile: React.FC = () => {
                       setEmail(e.target.value)
                   }}
                 />
-                <SimpleInput 
+                <MaskInput 
                     label='Telefone' 
                     value={cellphone}
-                    onChange={(e) => {
+                    mask="99999-9999" 
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       setCellphone(e.target.value)
                   }}
                 />
-                <SimpleInput 
+                <MaskInput 
                     label='CPF' 
                     value={cpf}
-                    onChange={(e) => {
-                      setCpf(e.target.value)
+                    mask="999.999.999-99"
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      return setCpf(e.target.value);
                   }}
                 />
                 <SimpleInput 
