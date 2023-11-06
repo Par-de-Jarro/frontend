@@ -22,6 +22,14 @@ export const Status = styled.p`
     color: #c0c1c5;
 `
 
+export const PaymentInfoDiv = styled.div`
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`
+
+
 
 export const Value = styled.p`
     font-size: 20px;

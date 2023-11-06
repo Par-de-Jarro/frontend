@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import api from '../../../services/api'
 import { MainInfoDiv, CloseIcon, BackIcon, CloseDiv, Title, 
     ForwardIcon, Value, DateSelectorDiv, BillName, Container,
-    Price, PaymentsDiv, BillInfo, CircularImage, WarningTitle, Status } from './styles';
+    Price, PaymentsDiv, BillInfo, CircularImage, WarningTitle, Status, PaymentInfoDiv } from './styles';
 import { useAuth } from '../../../hooks/auth'
 import { useNavigate } from 'react-router-dom';
 import BillPic from '../../../styles/assets/bill.png'
@@ -48,6 +48,7 @@ const QuotaList: React.FC = () => {
 
     const truncateName = (name: string) => {
         const maxSize = 20
+        
         if (name.length <= maxSize) {
           return name
         } else {
@@ -112,8 +113,10 @@ const QuotaList: React.FC = () => {
                                         BillPic} />
                                     <BillName>{truncateName(quota.spot_bill.name)}</BillName>
                                 </BillInfo>
-                                <Price>R$ {quota.value.toFixed(2)}</Price>
-                                <Status>{quota.status == 'PAYED' ? 'Pago' : 'Pendente'}</Status>
+                                <PaymentInfoDiv>
+                                    <Status>{quota.status === 'PAYED' ? 'Pago' : 'Pendente'}</Status>
+                                    <Price>R$ ${quota.value.toFixed(2)}</Price>
+                                </PaymentInfoDiv>
                             </PaymentsDiv>
 					))
 					}
