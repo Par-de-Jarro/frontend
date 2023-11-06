@@ -192,6 +192,14 @@ const UserProfile: React.FC = () => {
       }
     }
 
+    const getValueWithoutMask = (value: string) => {
+      return value
+      .replaceAll('.', '')
+      .replace('-', '')
+      .replace('(', '')
+      .replace(')', '')
+    }
+
     useEffect(() => {
         signOutIfTokenIsExpired()
         getGenders()
@@ -244,9 +252,9 @@ const UserProfile: React.FC = () => {
                 <MaskInput 
                     label='Telefone' 
                     value={cellphone}
-                    mask="99999-9999" 
+                    mask="(99)99999-9999" 
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      setCellphone(e.target.value)
+                      setCellphone(getValueWithoutMask(e.target.value))
                   }}
                 />
                 <MaskInput 
@@ -254,7 +262,7 @@ const UserProfile: React.FC = () => {
                     value={cpf}
                     mask="999.999.999-99"
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      return setCpf(e.target.value);
+                      return setCpf(getValueWithoutMask(e.target.value));
                   }}
                 />
                 <SimpleInput 
