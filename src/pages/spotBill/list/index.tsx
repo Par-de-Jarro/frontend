@@ -1,14 +1,13 @@
 import PageContainer from '../../../components/page-container'
 import { useEffect, useState } from 'react'
 import api from '../../../services/api'
-import { } from './styles'
 import { MainInfoDiv, CloseIcon, BackIcon, CloseDiv, Title, LocationIcon, 
     ForwardIcon, Value, DateSelectorDiv, BillName, Container, ButtonDiv, Button, PlusIcon, 
     Price, PlusButton, PaymentsDiv, BillInfo, CircularImage, WarningTitle } from './styles';
 import DropDownInput from '../../../components/dropdown-input'
 import { useAuth } from '../../../hooks/auth'
-import {Spot} from '../../../types/spot'
-import {SpotBill} from '../../../types/spotBill'
+import { Spot } from '../../../types/spot'
+import { SpotBill } from '../../../types/spotBill'
 import { useNavigate, NavLink } from 'react-router-dom';
 import BillPic from '../../../styles/assets/bill.png'
 import { DropdownItem } from '../../../types/input';
@@ -174,7 +173,7 @@ const ListSpotBill: React.FC = () => {
                             <NavLink to={`/spotBill/${spotBill.id_spot_bill}`} style={{ textDecoration: 'none', width: '100%'}}>
                                 <PaymentsDiv>
                                     <BillInfo>
-                                        <CircularImage src={spotBill.images[0].image_url || BillPic} />
+                                        <CircularImage src={spotBill.images[0] || BillPic} />
                                         <BillName>{truncateName(spotBill.name)}</BillName>
                                     </BillInfo>
                                     <Price>R$ {spotBill.value}</Price>
