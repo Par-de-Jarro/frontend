@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { CardsContainer, CloseIcon, Title, TitleContainer, PlusButton, PlusIcon, ButtonDiv  } from "./styles"
+import { CardsContainer, CloseIcon, Title, TitleContainer, PlusButton, PlusIcon, ButtonDiv } from "./styles"
 import Card from '../../components/card'
 import { Spot } from '../../types/spot'
 import { useState, useEffect } from "react";
@@ -18,8 +18,8 @@ const Spots: React.FC = () => {
 
 	const navigate = useNavigate()
 
-  	const goToCreateSpot = () => {
-    	navigate('/spot');
+	const goToCreateSpot = () => {
+		navigate('/spot');
 	}
 
 	const goBack = () => {
@@ -34,22 +34,22 @@ const Spots: React.FC = () => {
 	  }
 
 
-  const loadSpots = async () => {   
-		if(user !== undefined) {
+	const loadSpots = async () => {
+		if (user !== undefined) {
 			await api.get('/spot/', {
 				params: {
 					id_user: user.id_user
 				},
 			})
-			.then((response) => {
-				const spots: Spot[] = response?.data;
-				setSpots(spots);
-			})
-			.catch((error) => {
-			console.error("Error on getting user spot: ", error)
-			})
+				.then((response) => {
+					const spots: Spot[] = response?.data;
+					setSpots(spots);
+				})
+				.catch((error) => {
+					console.error("Error on getting user spot: ", error)
+				})
 		}
-  };
+	};
 
 	useEffect(() => {
 		signOutIfTokenIsExpired()
@@ -60,11 +60,11 @@ const Spots: React.FC = () => {
 		<>
 			<PageContainer>
 				<TitleContainer>
-						<CloseIcon onClick={goBack} size={30} color='black'/>
-						<Title>Meus Locais</Title>
+					<CloseIcon onClick={goBack} size={30} color='black' />
+					<Title>Meus Locais</Title>
 				</TitleContainer>
 				{
-					!!!spots && (<Title>Você não tem nenhum spot cadastrado :(</Title>)
+					!!!spots && (<Title>Você não tem nenhum spot cadastrado :</Title>)
 				}
 				{
 					spots &&
@@ -74,7 +74,7 @@ const Spots: React.FC = () => {
 								{
 									spots.map((spot, index) => (
 										<NavLink to={`/spots/${spot.id_spot}`} key={index} style={{ textDecoration: 'none' }}>
-											<Card image_url={spot.images !== null? spot.images[0].image_url : HouseImage} title={spot.name} distance={spot.distance} empty_quota={spot.personal_quota} value={spot.value}/>
+											<Card image_url={spot.images !== null ? spot.images[0].image_url : HouseImage} title={spot.name} distance={spot.distance} empty_quota={spot.personal_quota} value={spot.value} is_owner={spot.owner.id_user === user.id_user} />
 										</NavLink>
 									))
 								}
@@ -84,10 +84,10 @@ const Spots: React.FC = () => {
 				}
 
 				<ButtonDiv>
-          			<PlusButton onClick={goToCreateSpot}>
-              			<PlusIcon/>
-          			</PlusButton>
-        		</ButtonDiv>
+					<PlusButton onClick={goToCreateSpot}>
+						<PlusIcon />
+					</PlusButton>
+				</ButtonDiv>
 			</PageContainer>
 			<NavBar />
 		</>

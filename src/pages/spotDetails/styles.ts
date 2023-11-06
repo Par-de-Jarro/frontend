@@ -4,8 +4,8 @@ import { PiHouseLineBold } from 'react-icons/pi'
 import { IoBedOutline } from 'react-icons/io5'
 import { LuDog, LuCigarette, LuShowerHead } from 'react-icons/lu'
 import { FaRegMap } from 'react-icons/fa'
-import { LiaMoneyBillWaveSolid} from 'react-icons/lia'
-import { AiOutlineCloseCircle} from 'react-icons/ai'
+import { LiaMoneyBillWaveSolid } from 'react-icons/lia'
+import { AiOutlineCloseCircle } from 'react-icons/ai'
 
 export const SpotTitle = styled.p`
     font-size: 20px;
@@ -163,3 +163,4 @@ export const DescriptionDiv = styled.div`
      color: #2b2b2b;
   }
 `
+
