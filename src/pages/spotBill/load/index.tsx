@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import { MainInfoDiv, CloseIcon, CloseDiv, Title, Value, PaymentInfoDiv, Price, RequesterName, Container, SpotDiv, Status, CircularImage, PaymentsDiv, RequesterInfo, UserImage } from './styles';
 import { Carousel } from 'react-responsive-carousel';
 import { useAuth } from '../../../hooks/auth'
-import {SpotBill, Image} from '../../../types/spotBill'
+import { SpotBill } from '../../../types/spotBill'
 import { useNavigate, NavLink } from 'react-router-dom';
 import HouseImage from '../../../styles/assets/house.jpg'
 import UserPic from '../../../styles/assets/User.jpg'
@@ -79,9 +79,9 @@ const LoadSpotBill: React.FC = () => {
                 <Container>
                     <Carousel showThumbs={false}>
                         {
-                            spotBill?.images.map((image: Image) => (
+                            spotBill?.images.map((image: string) => (
                                 <div>
-                                    <img src={image.image_url || SpotBillPic} alt={`spot ${id}`}/>
+                                    <img src={image || SpotBillPic} alt={`spot ${id}`}/>
                                 </div>
                             ))
                         }
