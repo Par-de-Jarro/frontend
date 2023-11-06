@@ -5,6 +5,7 @@ import styled, { css } from 'styled-components'
 import cameraIcon from '../../styles/assets/cameraIcon.png'
 import api from '../../services/api'
 import { useNavigate } from 'react-router-dom'
+import { Carousel } from 'react-responsive-carousel';
 
 export const ImageInputWrapper = styled.div`
   height: 105px;
@@ -160,16 +161,37 @@ const PayQuotaModal: React.FC<PayQuotaModal> = ({ onClose, quota }) => {
     return (
         <Modal onClose={onClose} title='Pagar Cota'>
             <Container>
-                <ImagesDiv>
-                    {
-                        imagePreviews.map((imageUrl: string) => (
-                            <QuotaImage src={imageUrl}/>
-                        ))
-                    }
-                    <ImageInputWrapper>
-                        <ImageInput type="file" accept="image/*" onChange={selectImage}></ImageInput>
-                    </ImageInputWrapper>
-                </ImagesDiv>
+                { 
+                    quota.status !== 'PAYED' && 
+                    (
+                        <ImagesDiv>
+                        {
+                            imagePreviews.map((imageUrl: string) => (
+                                <QuotaImage src={imageUrl}/>
+                            ))
+                        }
+                        <ImageInputWrapper>
+                            <ImageInput type="file" accept="image/*" onChange={selectImage}></ImageInput>
+                        </ImageInputWrapper>
+                    </ImagesDiv>
+                    )
+                }
+                {
+
+                    quota.status === 'PAYED' && (
+                        <Carousel showThumbs={false}>
+                            {
+                                quota.images.map((image: string) => (
+                                    <div>
+                                        <img src={image} />
+                                    </div>
+                                ))
+                            }
+                        </Carousel>
+                    )
+                }
+
+
                 <Button disabled={quota.status === 'PAYED'} onClick={payQuota}>{quota.status === 'PAYED' ? 'Cota Paga' : 'Pagar Cota'}</Button>
             </Container>
         </Modal>

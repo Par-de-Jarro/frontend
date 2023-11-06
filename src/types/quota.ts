@@ -6,7 +6,7 @@ export interface Quota {
     id_spot_bill: string
     id_user: string
     value: number
-    images: Image[]
+    images: string[]
     status: string
     user: User
     spot_bill: SpotBill
