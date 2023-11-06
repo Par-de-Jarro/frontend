@@ -12,13 +12,13 @@ const Modal: React.FC<ModalProps> = ({ onClose, children, title }) => {
   return (
     <ModalWrapper>
       <ModalContainer>
-      <TitleContainer>
-        <CloseIcon onClick={onClose}/>
-        <Title>{title}</Title>
-      </TitleContainer>
-      <ModalContentContainer>
-        {children}
-      </ModalContentContainer>
+        <TitleContainer>
+          <CloseIcon onClick={onClose}/>
+          <Title>{title}</Title>
+        </TitleContainer>
+        <ModalContentContainer>
+          {children}
+        </ModalContentContainer>
       </ModalContainer>
     </ModalWrapper>
   )

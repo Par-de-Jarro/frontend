@@ -17,6 +17,12 @@ export const WarningTitle = styled.p`
     text-align: center;
 `
 
+export const Status = styled.p`
+    font-size: 14px;
+    color: #c0c1c5;
+`
+
+
 export const Value = styled.p`
     font-size: 20px;
     font-weight: 400;

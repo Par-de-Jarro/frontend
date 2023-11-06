@@ -1,18 +1,14 @@
 import PageContainer from '../../../components/page-container'
 import { useEffect, useState } from 'react'
 import api from '../../../services/api'
-import { } from './styles'
-import { MainInfoDiv, CloseIcon, BackIcon, CloseDiv, Title, LocationIcon, 
-    ForwardIcon, Value, DateSelectorDiv, BillName, Container, ButtonDiv, Button, PlusIcon, 
-    Price, PlusButton, PaymentsDiv, BillInfo, CircularImage, WarningTitle } from './styles';
-import DropDownInput from '../../../components/dropdown-input'
+import { MainInfoDiv, CloseIcon, BackIcon, CloseDiv, Title, 
+    ForwardIcon, Value, DateSelectorDiv, BillName, Container,
+    Price, PaymentsDiv, BillInfo, CircularImage, WarningTitle, Status } from './styles';
 import { useAuth } from '../../../hooks/auth'
-import {Spot} from '../../../types/spot'
-import {SpotBill} from '../../../types/spotBill'
-import { useNavigate, NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import BillPic from '../../../styles/assets/bill.png'
 import {Quota} from '../../../types/quota'
-import { DropdownItem } from '../../../types/input';
+import PayQuotaModal from '../../../components/pay_quota_modal';
 
 
 const QuotaList: React.FC = () => {
@@ -28,6 +24,8 @@ const QuotaList: React.FC = () => {
     
     const [quotas, setQuotas] = useState<Quota[]>([])
     const { user } = useAuth()
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+    const [selectedQuota, setSelectedQuota] = useState<Quota>({} as Quota)
 
     const navigate = useNavigate();
   
@@ -98,6 +96,7 @@ const QuotaList: React.FC = () => {
             </MainInfoDiv>
             <PageContainer>
                 <Container>
+                    {isModalOpen && <PayQuotaModal  onClose={() => { setIsModalOpen(false)}} quota={selectedQuota}></PayQuotaModal>}
                     {
                         !quotas && (
                             <WarningTitle>Você não possui contas :) </WarningTitle>
@@ -105,15 +104,16 @@ const QuotaList: React.FC = () => {
                     }
                     {
                         quotas.map((quota, index) => (
-                            <PaymentsDiv>
+                            <PaymentsDiv onClick={() => { setIsModalOpen(true); setSelectedQuota(quota) }}>
                                 <BillInfo>
                                     <CircularImage src={
-                                        quota.images != null && quota.images.length > 0 ? 
-                                        quota.images[0].image_url : 
+                                        quota.spot_bill.images != null && quota.spot_bill.images.length > 0 ? 
+                                        quota.spot_bill.images[0] : 
                                         BillPic} />
                                     <BillName>{truncateName(quota.spot_bill.name)}</BillName>
                                 </BillInfo>
                                 <Price>R$ {quota.value.toFixed(2)}</Price>
+                                <Status>{quota.status == 'PAYED' ? 'Pago' : 'Pendente'}</Status>
                             </PaymentsDiv>
 					))
 					}

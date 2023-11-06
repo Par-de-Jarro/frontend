@@ -6,7 +6,8 @@ export const ModalWrapper = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: fit-content;
+  height: 100%;
+  overflow: auto;
   background: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
@@ -23,11 +24,16 @@ export const ModalContainer = styled.div`
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); 
+  width: 100%;
+
+  
 
   @media (min-width: 769px) {
     width: 900px;
   }
 `;
+
+
 
 export const CloseIcon = styled(AiOutlineCloseCircle)`
   height: 20px;
