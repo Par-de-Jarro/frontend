@@ -82,12 +82,15 @@ const ListSpotBill: React.FC = () => {
     }
 
     const generateQuotas = () => {
+        if(spotId === '' || spotId == null) {
+            alert("Você deve selecionar um local antes!")
+        }
         api.post(`/personal_quota_payment/generate_personal_quota_payemnt`, {
                 id_spot: spotId,
                 reference_date_start: year + "-" + months[currentMonthIndex].value + "-01",
                 reference_date_end: year + "-" + months[currentMonthIndex].value + "-" + months[currentMonthIndex].endDay
         }).then((response) => {
-            alert("Quotas generated with success")
+            alert("Cotas geradas com sucesso")
         }).catch((error) => {
             alert("Algo de errado ocorreu na sua solicitação")
             console.log('Erro na solicitação: ', error);
@@ -111,6 +114,17 @@ const ListSpotBill: React.FC = () => {
             console.log('Erro na solicitação: ', error);
         })
     }
+
+    const handleClick = () => {
+        if(spotId !== '' && spotId != null) {
+            navigate(`/${spotId}/spotBill/create`)
+        }
+        else {
+            alert("Você deve selecionar um local!")
+        }
+    }
+
+    const spotRecommendationsCheck = spotRecommendations.length > 0;
 
     useEffect(() => { 
         loadSpots()
@@ -140,7 +154,7 @@ const ListSpotBill: React.FC = () => {
             <PageContainer>
                 <Container>
                     {
-                        spotRecommendations && (                     
+                        spotRecommendationsCheck && (                     
                             <DropDownInput 
                                 recommendations={spotRecommendations} 
                                 onSelectItem={(item) => {setSpotId(item.value)}} 
@@ -151,7 +165,7 @@ const ListSpotBill: React.FC = () => {
                         )
                     }
                     {
-                        !spotRecommendations && (
+                        !spotRecommendationsCheck && (
                             <WarningTitle>Você não é administrador de nenhum lugar :( </WarningTitle>
                         )
                     }
@@ -170,7 +184,7 @@ const ListSpotBill: React.FC = () => {
 					}
                     <ButtonDiv>
                         <Button onClick={() => generateQuotas()} >Gerar cotas do mês</Button>
-                        <PlusButton disabled={!spotRecommendations} onClick={() => navigate(`/${spotId}/spotBill/create`)}>
+                        <PlusButton disabled={!spotRecommendationsCheck} onClick={handleClick}>
                             <PlusIcon/>
                         </PlusButton>
         		    </ButtonDiv>
