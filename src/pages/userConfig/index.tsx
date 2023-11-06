@@ -4,6 +4,8 @@ import NavBar from '../../components/nav-bar'
 import PageContainer from '../../components/page-container'
 import NavCard from '../../components/nav-card'
 import { BsHouses } from 'react-icons/bs'
+import { FaMoneyBillWave } from 'react-icons/fa'
+import { RiBillLine } from 'react-icons/ri'
 import { PiUserCircleFill } from 'react-icons/pi'
 import { MdOutlineMailOutline } from 'react-icons/md'
 import { useAuth } from '../../hooks/auth'
@@ -66,6 +68,12 @@ const UserConfigPage: React.FC = () => {
             </NavCard>
             <NavCard label='Meus Locais' redicted_to='/mySpots/'>
               <BsHouses/>
+            </NavCard>
+            <NavCard label='Contas de local' redicted_to='/spotBill/list'>
+              <RiBillLine/>
+            </NavCard>
+            <NavCard label='Cotas' redicted_to='/spotBill/quota'>
+              <FaMoneyBillWave/>
             </NavCard>
             {
               loggedUser && (
