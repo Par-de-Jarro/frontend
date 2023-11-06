@@ -90,8 +90,15 @@ export default function SignUp () {
 
     setGenderRecommendations(genders)
   }
-  
 
+  const getValueWithoutMask = (value: string) => {
+    return value
+    .replaceAll('.', '')
+    .replace('-', '')
+    .replace('(', '')
+    .replace(')', '')
+  }
+  
   useEffect(() => {
     getGenders()
     getUniversities()
@@ -135,14 +142,14 @@ export default function SignUp () {
           <MaskInput 
             label='Telefone' 
             value={cellphone}
-            mask="99999-9999"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCellphone(e.target.value)}
+            mask="(99)99999-9999"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCellphone(getValueWithoutMask(e.target.value))}
           />
           <MaskInput 
             label='CPF' 
             value={cpf}
             mask="999.999.999-99"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCpf(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCpf(getValueWithoutMask(e.target.value))}
           />
           <SimpleInput 
             label='Curso' 
