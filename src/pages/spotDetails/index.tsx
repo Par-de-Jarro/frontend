@@ -8,7 +8,8 @@ import api from '../../services/api';
 import UserPic from '../../styles/assets/User.jpg'
 import { useAuth } from '../../hooks/auth'
 import { useNavigate, NavLink } from 'react-router-dom';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 import {
     SpotContainer, MainInfoDiv, MoneyIcon, OwnerDiv, UserImage, SubInfo, LocationIcon, SpotTitle, CigaretteIcon, MainButton,
     HouseIcon, BedIcon, ShowerIcon, PetIcon, MapIcon, CloseIcon
@@ -36,20 +37,21 @@ const SpotDetails: React.FC = () => {
 
     const handleClick = () => {
         try {
-            if (user === undefined) {
-                navigate('/userConfig')
-            }
             if (spot?.owner.id_user !== user.id_user) {
                 api.post(`/spot/${id}/request_entry`).then((response) => {
-                    alert("Sua solicitação foi feita com sucesso")
+                    toast.success("Sua solicitação foi feita com sucesso :) ");
                 }).catch(() => {
-                    alert("Algo de errado ocorreu na sua solicitação")
+                    toast.error("Você precisa estar logado para realizar essa ação ou já fez uma solicitação para esse local.");
                     console.log('error');
                 })
             }
         }
         catch {
-            alert("Algo de errado ocorreu na sua solicitação")
+            toast.error("Você precisa estar logado para realizar essa ação",
+                {
+                    position: "top-center",
+                    autoClose: 7000,
+                });
             console.log('error');
         }
     }
@@ -68,6 +70,7 @@ const SpotDetails: React.FC = () => {
 
     return (
         <>
+
             <Carousel showThumbs={false}>
                 {
                     spot?.images.map((image: Image) => (
@@ -123,7 +126,10 @@ const SpotDetails: React.FC = () => {
                         <p>{spot?.key.allowance.allow_smoker ? "Permite fumantes" : "Não permite fumantes"}</p>
                     </SubInfo>
                 </SpotContainer>
+                <ToastContainer
+                    position="top-center" />
                 <MainButton onClick={handleClick}>{user && user.id_user === spot?.owner.id_user ? 'Editar local' : 'Solicitar entrada'}</MainButton>
+
             </PageContainer>
         </>
     )
