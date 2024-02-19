@@ -3,7 +3,7 @@ import { University } from "./university"
 export interface User {
     name: string
     email: string
-    cellphone: string
+    cellphone: number
     document_id: string
     profile_img: string
     birthdate: string
