@@ -11,6 +11,8 @@ import { useNavigate } from 'react-router-dom';
 import BillPic from '../../../styles/assets/bill.png'
 import { Quota } from '../../../types/quota'
 import PayQuotaModal from '../../../components/pay_quota_modal';
+import NavBar from '../../../components/nav-bar';
+
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 
@@ -125,6 +127,7 @@ const QuotaList: React.FC = () => {
                     }
                 </Container>
             </PageContainer>
+            <NavBar/>
         </>
     )
 }
