@@ -12,29 +12,30 @@ import HouseImage from '../../../styles/assets/house.jpg'
 import UserPic from '../../../styles/assets/User.jpg'
 import SpotBillPic from '../../../styles/assets/bill.png'
 import { Quota } from '../../../types/quota'
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 const LoadSpotBill: React.FC = () => {
     const [spotBill, setSpotBill] = useState<SpotBill>()
     const [quotas, setQuotas] = useState<Quota[]>([])
 
     const { user } = useAuth()
-    
+
     const { id } = useParams();
 
     const navigate = useNavigate();
-  
-	const goBack = () => {
-		navigate(-1);
-	}
+
+    const goBack = () => {
+        navigate(-1);
+    }
 
     const truncateName = (name: string) => {
         const maxSize = 12
         if (name.length <= maxSize) {
-          return name
+            return name
         } else {
-          const truncatedName = name.slice(0, maxSize) + '...';
-          return truncatedName
+            const truncatedName = name.slice(0, maxSize) + '...';
+            return truncatedName
         }
     }
 
@@ -43,7 +44,7 @@ const LoadSpotBill: React.FC = () => {
             const spot: SpotBill = response?.data
             setSpotBill(spot)
         }).catch((error) => {
-            alert("Algo de errado ocorreu na sua solicitação")
+            toast.error("Algo de errado ocorreu na sua solicitação")
             console.log('Erro na solicitação de lugar: ', error);
         })
     }
@@ -55,22 +56,23 @@ const LoadSpotBill: React.FC = () => {
             },
         }).then((response) => {
             const quotas: Quota[] = response?.data;
-			setQuotas(quotas);
+            setQuotas(quotas);
         }).catch((error) => {
-            alert("Algo de errado ocorreu na sua solicitação")
+            toast.error("Algo de errado ocorreu na sua solicitação")
             console.log('Erro na solicitação de lugar: ', error);
         })
     }
 
-    useEffect(() => { 
+    useEffect(() => {
         getSpotBill()
-        getQuotas() }, [])
+        getQuotas()
+    }, [])
 
     return (
         <>
             <MainInfoDiv>
                 <CloseDiv>
-                    <CloseIcon onClick={goBack} size={30}/>
+                    <CloseIcon onClick={goBack} size={30} />
                 </CloseDiv>
                 <Title>{spotBill?.name}</Title>
                 <Value>R$ {spotBill?.value}</Value>
@@ -81,14 +83,14 @@ const LoadSpotBill: React.FC = () => {
                         {
                             spotBill?.images.map((image: string) => (
                                 <div>
-                                    <img src={image || SpotBillPic} alt={`spot ${id}`}/>
+                                    <img src={image || SpotBillPic} alt={`spot ${id}`} />
                                 </div>
                             ))
                         }
                     </Carousel>
                     <SpotDiv>
-                        <NavLink to={ user ? `/spots/${spotBill?.spot.id_spot}` : '/signIn'} style={{ textDecoration: 'none' }}>
-                            <CircularImage src={spotBill?.spot.images[0].image_url || HouseImage}/>
+                        <NavLink to={user ? `/spots/${spotBill?.spot.id_spot}` : '/signIn'} style={{ textDecoration: 'none' }}>
+                            <CircularImage src={spotBill?.spot.images[0].image_url || HouseImage} />
                         </NavLink>
                         <p>{spotBill?.spot.name}</p>
                     </SpotDiv>
@@ -96,7 +98,7 @@ const LoadSpotBill: React.FC = () => {
                         quotas.map((quota, index) => (
                             <PaymentsDiv>
                                 <RequesterInfo>
-                                    <UserImage src={ quota.user.profile_img ||UserPic} />
+                                    <UserImage src={quota.user.profile_img || UserPic} />
                                     <RequesterName>{truncateName(quota.user.name)}</RequesterName>
                                 </RequesterInfo>
                                 <PaymentInfoDiv>
@@ -104,12 +106,12 @@ const LoadSpotBill: React.FC = () => {
                                     <Price>R$ {quota.value.toFixed(2)}</Price>
                                 </PaymentInfoDiv>
                             </PaymentsDiv>
-					))
-					}        
+                        ))
+                    }
                 </Container>
             </PageContainer>
         </>
-      )
-  }
-  
-  export default LoadSpotBill
+    )
+}
+
+export default LoadSpotBill
