@@ -2,14 +2,15 @@ import React, { createContext, useContext, ReactNode, useState } from 'react';
 import { Spot } from '../types/spot';
 import api from '../services/api';
 import { useAuth } from './auth';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 interface Filters {
   lat?: number;
   long?: number;
   local_name: string
   type?: string
   allow_pet?: boolean
-  allow_smoker?:  boolean
+  allow_smoker?: boolean
   rooms_quantity?: number
   bathrooms_quantity?: number
   has_elevator?: boolean
@@ -24,7 +25,7 @@ interface SpotContextData {
   setFilters: (a: any) => void;
   loadingSpots: boolean;
   isFilterOpen: boolean;
-  setIsFilterOpen:(a: boolean) => void;
+  setIsFilterOpen: (a: boolean) => void;
 }
 
 const SpotContext = createContext<SpotContextData | undefined>(undefined);
@@ -35,8 +36,8 @@ export function SpotsProvider({ children }: { children: ReactNode }) {
   const [spots, setSpots] = useState<Spot[]>([]);
   const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
   const [filters, setFilters] = useState<Filters>(() => {
-    let lat =  -7.2171368
-    let long =  -35.9097543
+    let lat = -7.2171368
+    let long = -35.9097543
     let local_name = 'UFCG - Campus Campina Grande'
 
     if (user) {
@@ -49,33 +50,33 @@ export function SpotsProvider({ children }: { children: ReactNode }) {
   })
 
   const loadSpots = async () => {
-    try {      
+    try {
       setLoadingSpots(true);
-      
+
       const response = await api.get('/spot/search', {
         params: {
           ...filters
         },
       });
-  
+
       const spotsData: { Spot: Spot; distance: number }[] = response?.data;
-  
+
       const combinedSpots = spotsData.map(item => ({
         ...item.Spot,
         ...item
       }));
-  
+
       setSpots(combinedSpots);
-    } 
+    }
     catch {
-      alert("Algo de errado ocorreu na sua solicitação")
+      toast.error("Algo de errado ocorreu na sua solicitação")
       console.log('error');
     }
     finally {
       setLoadingSpots(false);
     }
   };
-  
+
 
   const value: SpotContextData = {
     loadingSpots,
