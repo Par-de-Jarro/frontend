@@ -25,7 +25,7 @@ const UserPage: React.FC = () => {
     ['male', 'Masculino'],
     ['female', 'Feminino'],
     ['non-binary', 'Não binário'],
-    ['uninformed', 'Nãao informado']
+    ['uninformed', 'Não informado']
   ]);
 
   const getSpot = () => {
