@@ -20,6 +20,7 @@ import DropDownInput from '../../components/dropdown-input'
 import SimpleInput from '../../components/simple-input'
 import api from '../../services/api';
 import UserPic from '../../styles/assets/User.jpg'
+import { validateCPF } from '../../utils/cpfValidator'
 
 import { useAuth } from '../../hooks/auth'
 import * as yup from 'yup';
@@ -193,6 +194,26 @@ const UserProfile: React.FC = () => {
     }
   }
 
+  const handleCpfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const cpf = (e.target.value);
+    if (!validateCPF(cpf)){
+      toast.error("CPF inválido")
+      return
+    }
+    setCpf(cpf)
+  }
+
+    
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const email = (e.target.value);
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      toast.error("Email inválido");
+      return;
+    }
+    setEmail(email);
+  }
+
   const getValueWithoutMask = (value: string) => {
     return value
       .replaceAll('.', '')
@@ -246,9 +267,7 @@ const UserProfile: React.FC = () => {
           <SimpleInput
             label='Email'
             value={email}
-            onChange={(e) => {
-              setEmail(e.target.value)
-            }}
+            onChange={handleEmailChange}
           />
           <MaskInput
             label='Telefone'
@@ -262,9 +281,7 @@ const UserProfile: React.FC = () => {
             label='CPF'
             value={cpf}
             mask="999.999.999-99"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              return setCpf(getValueWithoutMask(e.target.value));
-            }}
+            onChange={handleCpfChange}
           />
           <SimpleInput
             label='Data de nascimento'
