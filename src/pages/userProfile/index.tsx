@@ -57,14 +57,14 @@ const UserProfile: React.FC = () => {
   });
 
   const { user, isTokenExpired, signOut } = useAuth()
-
+  
   const [name, setName] = useState(user.name)
   const [profileImage, setProfileImage] = useState(user.profile_img)
   const [imageFile, setImageFile] = useState<File>();
   const [gender, setGender] = useState(user.gender)
   const [email, setEmail] = useState(user.email)
   const [bio, setBio] = useState(user.bio)
-  const [cellphone, setCellphone] = useState(user.cellphone)
+  const [cellphone, setCellphone] = useState<string | number>('');
   const [cpf, setCpf] = useState(user.document_id)
   const [course, setCourse] = useState(user.course)
   const [university, setUniversity] = useState(user.university.name)
@@ -225,88 +225,89 @@ const UserProfile: React.FC = () => {
   user.profile_img])
 
   return (
-    <>
-      <PageContainer>
-        <TitleContainer>
-          <CloseIcon onClick={goBack} size={30} color='black' />
-          <Title>Meu Perfil</Title>
-        </TitleContainer>
-        <ProfileDiv>
-          <UserImage src={profileImage || UserPic} />
-          <ImageInputWrapper>
-            <ImageInput type="file" accept="image/*" onChange={selectImage}></ImageInput>
-          </ImageInputWrapper>
-          <SimpleInput
-            label='Nome'
-            value={name}
-            onChange={(e) => {
-              setName(e.target.value)
-            }}
-          />
-          <SimpleInput
-            label='Email'
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value)
-            }}
-          />
-          <MaskInput
-            label='Telefone'
-            value={cellphone}
-            mask="(99)99999-9999"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setCellphone(getValueWithoutMask(e.target.value))
-            }}
-          />
-          <MaskInput
-            label='CPF'
-            value={cpf}
-            mask="999.999.999-99"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              return setCpf(getValueWithoutMask(e.target.value));
-            }}
-          />
-          <SimpleInput
-            label='Data de nascimento'
-            value={birthdate}
-            onChange={(e) => {
-              setBirthdate(e.target.value)
-            }}
-            type='date'
-          />
-          <DropDownInput
-            recommendations={genderRecommendations}
-            onSelectItem={(item) => { setGender(item.value) }}
-            label='Gênero'
-            inputValue={gender}
-            onInputValueChange={setGender}
-          />
-          <DropDownInput
-            recommendations={universityRecommendations}
-            onSelectItem={(item) => { setUniversity(item.value) }}
-            label='Universidade'
-            inputValue={university}
-            onInputValueChange={setUniversity}
-          />
-          <SimpleInput
-            label='Curso'
-            value={course}
-            onChange={(e) => {
-              setCourse(e.target.value)
-            }}
-          />
-          <SimpleInput
-            label='Bio'
-            value={bio}
-            onChange={(e) => {
-              setBio(e.target.value)
-            }}
-          />
-          <MainButton onClick={updateUser}>Editar</MainButton>
-        </ProfileDiv>
-      </PageContainer>
-    </>
-  )
+      <>
+        <PageContainer>
+            <TitleContainer>
+                <CloseIcon onClick={goBack} size={30} color='black'/>
+                <Title>Meu Perfil</Title>
+            </TitleContainer>
+            <ProfileDiv>
+                <UserImage src={profileImage || UserPic}/>
+                <ImageInputWrapper>
+                  <ImageInput type="file" accept="image/*" onChange={selectImage}></ImageInput>
+                </ImageInputWrapper>
+                <SimpleInput 
+                    label='Nome' 
+                    value={name}
+                    onChange={(e) => {
+                        setName(e.target.value)
+                    }}
+                />
+                <SimpleInput 
+                    label='Email' 
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value)
+                  }}
+                />
+                <MaskInput 
+                    label='Telefone' 
+                    value={cellphone.toString()}
+                    mask="(99)99999-9999" 
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      const valueWithoutMask = getValueWithoutMask(e.target.value);
+                      setCellphone(valueWithoutMask);
+                  }}
+                />
+                <MaskInput 
+                    label='CPF' 
+                    value={cpf}
+                    mask="999.999.999-99"
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      return setCpf(getValueWithoutMask(e.target.value));
+                  }}
+                />
+                <SimpleInput 
+                    label='Data de nascimento' 
+                    value={birthdate}
+                    onChange={(e) => {
+                      setBirthdate(e.target.value)
+                    }}
+                    type='date'
+                />
+                <DropDownInput 
+                    recommendations={genderRecommendations} 
+                    onSelectItem={(item) => {setGender(item.value)}} 
+                    label='Gênero' 
+                    inputValue={gender} 
+                    onInputValueChange={setGender}
+                />
+                <DropDownInput 
+                    recommendations={universityRecommendations} 
+                    onSelectItem={(item) => {setUniversity(item.value)}} 
+                    label='Universidade' 
+                    inputValue={university}
+                    onInputValueChange={setUniversity}
+                />
+                <SimpleInput 
+                    label='Curso' 
+                    value={course}
+                    onChange={(e) => {
+                      setCourse(e.target.value)
+                    }}
+                />
+                <SimpleInput 
+                    label='Bio' 
+                    value={bio}
+                    onChange={(e) => {
+                      setBio(e.target.value)
+                    }}
+                />
+                <MainButton onClick={updateUser}>Editar</MainButton>
+            </ProfileDiv>
+        </PageContainer>
+      </>
+    )
 }
 
 export default UserProfile
