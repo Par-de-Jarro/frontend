@@ -63,7 +63,7 @@ const UserProfile: React.FC = () => {
     const [gender, setGender] = useState(user.gender)
     const [email, setEmail] = useState(user.email)
     const [bio, setBio] = useState(user.bio)
-    const [cellphone, setCellphone] = useState(user.cellphone)
+    const [cellphone, setCellphone] = useState<string | number>('');
     const [cpf, setCpf] = useState(user.document_id)
     const [course, setCourse] = useState(user.course)
     const [university, setUniversity] = useState(user.university.name)
@@ -251,10 +251,11 @@ const UserProfile: React.FC = () => {
                 />
                 <MaskInput 
                     label='Telefone' 
-                    value={cellphone}
+                    value={cellphone.toString()}
                     mask="(99)99999-9999" 
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      setCellphone(getValueWithoutMask(e.target.value))
+                      const valueWithoutMask = getValueWithoutMask(e.target.value);
+                      setCellphone(valueWithoutMask);
                   }}
                 />
                 <MaskInput 
