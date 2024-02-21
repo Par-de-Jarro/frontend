@@ -176,7 +176,7 @@ const ListSpotBill: React.FC = () => {
                             <NavLink to={`/spotBill/${spotBill.id_spot_bill}`} style={{ textDecoration: 'none', width: '100%' }}>
                                 <PaymentsDiv>
                                     <BillInfo>
-                                        <CircularImage src={spotBill.images[0] || BillPic} />
+                                        <CircularImage src={spotBill.images ? spotBill.images[0] : BillPic} />
                                         <BillName>{truncateName(spotBill.name)}</BillName>
                                     </BillInfo>
                                     <Price>R$ {spotBill.value}</Price>
