@@ -16,7 +16,7 @@ import CreateSpotBill from './pages/spotBill/create'
 import LoadSpotBill from './pages/spotBill/load'
 import ListSpotBill from './pages/spotBill/list'
 import QuotaList from './pages/quota/list'
-
+import EditSpot from './pages/editSpot'
 
 export default function AppRoutes() {
 
@@ -45,6 +45,7 @@ export default function AppRoutes() {
         <Route path="/spotBill/:id" element={<ProtectedRoute {...defaultProtectedRouteProps} outlet={<LoadSpotBill />} />} />
         <Route path="/spotBill/list" element={<ProtectedRoute {...defaultProtectedRouteProps} outlet={<ListSpotBill />} />} />
         <Route path="/spotBill/quota" element={<ProtectedRoute {...defaultProtectedRouteProps} outlet={<QuotaList />} />} />
+        <Route path="/editSpot/:id" element={<EditSpot />} />
       </Routes>
     </BrowserRouter>
   )
