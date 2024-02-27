@@ -21,6 +21,7 @@ import SimpleInput from "../../components/simple-input";
 import CheckBox from "../../components/checkbox";
 import { useAuth } from "../../hooks/auth";
 import { toast } from 'react-toastify';
+import MaskInput from "../../components/input-mask";
 
 export default function AddSpot() {
   const [name, setName] = useState("");
@@ -31,6 +32,7 @@ export default function AddSpot() {
   const [street, setStreet] = useState("");
   const [zipcode, setZipcode] = useState("");
   const [number, setNumber] = useState("");
+  const [complement, setComplement] = useState("");
   const [city, setCity] = useState("");
   const [neighborhood, setNeighborhood] = useState("");
   const [state, setState] = useState("");
@@ -55,9 +57,9 @@ export default function AddSpot() {
 
   function cep_callback (content: any) {
     if (!("erro" in content)) {
-      setZipcode(content.cep)
       setCity(content.localidade)
       setState(content.uf)
+      setStreet(content.logradouro)
       setNeighborhood(content.bairro)
     }
     else {
@@ -65,17 +67,26 @@ export default function AddSpot() {
     }
   }
   const autocompleteZipcode = async (zip_code: string) => {
-    var cep = zip_code.replace(/\D/g, '');
     var validacep = /^[0-9]{8}$/;
 
-    if(cep === "" || !validacep.test(cep)) {
+    if(zip_code === "" || !validacep.test(zip_code)) {
       toast.error("Informe um CEP válido")
+      return
     }
-    const url = `viacep.com.br/ws/${cep}/json/?callback=${cep_callback}`
-    await fetch(url, {
-      method: 'POST',
-      headers: {'Content-Type': '*/*; charset=UTF-8'} }
-    )
+    
+    const url = `https://viacep.com.br/ws/${zip_code}/json`
+    const response = await fetch(new URL(url), {
+      method: 'GET',
+      headers: {'Content-Type': '*/*; charset=UTF-8'},
+      mode: "cors"
+    })
+
+    if (response.ok && response.body !== null) {
+      cep_callback(await response.json())
+    }
+    else {
+      toast.error("Não foi possível autocompletar")
+    }
   }
 
   const updateAllowPet = () => {
@@ -139,6 +150,7 @@ export default function AddSpot() {
         street,
         zip_code: zipcode,
         number,
+        complement,
         city,
         state,
         key,
@@ -232,6 +244,12 @@ export default function AddSpot() {
     signOutIfTokenIsExpired();
     getTypes();
   }, [imageFiles]);
+
+  useEffect(() => {
+    if (zipcode.length == 8) {
+      autocompleteZipcode(zipcode)
+    }
+  }, [zipcode])
 
   return (
     <PageContainer>
@@ -329,11 +347,15 @@ export default function AddSpot() {
         <TitleContainer>
           <p>Localização</p>
         </TitleContainer>
-        <SimpleInput
+
+        <MaskInput
           label="CEP"
           value={zipcode}
-          onChange={(e) => {
-            autocompleteZipcode(e.target.value);
+          mask="99999-999" 
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            var cep = e.target.value
+            cep = cep.replace(/\D/g, '');
+            setZipcode(cep);
           }}
         />
 
@@ -374,6 +396,13 @@ export default function AddSpot() {
           value={number}
           onChange={(e) => {
             setNumber(e.target.value);
+          }}
+        />
+        <SimpleInput
+          label="Complemento"
+          value={complement}
+          onChange={(e) => {
+            setComplement(e.target.value);
           }}
         />
         <Button onClick={createSpot}>Cadastrar</Button>

@@ -18,6 +18,10 @@ export const Container = styled.div`
 export const Input = styled.input`
   width: 100%;
   border: 0;
+  &[type=number] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
 `;
 
 export const InputContainer = styled.div`
