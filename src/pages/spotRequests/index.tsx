@@ -24,7 +24,8 @@ import {
   RejectIcon,
   CheckIcon,
   PendingTitle,
-  SecondaryTitle
+  SecondaryTitle,
+  Button
 } from './styles';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
@@ -61,6 +62,18 @@ const SpotRequests: React.FC = () => {
 
   const reject = async (requestId: string) => {
     await api.post(`/spot_entry_request/${requestId}/reject`)
+      .then((response) => {
+        toast.error('Request rejected')
+        loadRequestsReceived()
+        loadRequestsMade()
+      })
+      .catch((error) => {
+        console.error("Error on rejecting request: ", error)
+      })
+  }
+
+  const cancel = async (requestId: string) => {
+    await api.post(`/spot_entry_request/${requestId}/cancel`)
       .then((response) => {
         toast.error('Request rejected')
         loadRequestsReceived()
@@ -172,6 +185,7 @@ const SpotRequests: React.FC = () => {
                   <RequesterName>{truncateName(request.spot.name)}</RequesterName>
                 </RequesterInfo>
                 <PendingTitle>Pendente</PendingTitle>
+                <Button onClick={() => { cancel(request.id_spot_entry_request)}}>X</Button>
               </RequestDiv>
             ))}
           </>

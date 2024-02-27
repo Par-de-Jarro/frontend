@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import { AiOutlineCheckCircle, AiOutlineCloseCircle } from 'react-icons/ai'
 import { IoClose } from "react-icons/io5"
 
@@ -62,6 +62,30 @@ export const ButtonsDiv = styled.div`
     justify-content: center;
 `
 
+export const Button = styled.button`
+  height: 32px;
+  width: 32px;
+  background-color: white;
+  border: 2px solid #cdcdcd;
+  color: #cdcdcd;
+  border-radius: 50%;
+
+  &:hover {
+    border-color: black;
+    color: black;
+  }
+
+  ${(props) => props.disabled && css`
+      color: #ececec;
+      border-color: #ececec;
+
+      &:hover {
+        color: #ececec;
+        border-color: #ececec;
+      }
+  `}
+`
+
 export const CheckIcon = styled(AiOutlineCheckCircle)`
   height: 30px;
   width: 30px;
@@ -80,6 +104,7 @@ export const RejectIcon = styled(AiOutlineCloseCircle)`
 export const PendingTitle = styled.p`
     font-size: 14px;
     color: #c0c1c5;
+    margin-right: 5px;
 `
 
 export const NoRequestsDiv = styled.div`
