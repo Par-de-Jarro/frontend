@@ -20,8 +20,10 @@ import { DropdownItem } from "../../types/input";
 import SimpleInput from "../../components/simple-input";
 import CheckBox from "../../components/checkbox";
 import { useAuth } from "../../hooks/auth";
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import MaskInput from "../../components/input-mask";
+
+import 'react-toastify/dist/ReactToastify.min.css';
 
 export default function AddSpot() {
   const [name, setName] = useState("");
@@ -66,7 +68,7 @@ export default function AddSpot() {
       toast.error("Não foi possível autocompletar")
     }
   }
-  const autocompleteZipcode = async (zip_code: string) => {
+  async function autocomplete_address(zip_code: string) {
     var validacep = /^[0-9]{8}$/;
 
     if(zip_code === "" || !validacep.test(zip_code)) {
@@ -122,7 +124,7 @@ export default function AddSpot() {
         navigate("/mySpots");
       })
       .catch((error) => {
-        toast.error("Image upload failed")
+        toast.error("Não foi possível carregar a imagem no servidor")
         console.error("Image upload failed:", error);
       });
   };
@@ -168,14 +170,14 @@ export default function AddSpot() {
       });
   };
 
-  const signOutIfTokenIsExpired = () => {
+  function signOutIfTokenIsExpired() {
     if (isTokenExpired()) {
       signOut();
       navigate("/signIn");
     }
   };
 
-  const getTypes = () => {
+  function getTypes() {
     const spot_types = [
       {
         value: "apartment",
@@ -246,8 +248,8 @@ export default function AddSpot() {
   }, [imageFiles]);
 
   useEffect(() => {
-    if (zipcode.length == 8) {
-      autocompleteZipcode(zipcode)
+    if (zipcode.length === 8) {
+      autocomplete_address(zipcode)
     }
   }, [zipcode])
 

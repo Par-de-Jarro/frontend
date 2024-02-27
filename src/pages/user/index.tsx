@@ -35,8 +35,7 @@ const UserPage: React.FC = () => {
         SetUser(user)
       }
       catch {
-        toast.error("Something went wrong while updating user")
-        console.log('error');
+        toast.error("Algo de errado ocorreu na sua solicitação")
       }
     })
   }
