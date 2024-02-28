@@ -70,7 +70,6 @@ export function SpotsProvider({ children }: { children: ReactNode }) {
     }
     catch {
       toast.error("Algo de errado ocorreu na sua solicitação")
-      console.log('error');
     }
     finally {
       setLoadingSpots(false);
