@@ -22,26 +22,26 @@ import CheckBox from "../../components/checkbox";
 import { useAuth } from "../../hooks/auth";
 import { toast } from 'react-toastify';
 import { useParams } from 'react-router-dom';
+import { Spot } from "../../types/spot";
 export default function EditSpot() {
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
-    const [type, setType] = useState("");
-    const [personalQuota, setPersonalQuota] = useState(0);
-    const [value, setValue] = useState(0);
-    const [roomsQuantity, setRoomsQuantity] = useState(0);
-    const [bathroomsQuantity, setBathroomsQuantity] = useState(0);
-    const [hasElevator, setHasElevator] = useState(false);
-    const [allowPet, setAllowPet] = useState(false);
-    const [allowSmoker, setAllowSmoker] = useState(false);
-    const [typeRecommendations, setTypesRecommendations] = useState<
-        Array<DropdownItem>
-    >([]);
-    const [imageFiles, setImageFiles] = useState<File[]>([]);
-    const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+    const [spot, setSpot] = useState<Spot>()
 
     const { isTokenExpired, signOut } = useAuth();
-
     const navigate = useNavigate();
+
+    const { id } = useParams();
+
+    const getSpot = () => {
+        api.get(`/spot/${id}`).then((response) => {
+            const spot: Spot = response?.data
+            setSpot(spot)
+        }).catch((error) => {
+            toast.error("Algo de errado ocorreu na sua solicitação")
+            console.log('Erro na solicitação de lugar: ', error);
+        })
+    }
+
+    useEffect(() => { getSpot() }, [])
 
     const goBack = () => {
         navigate(-1);
@@ -61,7 +61,29 @@ export default function EditSpot() {
         const actual = allowSmoker || false;
         setAllowSmoker(!actual);
     };
-    const { id } = useParams();
+    
+    const spotTypeMap = new Map([
+        ['apartment', 'Apartamento'],
+        ['house', 'Casa'],
+    ]);
+
+    const [name, setName] = useState(spot?.name ?? "");
+    const [description, setDescription] = useState(spot?.description ?? "");
+    const [type, setType] = useState(spotTypeMap.get(spot?.type || "") ?? "");
+    const [personalQuota, setPersonalQuota] = useState(spot?.personal_quota ?? 0);
+    const [value, setValue] = useState(spot?.value ?? 0);
+    const [roomsQuantity, setRoomsQuantity] = useState(spot?.key.convenience.rooms_quantity ?? 0);
+    const [bathroomsQuantity, setBathroomsQuantity] = useState(spot?.key.convenience.bathrooms_quantity ?? 0);
+    const [hasElevator, setHasElevator] = useState(spot?.key.convenience.has_elevator ?? false);
+    const [allowPet, setAllowPet] = useState(spot?.key.allowance.allow_pet ?? false);
+    const [allowSmoker, setAllowSmoker] = useState(spot?.key.allowance.allow_smoker ?? false);
+    const [typeRecommendations, setTypesRecommendations] = useState<
+        Array<DropdownItem>
+    >([]);
+    const [imageFiles, setImageFiles] = useState<File[]>([]);
+    const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+
+
     const uploadImage = (files: File[], spotId: string) => {
         let formData = new FormData();
 
@@ -295,4 +317,3 @@ export default function EditSpot() {
         </PageContainer>
     );
 }
-
