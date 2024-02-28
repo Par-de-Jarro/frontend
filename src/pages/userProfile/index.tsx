@@ -248,6 +248,7 @@ const UserProfile: React.FC = () => {
   return (
     <>
       <PageContainer>
+        <ToastContainer />
         <TitleContainer>
           <CloseIcon onClick={goBack} size={30} color='black' />
           <Title>Meu Perfil</Title>
@@ -268,7 +269,8 @@ const UserProfile: React.FC = () => {
             label='Email'
             value={email}
             onChange={(e) => {
-              setEmail(e.target.value)
+              var email_value = e.target.value
+              setEmail(email_value)
             }}
           />
           <MaskInput
@@ -276,7 +278,8 @@ const UserProfile: React.FC = () => {
             value={cellphone.toString()}
             mask="(99)99999-9999"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              const valueWithoutMask = getValueWithoutMask(e.target.value);
+              var telefone_value = e.target.value
+              const valueWithoutMask = getValueWithoutMask(telefone_value);
               setCellphone(valueWithoutMask);
             }}
           />
@@ -285,7 +288,8 @@ const UserProfile: React.FC = () => {
             value={cpf}
             mask="999.999.999-99"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              return setCpf(getValueWithoutMask(e.target.value));
+              var cpf_value = e.target.value
+              return setCpf(getValueWithoutMask(cpf_value));
             }}
           />
           <SimpleInput
