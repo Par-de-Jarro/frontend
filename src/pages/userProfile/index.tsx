@@ -58,14 +58,14 @@ const UserProfile: React.FC = () => {
   });
 
   const { user, isTokenExpired, signOut } = useAuth()
-
+  
   const [name, setName] = useState(user.name)
   const [profileImage, setProfileImage] = useState(user.profile_img)
   const [imageFile, setImageFile] = useState<File>();
   const [gender, setGender] = useState(user.gender)
   const [email, setEmail] = useState(user.email)
   const [bio, setBio] = useState(user.bio)
-  const [cellphone, setCellphone] = useState(user.cellphone)
+  const [cellphone, setCellphone] = useState<string | number>('');
   const [cpf, setCpf] = useState(user.document_id)
   const [course, setCourse] = useState(user.course)
   const [university, setUniversity] = useState(user.university.name)
@@ -195,11 +195,12 @@ const UserProfile: React.FC = () => {
   }
 
   const handleCpfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const cpf = (e.target.value);
+    var cpf = (e.target.value);
     if (!validateCPF(cpf)){
       toast.error("CPF inválido")
       return
     }
+    cpf = cpf.replace(/\D/g, '')
     setCpf(cpf)
   }
 
@@ -271,7 +272,7 @@ const UserProfile: React.FC = () => {
           />
           <MaskInput
             label='Telefone'
-            value={cellphone}
+            value={cellphone.toString()}
             mask="(99)99999-9999"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setCellphone(getValueWithoutMask(e.target.value))
