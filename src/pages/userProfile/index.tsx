@@ -194,11 +194,12 @@ const UserProfile: React.FC = () => {
   }
 
   const handleCpfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const cpf = (e.target.value);
+    var cpf = (e.target.value);
     if (!validateCPF(cpf)) {
       toast.error("CPF inválido")
       return
     }
+    cpf = cpf.replace(/\D/g, '')
     setCpf(cpf)
   }
 
