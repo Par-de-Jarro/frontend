@@ -65,7 +65,7 @@ const UserProfile: React.FC = () => {
   const [gender, setGender] = useState(user.gender)
   const [email, setEmail] = useState(user.email)
   const [bio, setBio] = useState(user.bio)
-  const [cellphone, setCellphone] = useState(user.cellphone)
+  const [cellphone, setCellphone] = useState<string | number>('');
   const [cpf, setCpf] = useState(user.document_id)
   const [course, setCourse] = useState(user.course)
   const [university, setUniversity] = useState(user.university.name)
@@ -120,8 +120,7 @@ const UserProfile: React.FC = () => {
           localStorage.setItem('@ParDeJarro:user', JSON.stringify(user))
 
         }).catch(() => {
-          toast.error("Something went wrong while updating user")
-          console.log('error');
+          toast.error("Algo de errado ocorreu na sua solicitação")
         })
       })
       .catch(function (err) {
@@ -171,7 +170,7 @@ const UserProfile: React.FC = () => {
           setUniversityRecommendations(universities)
         })
         .catch((error) => {
-          toast.error("Something went wrong while retrieving university data")
+          toast.error("Algo de errado ocorreu em carregar dados da univer")
           console.error('Retrieve university data failed: ', error);
         })
     )
@@ -196,14 +195,14 @@ const UserProfile: React.FC = () => {
 
   const handleCpfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const cpf = (e.target.value);
-    if (!validateCPF(cpf)){
+    if (!validateCPF(cpf)) {
       toast.error("CPF inválido")
       return
     }
     setCpf(cpf)
   }
 
-    
+
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const email = (e.target.value);
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -267,21 +266,26 @@ const UserProfile: React.FC = () => {
           <SimpleInput
             label='Email'
             value={email}
-            onChange={handleEmailChange}
+            onChange={(e) => {
+              setEmail(e.target.value)
+            }}
           />
           <MaskInput
             label='Telefone'
-            value={cellphone}
+            value={cellphone.toString()}
             mask="(99)99999-9999"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setCellphone(getValueWithoutMask(e.target.value))
+              const valueWithoutMask = getValueWithoutMask(e.target.value);
+              setCellphone(valueWithoutMask);
             }}
           />
           <MaskInput
             label='CPF'
             value={cpf}
             mask="999.999.999-99"
-            onChange={handleCpfChange}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              return setCpf(getValueWithoutMask(e.target.value));
+            }}
           />
           <SimpleInput
             label='Data de nascimento'
