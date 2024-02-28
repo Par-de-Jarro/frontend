@@ -56,7 +56,7 @@ const AuthProvider: React.FC<AuthProps> = ({ children }) => {
         setData({ user, access_token })
       })
       .catch((error) => {
-        toast.error('Unable to login')
+        toast.error('Não foi possivel realizar o login')
         console.error("Login failed: ", error)
       })
 

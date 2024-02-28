@@ -20,7 +20,10 @@ import { DropdownItem } from "../../types/input";
 import SimpleInput from "../../components/simple-input";
 import CheckBox from "../../components/checkbox";
 import { useAuth } from "../../hooks/auth";
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
+import MaskInput from "../../components/input-mask";
+
+import 'react-toastify/dist/ReactToastify.min.css';
 
 export default function AddSpot() {
   const [name, setName] = useState("");
@@ -31,7 +34,9 @@ export default function AddSpot() {
   const [street, setStreet] = useState("");
   const [zipcode, setZipcode] = useState("");
   const [number, setNumber] = useState("");
+  const [complement, setComplement] = useState("");
   const [city, setCity] = useState("");
+  const [neighborhood, setNeighborhood] = useState("");
   const [state, setState] = useState("");
   const [roomsQuantity, setRoomsQuantity] = useState(0);
   const [bathroomsQuantity, setBathroomsQuantity] = useState(0);
@@ -51,6 +56,40 @@ export default function AddSpot() {
   const goBack = () => {
     navigate(-1);
   };
+
+  function cep_callback (content: any) {
+    if (!("erro" in content)) {
+      setCity(content.localidade)
+      setState(content.uf)
+      setStreet(content.logradouro)
+      setNeighborhood(content.bairro)
+    }
+    else {
+      toast.error("Não foi possível autocompletar")
+    }
+  }
+  async function autocomplete_address(zip_code: string) {
+    var validacep = /^[0-9]{8}$/;
+
+    if(zip_code === "" || !validacep.test(zip_code)) {
+      toast.error("Informe um CEP válido")
+      return
+    }
+    
+    const url = `https://viacep.com.br/ws/${zip_code}/json`
+    const response = await fetch(new URL(url), {
+      method: 'GET',
+      headers: {'Content-Type': '*/*; charset=UTF-8'},
+      mode: "cors"
+    })
+
+    if (response.ok && response.body !== null) {
+      cep_callback(await response.json())
+    }
+    else {
+      toast.error("Não foi possível autocompletar")
+    }
+  }
 
   const updateAllowPet = () => {
     const actual = allowPet || false;
@@ -81,10 +120,11 @@ export default function AddSpot() {
         },
       })
       .then((response) => {
-        console.log("Image uploaded successfully:", response.data);
+        toast.success("Image uploaded successfully:", response.data);
         navigate("/mySpots");
       })
       .catch((error) => {
+        toast.error("Não foi possível carregar a imagem no servidor")
         console.error("Image upload failed:", error);
       });
   };
@@ -112,6 +152,7 @@ export default function AddSpot() {
         street,
         zip_code: zipcode,
         number,
+        complement,
         city,
         state,
         key,
@@ -129,14 +170,14 @@ export default function AddSpot() {
       });
   };
 
-  const signOutIfTokenIsExpired = () => {
+  function signOutIfTokenIsExpired() {
     if (isTokenExpired()) {
       signOut();
       navigate("/signIn");
     }
   };
 
-  const getTypes = () => {
+  function getTypes() {
     const spot_types = [
       {
         value: "apartment",
@@ -206,8 +247,15 @@ export default function AddSpot() {
     getTypes();
   }, [imageFiles]);
 
+  useEffect(() => {
+    if (zipcode.length === 8) {
+      autocomplete_address(zipcode)
+    }
+  }, [zipcode])
+
   return (
     <PageContainer>
+      <ToastContainer />
       <Div>
         <TitleContainer>
           <CloseIcon onClick={goBack} size={30} color="black" />
@@ -302,12 +350,25 @@ export default function AddSpot() {
         <TitleContainer>
           <p>Localização</p>
         </TitleContainer>
+
+        <MaskInput
+          label="CEP"
+          value={zipcode}
+          mask="99999-999" 
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            var cep = e.target.value
+            cep = cep.replace(/\D/g, '');
+            setZipcode(cep);
+          }}
+        />
+
         <SimpleInput
           label="Estado"
           value={state}
           onChange={(e) => {
             setState(e.target.value);
           }}
+          disabled
         />
         <SimpleInput
           label="Cidade"
@@ -315,13 +376,23 @@ export default function AddSpot() {
           onChange={(e) => {
             setCity(e.target.value);
           }}
+          disabled
         />
         <SimpleInput
-          label="Rua"
+          label="Bairro"
+          value={neighborhood}
+          onChange={(e) => {
+            setNeighborhood(e.target.value);
+          }}
+          disabled
+        />
+        <SimpleInput
+          label="Logradouro"
           value={street}
           onChange={(e) => {
             setStreet(e.target.value);
           }}
+          disabled
         />
         <SimpleInput
           label="Número do local"
@@ -331,10 +402,10 @@ export default function AddSpot() {
           }}
         />
         <SimpleInput
-          label="CEP"
-          value={zipcode}
+          label="Complemento"
+          value={complement}
           onChange={(e) => {
-            setZipcode(e.target.value);
+            setComplement(e.target.value);
           }}
         />
         <Button onClick={createSpot}>Cadastrar</Button>

@@ -119,8 +119,7 @@ const UserProfile: React.FC = () => {
           localStorage.setItem('@ParDeJarro:user', JSON.stringify(user))
 
         }).catch(() => {
-          toast.error("Something went wrong while updating user")
-          console.log('error');
+          toast.error("Algo de errado ocorreu na sua solicitação")
         })
       })
       .catch(function (err) {
@@ -170,7 +169,7 @@ const UserProfile: React.FC = () => {
           setUniversityRecommendations(universities)
         })
         .catch((error) => {
-          toast.error("Something went wrong while retrieving university data")
+          toast.error("Algo de errado ocorreu em carregar dados da univer")
           console.error('Retrieve university data failed: ', error);
         })
     )
