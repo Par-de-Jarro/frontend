@@ -20,6 +20,7 @@ import DropDownInput from '../../components/dropdown-input'
 import SimpleInput from '../../components/simple-input'
 import api from '../../services/api';
 import UserPic from '../../styles/assets/User.jpg'
+import { validateCPF } from '../../utils/cpfValidator'
 
 import { useAuth } from '../../hooks/auth'
 import * as yup from 'yup';
@@ -57,7 +58,7 @@ const UserProfile: React.FC = () => {
   });
 
   const { user, isTokenExpired, signOut } = useAuth()
-  
+
   const [name, setName] = useState(user.name)
   const [profileImage, setProfileImage] = useState(user.profile_img)
   const [imageFile, setImageFile] = useState<File>();
@@ -192,6 +193,27 @@ const UserProfile: React.FC = () => {
     }
   }
 
+  const handleCpfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    var cpf = (e.target.value);
+    if (!validateCPF(cpf)) {
+      toast.error("CPF inválido")
+      return
+    }
+    cpf = cpf.replace(/\D/g, '')
+    setCpf(cpf)
+  }
+
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const email = (e.target.value);
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      toast.error("Email inválido");
+      return;
+    }
+    setEmail(email);
+  }
+
   const getValueWithoutMask = (value: string) => {
     return value
       .replaceAll('.', '')
@@ -224,89 +246,93 @@ const UserProfile: React.FC = () => {
   user.profile_img])
 
   return (
-      <>
-        <PageContainer>
-            <TitleContainer>
-                <CloseIcon onClick={goBack} size={30} color='black'/>
-                <Title>Meu Perfil</Title>
-            </TitleContainer>
-            <ProfileDiv>
-                <UserImage src={profileImage || UserPic}/>
-                <ImageInputWrapper>
-                  <ImageInput type="file" accept="image/*" onChange={selectImage}></ImageInput>
-                </ImageInputWrapper>
-                <SimpleInput 
-                    label='Nome' 
-                    value={name}
-                    onChange={(e) => {
-                        setName(e.target.value)
-                    }}
-                />
-                <SimpleInput 
-                    label='Email' 
-                    value={email}
-                    onChange={(e) => {
-                      setEmail(e.target.value)
-                  }}
-                />
-                <MaskInput 
-                    label='Telefone' 
-                    value={cellphone.toString()}
-                    mask="(99)99999-9999" 
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      const valueWithoutMask = getValueWithoutMask(e.target.value);
-                      setCellphone(valueWithoutMask);
-                  }}
-                />
-                <MaskInput 
-                    label='CPF' 
-                    value={cpf}
-                    mask="999.999.999-99"
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      return setCpf(getValueWithoutMask(e.target.value));
-                  }}
-                />
-                <SimpleInput 
-                    label='Data de nascimento' 
-                    value={birthdate}
-                    onChange={(e) => {
-                      setBirthdate(e.target.value)
-                    }}
-                    type='date'
-                />
-                <DropDownInput 
-                    recommendations={genderRecommendations} 
-                    onSelectItem={(item) => {setGender(item.value)}} 
-                    label='Gênero' 
-                    inputValue={gender} 
-                    onInputValueChange={setGender}
-                />
-                <DropDownInput 
-                    recommendations={universityRecommendations} 
-                    onSelectItem={(item) => {setUniversity(item.value)}} 
-                    label='Universidade' 
-                    inputValue={university}
-                    onInputValueChange={setUniversity}
-                />
-                <SimpleInput 
-                    label='Curso' 
-                    value={course}
-                    onChange={(e) => {
-                      setCourse(e.target.value)
-                    }}
-                />
-                <SimpleInput 
-                    label='Bio' 
-                    value={bio}
-                    onChange={(e) => {
-                      setBio(e.target.value)
-                    }}
-                />
-                <MainButton onClick={updateUser}>Editar</MainButton>
-            </ProfileDiv>
-        </PageContainer>
-      </>
-    )
+    <>
+      <PageContainer>
+        <ToastContainer />
+        <TitleContainer>
+          <CloseIcon onClick={goBack} size={30} color='black' />
+          <Title>Meu Perfil</Title>
+        </TitleContainer>
+        <ProfileDiv>
+          <UserImage src={profileImage || UserPic} />
+          <ImageInputWrapper>
+            <ImageInput type="file" accept="image/*" onChange={selectImage}></ImageInput>
+          </ImageInputWrapper>
+          <SimpleInput
+            label='Nome'
+            value={name}
+            onChange={(e) => {
+              setName(e.target.value)
+            }}
+          />
+          <SimpleInput
+            label='Email'
+            value={email}
+            onChange={(e) => {
+              var email_value = e.target.value
+              setEmail(email_value)
+            }}
+          />
+          <MaskInput
+            label='Telefone'
+            value={cellphone.toString()}
+            mask="(99)99999-9999"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              var telefone_value = e.target.value
+              const valueWithoutMask = getValueWithoutMask(telefone_value);
+              setCellphone(valueWithoutMask);
+            }}
+          />
+          <MaskInput
+            label='CPF'
+            value={cpf}
+            mask="999.999.999-99"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              var cpf_value = e.target.value
+              return setCpf(getValueWithoutMask(cpf_value));
+            }}
+          />
+          <SimpleInput
+            label='Data de nascimento'
+            value={birthdate}
+            onChange={(e) => {
+              setBirthdate(e.target.value)
+            }}
+            type='date'
+          />
+          <DropDownInput
+            recommendations={genderRecommendations}
+            onSelectItem={(item) => { setGender(item.value) }}
+            label='Gênero'
+            inputValue={gender}
+            onInputValueChange={setGender}
+          />
+          <DropDownInput
+            recommendations={universityRecommendations}
+            onSelectItem={(item) => { setUniversity(item.value) }}
+            label='Universidade'
+            inputValue={university}
+            onInputValueChange={setUniversity}
+          />
+          <SimpleInput
+            label='Curso'
+            value={course}
+            onChange={(e) => {
+              setCourse(e.target.value)
+            }}
+          />
+          <SimpleInput
+            label='Bio'
+            value={bio}
+            onChange={(e) => {
+              setBio(e.target.value)
+            }}
+          />
+          <MainButton onClick={updateUser}>Editar</MainButton>
+        </ProfileDiv>
+      </PageContainer>
+    </>
+  )
 }
 
 export default UserProfile
