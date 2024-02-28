@@ -255,6 +255,7 @@ export default function AddSpot() {
 
   return (
     <PageContainer>
+      <ToastContainer />
       <Div>
         <TitleContainer>
           <CloseIcon onClick={goBack} size={30} color="black" />

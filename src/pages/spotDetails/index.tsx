@@ -48,6 +48,9 @@ const SpotDetails: React.FC = () => {
                     console.log('error');
                 })
             }
+            if (spot?.owner.id_user === user.id_user) {
+                navigate(`/editSpot/${spot.id_spot}`)
+            }
         }
         catch {
             toast.error("Você precisa estar logado para realizar essa ação",
