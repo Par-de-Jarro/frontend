@@ -44,7 +44,7 @@ const SpotDetails: React.FC = () => {
                 api.post(`/spot/${id}/request_entry`).then((response) => {
                     toast.success("Sua solicitação foi feita com sucesso :) ");
                 }).catch(() => {
-                    toast.error("Você realizou fez uma solicitação para esse local.");
+                    toast.error("Você já possui uma solicitação pendente para esse local.");
                     console.log('error');
                 })
             }
