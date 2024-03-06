@@ -312,7 +312,7 @@ export default function EditSpot() {
                         label="Permite fumantes"
                     />
                 </CheckBoxDiv>
-                <Button onClick={() => { if (id) { editSpot(id) } else { toast.error("Acontece um erro com o id da sua solicitação") } }}>Salvar Edições</Button>
+                <Button onClick={() => { if (id) { editSpot(id) } else { toast.error("Erro identificação da solicitação") } }}>Salvar Edições</Button>
             </Div>
         </PageContainer>
     );
