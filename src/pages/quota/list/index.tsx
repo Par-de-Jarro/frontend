@@ -24,8 +24,9 @@ const QuotaList: React.FC = () => {
         { label: "Outubro", value: "10", endDay: "31" }, { label: "Novembro", value: "11", endDay: "30" }, { label: "Dezembro", value: "12", endDay: "31" }
     ];
 
-    const [currentMonthIndex, setCurrentMonthIndex] = useState(10);
-    const [year, setYear] = useState(2023);
+    const date = new Date();
+    const [currentMonthIndex, setCurrentMonthIndex] = useState(date.getMonth());
+    const [year, setYear] = useState(date.getFullYear());
 
     const [quotas, setQuotas] = useState<Quota[]>([])
     const { user } = useAuth()
