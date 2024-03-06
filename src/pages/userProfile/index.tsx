@@ -170,7 +170,7 @@ const UserProfile: React.FC = () => {
           setUniversityRecommendations(universities)
         })
         .catch((error) => {
-          toast.error("Algo de errado ocorreu em carregar dados da univer")
+          toast.error("Algo de errado ocorreu em carregar dados da universidade")
           console.error('Retrieve university data failed: ', error);
         })
     )
